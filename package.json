@@ -1,0 +1,21 @@
+{
+  "name": "final-project_tpl",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "author": "Yurii Pakhariev",
+  "license": "ISC",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "init-project": "npm i --workspaces; npm i",
+    "build": "npm run build --workspaces",
+    "start": "concurrently \"npm run start --workspace=frontend\" \"npm run dev --workspace=backend\""
+  },
+  "devDependencies": {
+    "concurrently": "^5.1.0"
+  }
+}
