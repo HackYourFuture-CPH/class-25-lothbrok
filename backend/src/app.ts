@@ -5,7 +5,7 @@ import router from './routes';
 import path from 'path';
 
 const app: Express = express();
-const uiBuildPath = path.join(__dirname, "../frontend/build/");
+const uiBuildPath = path.join(__dirname, "../../frontend/build/");
 
 app.use(express.static(uiBuildPath));
 
