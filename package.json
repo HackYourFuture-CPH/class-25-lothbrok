@@ -13,6 +13,7 @@
   "scripts": {
     "init-project": "npm i --workspaces; npm i",
     "build": "npm run build --workspaces",
+    "start-prod": "node ./backend/server/index.js",
     "start": "concurrently \"npm run start --workspace=frontend\" \"npm run dev --workspace=backend\""
   },
   "devDependencies": {
