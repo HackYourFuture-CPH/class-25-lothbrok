@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, TextField, InputLabel } from '@mui/material';
+import './signUp.css';
+import { Button, TextField, InputLabel, Checkbox } from '@mui/material';
 import logo from '../../assets/images/authLogo.svg';
 import image from '../../assets/images/Hands Show.svg';
 import { useNavigate } from 'react-router';
@@ -28,14 +29,14 @@ const SignUp = () => {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // register user
+      // register user with data.email and data.password
     } catch (e) {
       console.error(e);
     }
   };
 
   return (
-    <div className="sing-up">
+    <div className="sign-up">
       <img
         src={logo}
         className="icon"
@@ -47,45 +48,49 @@ const SignUp = () => {
         <div className="form">
           <h1>Sign up</h1>
           <form onSubmit={submit}>
-            <div>
-              <InputLabel htmlFor="first-name" style={{ color: '#55555F' }}>
-                First Name
-              </InputLabel>
-              <TextField
-                id="first-name"
-                name="firstName"
-                value={data.firstName}
-                style={{
-                  borderRadius: '8px',
-                  border: '1px solid #D8E0E8',
-                  background: '#F8F9FD',
-                  marginBottom: '1rem'
-                }}
-                placeholder="Input text here"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  updateData(e);
-                }}
-                required
-              />
-              <InputLabel htmlFor="last-name" style={{ color: '#55555F' }}>
-                Last Name
-              </InputLabel>
-              <TextField
-                id="last-name"
-                name="lastName"
-                value={data.lastName}
-                style={{
-                  borderRadius: '8px',
-                  border: '1px solid #D8E0E8',
-                  background: '#F8F9FD',
-                  marginBottom: '1rem'
-                }}
-                placeholder="Input text here"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  updateData(e);
-                }}
-                required
-              />
+            <div className="row">
+              <div>
+                <InputLabel htmlFor="first-name" style={{ color: '#55555F' }}>
+                  First Name
+                </InputLabel>
+                <TextField
+                  id="first-name"
+                  name="firstName"
+                  value={data.firstName}
+                  style={{
+                    borderRadius: '8px',
+                    border: '1px solid #D8E0E8',
+                    background: '#F8F9FD',
+                    marginBottom: '1rem'
+                  }}
+                  placeholder="First Name"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    updateData(e);
+                  }}
+                  required
+                />
+              </div>
+              <div>
+                <InputLabel htmlFor="last-name" style={{ color: '#55555F' }}>
+                  Last Name
+                </InputLabel>
+                <TextField
+                  id="last-name"
+                  name="lastName"
+                  value={data.lastName}
+                  style={{
+                    borderRadius: '8px',
+                    border: '1px solid #D8E0E8',
+                    background: '#F8F9FD',
+                    marginBottom: '1rem'
+                  }}
+                  placeholder="Last name"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    updateData(e);
+                  }}
+                  required
+                />
+              </div>
             </div>
             <InputLabel htmlFor="email" style={{ color: '#55555F' }}>
               Email
@@ -100,7 +105,7 @@ const SignUp = () => {
                 background: '#F8F9FD',
                 marginBottom: '1rem'
               }}
-              placeholder="Input text here"
+              placeholder="Email"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 updateData(e);
               }}
@@ -119,24 +124,33 @@ const SignUp = () => {
                 background: '#F8F9FD',
                 marginBottom: '1rem'
               }}
-              placeholder="Input text here"
+              placeholder="Password"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 updateData(e);
               }}
               type="password"
               required
             />
+            <div>
+              <Checkbox /> Remeber me
+            </div>
             <Button
               type="submit"
               variant="contained"
               style={{
                 color: '#F1F2F4',
                 borderRadius: '8px',
-                height: '3rem'
-              }}>
-              Submit
+                height: '3rem',
+                marginBottom: '1rem'
+              }}
+              disabled={!Object.values(data).every(Boolean)}>
+              Sign Up
             </Button>
           </form>
+          <div className="small">
+            Already have an account?{' '}
+            <a onClick={() => navigate('/login')}>Sign In</a>
+          </div>
         </div>
       </div>
     </div>
