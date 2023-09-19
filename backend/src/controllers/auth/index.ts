@@ -29,8 +29,13 @@ const login = (req: Request, res: Response) => {
   res.status(200).send({message: `User loged in with  email ${email} and pass ${password}`});
 };
 
+const forgotPas = (req: Request, res: Response) => {
+  const {email} = req.body;
+  res.status(200).send({message: `Instructions for new password was sent to ${email}`});
+};
+
 const testAuth = (req: Request, res: Response) => {
   res.status(200).send({message: 'Test auth route works successfully!!!!'})
 }
 
-export default {signUp, login, testAuth};
+export default {signUp, login, testAuth,forgotPas};
