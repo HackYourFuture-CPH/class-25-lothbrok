@@ -22,6 +22,7 @@ function ForgotPasswordLayout({ children }: { children: React.ReactNode }) {
           <div className="icon" onClick={() => navigate('/login')}>
             <ArrowBackIcon style={{ color: '#E3E4E8' }} />
           </div>
+          <h1>Forgot password</h1>
           {children}
         </div>
       </div>

@@ -11,6 +11,7 @@ import {
   Setting
 } from './IndexForImport';
 import ForgotPassword from './pages/forgotPassword/ForgotPassword';
+import ResetPassword from './pages/resetPassword/ResetPassword';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/message" element={<Message />} />
           <Route path="/setting" element={<Setting />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>
       </BrowserRouter>
     </div>

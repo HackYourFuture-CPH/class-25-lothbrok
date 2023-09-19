@@ -21,7 +21,6 @@ function ForgotPassword() {
 
   return (
     <ForgotPasswordLayout>
-      <h1>Forgot password</h1>
       {!submitted ? (
         <>
           <p>We will send reset password you link on your mail</p>
