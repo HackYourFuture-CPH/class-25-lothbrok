@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import './signUp.css';
-import { Button, TextField, InputLabel, Checkbox } from '@mui/material';
-import logo from '../../assets/images/authLogo.svg';
-import image from '../../assets/images/Hands Show.svg';
-import { useNavigate } from 'react-router';
+import React, { useState } from "react";
+import "./signUp.css";
+import { Button, TextField, InputLabel, Checkbox } from "@mui/material";
+import logo from "../../assets/images/authLogo.svg";
+import image from "../../assets/images/Hands Show.svg";
+
+import { useNavigate } from "react-router";
+
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase_config";
 
 type FormData = {
   firstName: string;
@@ -14,10 +18,10 @@ type FormData = {
 
 const SignUp = () => {
   const [data, setData] = useState<FormData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: ''
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
   });
   const navigate = useNavigate();
 
@@ -29,7 +33,13 @@ const SignUp = () => {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // register user with data.email and data.password
+      const user = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+      console.log(user);
+      navigate("/login");
     } catch (e) {
       console.error(e);
     }
@@ -41,7 +51,7 @@ const SignUp = () => {
         src={logo}
         className="icon"
         alt="logo"
-        onClick={() => navigate('/')}
+        onClick={() => navigate("/")}
       />
       <div className="flex-container">
         <img className="image" src={image} alt="hand holding globe" />
@@ -50,7 +60,7 @@ const SignUp = () => {
           <form onSubmit={submit}>
             <div className="row">
               <div>
-                <InputLabel htmlFor="first-name" style={{ color: '#55555F' }}>
+                <InputLabel htmlFor="first-name" style={{ color: "#55555F" }}>
                   First Name
                 </InputLabel>
                 <TextField
@@ -58,10 +68,10 @@ const SignUp = () => {
                   name="firstName"
                   value={data.firstName}
                   style={{
-                    borderRadius: '8px',
-                    border: '1px solid #D8E0E8',
-                    background: '#F8F9FD',
-                    marginBottom: '1rem'
+                    borderRadius: "8px",
+                    border: "1px solid #D8E0E8",
+                    background: "#F8F9FD",
+                    marginBottom: "1rem",
                   }}
                   placeholder="First Name"
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,7 +81,7 @@ const SignUp = () => {
                 />
               </div>
               <div>
-                <InputLabel htmlFor="last-name" style={{ color: '#55555F' }}>
+                <InputLabel htmlFor="last-name" style={{ color: "#55555F" }}>
                   Last Name
                 </InputLabel>
                 <TextField
@@ -79,10 +89,10 @@ const SignUp = () => {
                   name="lastName"
                   value={data.lastName}
                   style={{
-                    borderRadius: '8px',
-                    border: '1px solid #D8E0E8',
-                    background: '#F8F9FD',
-                    marginBottom: '1rem'
+                    borderRadius: "8px",
+                    border: "1px solid #D8E0E8",
+                    background: "#F8F9FD",
+                    marginBottom: "1rem",
                   }}
                   placeholder="Last name"
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +102,7 @@ const SignUp = () => {
                 />
               </div>
             </div>
-            <InputLabel htmlFor="email" style={{ color: '#55555F' }}>
+            <InputLabel htmlFor="email" style={{ color: "#55555F" }}>
               Email
             </InputLabel>
             <TextField
@@ -100,10 +110,10 @@ const SignUp = () => {
               name="email"
               value={data.email}
               style={{
-                borderRadius: '8px',
-                border: '1px solid #D8E0E8',
-                background: '#F8F9FD',
-                marginBottom: '1rem'
+                borderRadius: "8px",
+                border: "1px solid #D8E0E8",
+                background: "#F8F9FD",
+                marginBottom: "1rem",
               }}
               placeholder="Email"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,7 +121,7 @@ const SignUp = () => {
               }}
               required
             />
-            <InputLabel htmlFor="password" style={{ color: '#55555F' }}>
+            <InputLabel htmlFor="password" style={{ color: "#55555F" }}>
               Password
             </InputLabel>
             <TextField
@@ -119,10 +129,10 @@ const SignUp = () => {
               name="password"
               value={data.password}
               style={{
-                borderRadius: '8px',
-                border: '1px solid #D8E0E8',
-                background: '#F8F9FD',
-                marginBottom: '1rem'
+                borderRadius: "8px",
+                border: "1px solid #D8E0E8",
+                background: "#F8F9FD",
+                marginBottom: "1rem",
               }}
               placeholder="Password"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,18 +148,19 @@ const SignUp = () => {
               type="submit"
               variant="contained"
               style={{
-                color: '#F1F2F4',
-                borderRadius: '8px',
-                height: '3rem',
-                marginBottom: '1rem'
+                color: "#F1F2F4",
+                borderRadius: "8px",
+                height: "3rem",
+                marginBottom: "1rem",
               }}
-              disabled={!Object.values(data).every(Boolean)}>
+              disabled={!Object.values(data).every(Boolean)}
+            >
               Sign Up
             </Button>
           </form>
           <div className="small">
-            Already have an account?{' '}
-            <a onClick={() => navigate('/login')}>Sign In</a>
+            Already have an account?{" "}
+            <a onClick={() => navigate("/login")}>Sign In</a>
           </div>
         </div>
       </div>
