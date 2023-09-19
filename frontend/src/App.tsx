@@ -20,7 +20,7 @@ function App() {
       <CardActions>
         <Button size="small" onClick={() => increase(1)}>Increase Bears</Button>
       </CardActions>
-    </Card>
+    </Card>  
     </div>
   );
 }
