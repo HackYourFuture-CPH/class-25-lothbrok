@@ -23,6 +23,7 @@
   "dependencies": {
     "firebase": "^10.4.0",
     "i": "^0.3.7",
-    "npm": "^10.1.0"
+    "npm": "^10.1.0",
+    "react-hook-form": "^7.46.1"
   }
 }

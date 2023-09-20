@@ -1,50 +1,42 @@
-import React, { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import "./signUp.css";
 import { Button, TextField, InputLabel, Checkbox } from "@mui/material";
 import logo from "../../assets/images/authLogo.svg";
 import image from "../../assets/images/Hands Show.svg";
-
 import { useNavigate } from "react-router";
-
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase_config";
 
-type FormData = {
+interface FormData {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-};
+}
 
 const SignUp = () => {
-  const [data, setData] = useState<FormData>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-  });
+  const { register, formState, handleSubmit } = useForm<FormData>();
+
+  const { isDirty, isValid } = formState;
+
   const navigate = useNavigate();
 
-  const updateData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-    console.log(data);
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    const user = await createUserWithEmailAndPassword(
+      auth,
+      data.email,
+      data.password
+    );
+
+    alert(
+      "Congratulations " +
+        JSON.stringify(data.firstName) +
+        "! You have now been registered on our Project management platform"
+    );
+    navigate("/login");
   };
 
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const user = await createUserWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      );
-      console.log(user);
-      navigate("/login");
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
+  const passwordPattern = /^(?=.*[A-Z])(?=.*[!_])[\w!_]+$/;
   return (
     <div className="sign-up">
       <img
@@ -57,7 +49,7 @@ const SignUp = () => {
         <img className="image" src={image} alt="hand holding globe" />
         <div className="form">
           <h1>Sign up</h1>
-          <form onSubmit={submit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div>
                 <InputLabel htmlFor="first-name" style={{ color: "#55555F" }}>
@@ -65,14 +57,10 @@ const SignUp = () => {
                 </InputLabel>
                 <TextField
                   className="input-styles"
-                  id="first-name"
-                  name="firstName"
-                  value={data.firstName}
+                  {...register("firstName", {
+                    required: "First name is required",
+                  })}
                   placeholder="First Name"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    updateData(e);
-                  }}
-                  required
                 />
               </div>
               <div>
@@ -80,15 +68,10 @@ const SignUp = () => {
                   Last Name
                 </InputLabel>
                 <TextField
-                  className="input-styles"
-                  id="last-name"
-                  name="lastName"
-                  value={data.lastName}
-                  placeholder="Last name"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    updateData(e);
-                  }}
-                  required
+                  {...register("lastName", {
+                    required: "Last name is required",
+                  })}
+                  placeholder="Last Name"
                 />
               </div>
             </div>
@@ -96,30 +79,35 @@ const SignUp = () => {
               Email
             </InputLabel>
             <TextField
-              className="input-styles"
-              id="email"
-              name="email"
-              value={data.email}
+              type="email"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^\S+@\S+$/i,
+                  message: "Invalid email format",
+                },
+              })}
               placeholder="Email"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                updateData(e);
-              }}
-              required
             />
+
             <InputLabel htmlFor="password" style={{ color: "#55555F" }}>
               Password
             </InputLabel>
             <TextField
-              className="input-styles"
-              id="password"
-              name="password"
-              value={data.password}
-              placeholder="Password"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                updateData(e);
-              }}
               type="password"
-              required
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+                pattern: {
+                  value: passwordPattern,
+                  message:
+                    "Password must contain at least one uppercase letter and at least one symbol (! or _)",
+                },
+              })}
+              placeholder="Password"
             />
             <div>
               <Checkbox /> Remeber me
@@ -128,7 +116,7 @@ const SignUp = () => {
               className="button-style"
               type="submit"
               variant="contained"
-              disabled={!Object.values(data).every(Boolean)}
+              disabled={!isDirty || !isValid}
             >
               Sign Up
             </Button>
