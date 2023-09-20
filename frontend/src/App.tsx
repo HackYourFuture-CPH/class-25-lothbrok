@@ -3,6 +3,9 @@ import './App.css';
 import useBearStore from './store/example.store';
 import { Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 import useTestHook from './hooks/test.hook';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Dashboard, Project, MyTask, Activity, Team, Message, Setting } from './IndexForImport';
+import LoginPage from './pages/login/LoginPage';
 
 function App() {
   const {bears, increase} = useBearStore();
@@ -16,6 +19,18 @@ function App() {
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           The amount of Bears {bears}
         </Typography>
+        <BrowserRouter>
+         <Routes>
+           <Route path='/' element={<Dashboard/>}/>
+           <Route path='/project' element={<Project/>}/>
+           <Route path='/mytask' element={<MyTask/>}/>
+           <Route path='/activity' element={<Activity/>}/>
+           <Route path='/team' element={<Team/>}/>
+           <Route path='/message' element={<Message/>}/>
+           <Route path='/setting' element={<Setting/>}/>
+           <Route path="/login" element={<LoginPage />} />
+         </Routes>
+        </BrowserRouter>
       </CardContent>
       <CardActions>
         <Button size="small" onClick={() => increase(1)}>Increase Bears</Button>
