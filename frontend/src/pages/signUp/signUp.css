@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
 
 .sign-up {
   padding: 1rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   box-sizing: border-box;
 }
 
@@ -14,4 +14,18 @@
 .small {
   font-size: 0.8rem;
   text-align: center;
+}
+
+.input-styles {
+  border: 1px solid #d8e0e8;
+  border-radius: 8px;
+  background: #f8f9fd;
+  margin-bottom: 1rem;
+}
+
+.button-style {
+  color: #f1f2f4;
+  border-radius: 8px;
+  height: 3rem;
+  margin-bottom: 3rem;
 }

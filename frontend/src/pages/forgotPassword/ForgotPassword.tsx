@@ -30,13 +30,9 @@ function ForgotPassword() {
               Email
             </InputLabel>
             <TextField
+              className="input-styles"
               id="email"
               value={email}
-              style={{
-                borderRadius: "8px",
-                border: "1px solid #D8E0E8",
-                background: "#F8F9FD",
-              }}
               placeholder="Input text here"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setEmail(e.target.value);
@@ -45,13 +41,9 @@ function ForgotPassword() {
               required
             />
             <Button
+              className="button-style"
               type="submit"
               variant="contained"
-              style={{
-                color: "#F1F2F4",
-                borderRadius: "8px",
-                height: "3rem",
-              }}
               disabled={!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)}
             >
               Reset Password

@@ -64,15 +64,10 @@ const SignUp = () => {
                   First Name
                 </InputLabel>
                 <TextField
+                  className="input-styles"
                   id="first-name"
                   name="firstName"
                   value={data.firstName}
-                  style={{
-                    borderRadius: "8px",
-                    border: "1px solid #D8E0E8",
-                    background: "#F8F9FD",
-                    marginBottom: "1rem",
-                  }}
                   placeholder="First Name"
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     updateData(e);
@@ -85,15 +80,10 @@ const SignUp = () => {
                   Last Name
                 </InputLabel>
                 <TextField
+                  className="input-styles"
                   id="last-name"
                   name="lastName"
                   value={data.lastName}
-                  style={{
-                    borderRadius: "8px",
-                    border: "1px solid #D8E0E8",
-                    background: "#F8F9FD",
-                    marginBottom: "1rem",
-                  }}
                   placeholder="Last name"
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     updateData(e);
@@ -106,15 +96,10 @@ const SignUp = () => {
               Email
             </InputLabel>
             <TextField
+              className="input-styles"
               id="email"
               name="email"
               value={data.email}
-              style={{
-                borderRadius: "8px",
-                border: "1px solid #D8E0E8",
-                background: "#F8F9FD",
-                marginBottom: "1rem",
-              }}
               placeholder="Email"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 updateData(e);
@@ -125,15 +110,10 @@ const SignUp = () => {
               Password
             </InputLabel>
             <TextField
+              className="input-styles"
               id="password"
               name="password"
               value={data.password}
-              style={{
-                borderRadius: "8px",
-                border: "1px solid #D8E0E8",
-                background: "#F8F9FD",
-                marginBottom: "1rem",
-              }}
               placeholder="Password"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 updateData(e);
@@ -145,14 +125,9 @@ const SignUp = () => {
               <Checkbox /> Remeber me
             </div>
             <Button
+              className="button-style"
               type="submit"
               variant="contained"
-              style={{
-                color: "#F1F2F4",
-                borderRadius: "8px",
-                height: "3rem",
-                marginBottom: "1rem",
-              }}
               disabled={!Object.values(data).every(Boolean)}
             >
               Sign Up
