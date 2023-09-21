@@ -1,10 +1,10 @@
-
 .header{
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 2.5rem;
-    border: 1px solid red;
+    background: transparent;
+    /* border: 1px solid red; */
     
 }
 
@@ -17,8 +17,8 @@
 
 
 .notification-icon-div {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .img-account-div {
@@ -40,8 +40,6 @@
 }
 
 .burger-icon-btn {
-    width: 2.6rem;
-    height: 1.8rem;
     border: none;
     background: transparent;
     cursor: pointer;

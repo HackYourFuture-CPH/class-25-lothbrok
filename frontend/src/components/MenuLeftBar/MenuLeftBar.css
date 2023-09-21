@@ -1,0 +1,48 @@
+.burger-btn {
+    width: 1.8rem;
+    height: 1.8rem;
+}
+
+.icons {
+    width:1.25rem;
+    height:1.25rem;
+}
+
+.logo-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.logo-menu {
+    width: 2rem;
+    height: 2rem;
+}
+
+
+h4 {
+    color: var(--text--10);
+    font-size: 1.2rem;
+}
+
+.list-name {
+    color: var(--text--10);  
+}
+
+.swipeableDrawer {
+    background-color: var(--purple--80);
+    height: 100vh;
+    position: relative;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+#list-bottom {
+    position: absolute;
+    bottom: 2rem;
+}

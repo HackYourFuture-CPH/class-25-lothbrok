@@ -1,15 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
 import "./Header.css";
 import SearchBar from "../searchBar/SearchBar";
 import PageTitle from "../pageTitle/PageTitle";
+import MenuLeftBar from "../MenuLeftBar/MenuLeftBar";
 
 const Header = () => {
+  const [showMenu, setShowMenu] = useState(false);
+
   return (
     <div className="header container">
       <PageTitle />
-      <button className="burger-icon-btn">
-        <img className="image-Arash" src="/assets/icons/burger.png"/>
-      </button>
+      <div className="burger-icon-btn" >
+        <MenuLeftBar/>
+      </div>
       <div className="logo">
         <div className="logo-icon-div">
           <img className="image-Arash" src="/assets/icons/tablet-icon.png"/>
