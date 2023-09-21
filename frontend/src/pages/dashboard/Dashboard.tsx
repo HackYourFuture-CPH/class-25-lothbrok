@@ -1,8 +1,21 @@
-import React from "react";
-import "./Dashboard.css";
-import { Link } from "react-router-dom";
+import React, { useEffect } from 'react';
+import './Dashboard.css';
+import { Link } from 'react-router-dom';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate('/login');
+      }
+    });
+  }, []);
+
   return (
     <div>
       <h2>This is Dashboard page</h2>
@@ -13,6 +26,7 @@ const Dashboard = () => {
         <Link to="/team">Team</Link>
         <Link to="/message">Message</Link>
         <Link to="/setting">Setting</Link>
+        <button onClick={async () => signOut(getAuth())}>Sign out</button>
       </div>
     </div>
   );
