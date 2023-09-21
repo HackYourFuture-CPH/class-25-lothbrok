@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
-import ForgotPasswordLayout from '../../components/ForgotPasswordLayout';
-import { Button, TextField, InputLabel } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import ForgotPasswordLayout from "../../components/ForgotPasswordLayout";
+import { Button, TextField, InputLabel } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase_config";
+import { confirmPasswordReset } from "firebase/auth";
+import "./resetPassword.css";
 
 const ResetPassword = () => {
-  const [pass, setPass] = useState<string>('');
-  const [confirmPass, setConfirmPass] = useState<string>('');
+  const [pass, setPass] = useState<string>("");
+  const [confirmPass, setConfirmPass] = useState<string>("");
+  const [oobCode, setOobCode] = useState("");
   const navigate = useNavigate();
 
-  const submit = async () => {
+  useEffect(() => {
+    const currentUrl = window.location.href;
+    const urlParams: any = new URLSearchParams(new URL(currentUrl).search);
+    setOobCode(urlParams.get("oobCode"));
+  }, []);
+
+  const submit = async (e: any) => {
     try {
-      // confirmPasswordReset
-      navigate('/login');
+      e.preventDefault();
+      await confirmPasswordReset(auth, oobCode, pass);
+      navigate("/login");
     } catch (e) {
       console.error(e);
     }
@@ -21,18 +32,13 @@ const ResetPassword = () => {
     <ForgotPasswordLayout>
       <p>To change your password, please fill in the fields below</p>
       <form onSubmit={submit}>
-        <InputLabel htmlFor="pass" style={{ color: '#55555F' }}>
+        <InputLabel htmlFor="pass" style={{ color: "#55555F" }}>
           New Password
         </InputLabel>
         <TextField
+          className="input-styles"
           id="pass"
           value={pass}
-          style={{
-            borderRadius: '8px',
-            border: '1px solid #D8E0E8',
-            background: '#F8F9FD',
-            marginBottom: '1rem'
-          }}
           placeholder="Input text here"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setPass(e.target.value);
@@ -40,18 +46,13 @@ const ResetPassword = () => {
           type="password"
           required
         />
-        <InputLabel htmlFor="confirm-pass" style={{ color: '#55555F' }}>
+        <InputLabel htmlFor="confirm-pass" style={{ color: "#55555F" }}>
           Confirm New Password
         </InputLabel>
         <TextField
+          className="input-styles"
           id="confirm-pass"
           value={confirmPass}
-          style={{
-            borderRadius: '8px',
-            border: '1px solid #D8E0E8',
-            background: '#F8F9FD',
-            marginBottom: '1rem'
-          }}
           placeholder="Input text here"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setConfirmPass(e.target.value);
@@ -60,14 +61,11 @@ const ResetPassword = () => {
           required
         />
         <Button
+          className="button-style"
           type="submit"
           variant="contained"
-          style={{
-            color: '#F1F2F4',
-            borderRadius: '8px',
-            height: '3rem'
-          }}
-          disabled={pass.trim() !== confirmPass || !pass.trim()}>
+          disabled={pass.trim() !== confirmPass || !pass.trim()}
+        >
           Submit
         </Button>
       </form>
