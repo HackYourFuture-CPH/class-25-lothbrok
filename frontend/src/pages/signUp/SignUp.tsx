@@ -6,6 +6,7 @@ import image from "../../assets/images/Hands Show.svg";
 import { useNavigate } from "react-router";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase_config";
+import { passwordPattern } from "../../passwordPattern";
 
 interface FormData {
   firstName: string;
@@ -27,16 +28,9 @@ const SignUp = () => {
       data.email,
       data.password
     );
-
-    alert(
-      "Congratulations " +
-        JSON.stringify(data.firstName) +
-        "! You have now been registered on our Project management platform"
-    );
     navigate("/login");
   };
 
-  const passwordPattern = /^(?=.*[A-Z])(?=.*[!_])[\w!_]+$/;
   return (
     <div className="sign-up">
       <img
@@ -122,7 +116,7 @@ const SignUp = () => {
             </Button>
           </form>
           <div className="small">
-            Already have an account?
+            Already have an account?{" "}
             <a onClick={() => navigate("/login")}>Sign In</a>
           </div>
         </div>
