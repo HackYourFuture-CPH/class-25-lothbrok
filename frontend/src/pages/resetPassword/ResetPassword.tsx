@@ -6,6 +6,7 @@ import { auth } from "../../firebase_config";
 import { confirmPasswordReset } from "firebase/auth";
 import "./resetPassword.css";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { passwordPattern } from "../../passwordPattern";
 
 interface FormData {
   password: string;
@@ -37,7 +38,7 @@ const ResetPassword = () => {
       console.error(e);
     }
   };
-  const passwordPattern = /^(?=.*[A-Z])(?=.*[!_])[\w!_]+$/;
+
   const passwordPatternValidator = (value: string) => {
     return (
       passwordPattern.test(value) ||
