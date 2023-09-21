@@ -7,7 +7,7 @@ export const validateAuth = async (req:Request, res:Response, next:NextFunction)
       const token = req.headers.authorization.split(" ")[1];
       try {
         const result = await adminFireAuth.verifyIdToken(token);
-        req.user = result;
+        //req.user = result;
         next();
       } catch (error) {
         res.status(401).send({errorCode: 410, errorMessage: "Token has expired"})
