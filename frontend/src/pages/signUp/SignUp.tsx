@@ -28,16 +28,12 @@ const SignUp = () => {
       data.email,
       data.password
     );
+    navigate('/');
   };
 
   return (
     <div className="sign-up">
-      <img
-        src={logo}
-        className="icon"
-        alt="logo"
-        onClick={() => navigate('/')}
-      />
+      <img src={logo} className="icon" alt="logo" />
       <div className="flex-container">
         <img className="image" src={image} alt="hand holding globe" />
         <div className="form">

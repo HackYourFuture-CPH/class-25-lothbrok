@@ -23,8 +23,8 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
@@ -41,17 +41,14 @@ const LoginPage: React.FC = () => {
   const handleLogin = async () => {
     try {
       const auth = getAuth();
-      if (rememberMe) {
-        await setPersistence(auth, browserLocalPersistence);
-      } else {
-        await setPersistence(auth, browserSessionPersistence);
-      }
+      await setPersistence(
+        auth,
+        rememberMe ? browserLocalPersistence : browserSessionPersistence
+      );
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/');
     } catch (e) {
       console.error(e);
     }
-
   };
 
   return (
@@ -59,45 +56,42 @@ const LoginPage: React.FC = () => {
       <img
         src={logo}
         alt="Image"
-        style={{ width: "140px", height: "30px", top: "40px", left: "76px" }}
+        style={{ width: '140px', height: '30px', top: '40px', left: '76px' }}
       />
 
       <Grid
         container
         justifyContent="center"
         alignItems="center"
-        style={{ height: "100vh" }}
-      >
+        style={{ height: '100vh' }}>
         <Grid item xs={12} sm={6}>
           <Typography
             style={{
-              font: "Poppins",
-              fontSize: "38px",
-              fontWeight: "700",
-              lineHeight: "45.6px",
-              letterSpacing: "-0.4099999964237213px",
-              textAlign: "left",
-              color: "#111111",
-              width: "113px",
-              height: "46px",
-              top: "129px",
-              left: "100px",
-            }}
-          >
+              font: 'Poppins',
+              fontSize: '38px',
+              fontWeight: '700',
+              lineHeight: '45.6px',
+              letterSpacing: '-0.4099999964237213px',
+              textAlign: 'left',
+              color: '#111111',
+              width: '113px',
+              height: '46px',
+              top: '129px',
+              left: '100px'
+            }}>
             Login
           </Typography>
 
           <Typography
             style={{
-              fontFamily: "Poppins",
-              fontSize: "17px",
-              fontWeight: "400",
-              lineHeight: "22px",
-              letterSpacing: "-0.4099999964237213px",
-              textAlign: "left",
-              color: "#89899C",
-            }}
-          >
+              fontFamily: 'Poppins',
+              fontSize: '17px',
+              fontWeight: '400',
+              lineHeight: '22px',
+              letterSpacing: '-0.4099999964237213px',
+              textAlign: 'left',
+              color: '#89899C'
+            }}>
             Easy steps to enter the platform
           </Typography>
 
@@ -116,12 +110,12 @@ const LoginPage: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Input text here"
             style={{
-              width: "Fill (273px)",
-              height: "Hug (49px)",
-              padding: "14px, 16px, 14px, 16px",
-              borderRadius: "8px",
-              border: "1px",
-              gap: "10px",
+              width: 'Fill (273px)',
+              height: 'Hug (49px)',
+              padding: '14px, 16px, 14px, 16px',
+              borderRadius: '8px',
+              border: '1px',
+              gap: '10px'
             }}
           />
 
@@ -142,21 +136,19 @@ const LoginPage: React.FC = () => {
           <Typography
             variant="body2"
             style={{
-              fontFamily: "Inter",
-              fontSize: "15px",
-              fontWeight: "400",
-              lineHeight: "20px",
-              letterSpacing: "-0.24px",
-              textAlign: "right",
-            }}
-          ></Typography>
+              fontFamily: 'Inter',
+              fontSize: '15px',
+              fontWeight: '400',
+              lineHeight: '20px',
+              letterSpacing: '-0.24px',
+              textAlign: 'right'
+            }}></Typography>
           <Button
             variant="contained"
             color="primary"
             fullWidth
             onClick={handleLogin}
-            disabled={!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)}
-          >
+            disabled={!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)}>
             Login
           </Button>
 
@@ -171,7 +163,7 @@ const LoginPage: React.FC = () => {
           <img
             src={image}
             alt="Image"
-            style={{ width: "100%", height: "auto" }}
+            style={{ width: '100%', height: 'auto' }}
           />
         </Grid>
       </Grid>

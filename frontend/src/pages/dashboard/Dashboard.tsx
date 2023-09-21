@@ -16,6 +16,8 @@ const Dashboard = () => {
     });
   }, []);
 
+  const handleSignOut = () => signOut(getAuth());
+
   return (
     <div>
       <h2>This is Dashboard page</h2>
@@ -26,7 +28,7 @@ const Dashboard = () => {
         <Link to="/team">Team</Link>
         <Link to="/message">Message</Link>
         <Link to="/setting">Setting</Link>
-        <button onClick={async () => signOut(getAuth())}>Sign out</button>
+        <button onClick={handleSignOut}>Sign out</button>
       </div>
     </div>
   );
