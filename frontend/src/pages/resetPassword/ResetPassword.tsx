@@ -1,73 +1,91 @@
-import React, { useState } from 'react';
-import ForgotPasswordLayout from '../../components/ForgotPasswordLayout';
-import { Button, TextField, InputLabel } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import ForgotPasswordLayout from "../../components/ForgotPasswordLayout";
+import { Button, TextField, InputLabel } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase_config";
+import { confirmPasswordReset } from "firebase/auth";
+import "./resetPassword.css";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+interface FormData {
+  password: string;
+  confirmPassword: string;
+}
 
 const ResetPassword = () => {
-  const [pass, setPass] = useState<string>('');
-  const [confirmPass, setConfirmPass] = useState<string>('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    getValues,
+  } = useForm<FormData>({ mode: "all" });
+
+  const [oobCode, setOobCode] = useState("");
   const navigate = useNavigate();
 
-  const submit = async () => {
+  useEffect(() => {
+    const currentUrl = window.location.href;
+    const urlParams: any = new URLSearchParams(new URL(currentUrl).search);
+    setOobCode(urlParams.get("oobCode"));
+  }, []);
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      // confirmPasswordReset
-      navigate('/login');
+      await confirmPasswordReset(auth, oobCode, data.password);
+      navigate("/login");
     } catch (e) {
       console.error(e);
     }
+  };
+  const passwordPattern = /^(?=.*[A-Z])(?=.*[!_])[\w!_]+$/;
+  const passwordPatternValidator = (value: string) => {
+    return (
+      passwordPattern.test(value) ||
+      "Password must contain at least one uppercase letter and at least one symbol (! or _)"
+    );
+  };
+
+  const passwordMatchValidator = () => {
+    const { password, confirmPassword } = getValues();
+    return password === confirmPassword || "Passwords do not match";
   };
 
   return (
     <ForgotPasswordLayout>
       <p>To change your password, please fill in the fields below</p>
-      <form onSubmit={submit}>
-        <InputLabel htmlFor="pass" style={{ color: '#55555F' }}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <InputLabel htmlFor="pass" style={{ color: "#55555F" }}>
           New Password
         </InputLabel>
         <TextField
-          id="pass"
-          value={pass}
-          style={{
-            borderRadius: '8px',
-            border: '1px solid #D8E0E8',
-            background: '#F8F9FD',
-            marginBottom: '1rem'
-          }}
-          placeholder="Input text here"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setPass(e.target.value);
-          }}
+          className="input-styles"
           type="password"
-          required
+          {...register("password", {
+            required: "Password is required",
+            validate: {
+              pattern: passwordPatternValidator,
+            },
+          })}
         />
         <InputLabel htmlFor="confirm-pass" style={{ color: '#55555F' }}>
           Confirm New Password
         </InputLabel>
         <TextField
-          id="confirm-pass"
-          value={confirmPass}
-          style={{
-            borderRadius: '8px',
-            border: '1px solid #D8E0E8',
-            background: '#F8F9FD',
-            marginBottom: '1rem'
-          }}
-          placeholder="Input text here"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setConfirmPass(e.target.value);
-          }}
+          className="input-styles"
           type="password"
-          required
+          {...register("confirmPassword", {
+            required: "Please confirm your password",
+            validate: {
+              pattern: passwordPatternValidator,
+              matches: passwordMatchValidator,
+            },
+          })}
         />
         <Button
           type="submit"
           variant="contained"
-          style={{
-            color: '#F1F2F4',
-            borderRadius: '8px',
-            height: '3rem'
-          }}
-          disabled={pass.trim() !== confirmPass || !pass.trim()}>
+          disabled={!isValid}
+        >
           Submit
         </Button>
       </form>
