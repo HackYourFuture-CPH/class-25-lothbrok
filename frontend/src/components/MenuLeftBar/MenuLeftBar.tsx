@@ -44,13 +44,12 @@ const MenuLeftBar = () => {
         <img className='logo-menu' src='/assets/icons/logo-menu.png'/>
         <h4>Dashhhboard</h4>
         <img className='logo-menu' src='/assets/icons/plus.png'/>
-
       </div>
       <List className='list-top'>
         {['Dashboard', 'Project', 'My Task', 'Activity', 'Team', 'Message', 'Setting'].map((text, index) => (
-          <ListItem key={text} disablePadding>
+          <ListItem key={text} disablePadding className='list-item'>
             <ListItemButton>
-              <Link className='list-item' to={index === 0 ? '/' : `/${text.toLowerCase()}`}>
+              <Link className='list-item-link' to={index === 0 ? '/' : `/${text.toLowerCase()}`}>
                 <ListItemIcon>
                   <img className="icons" src={`/assets/icons/${icons[index]}.png`} alt={`${text}-icon`} />
                 </ListItemIcon>
@@ -65,7 +64,7 @@ const MenuLeftBar = () => {
         {['Workspace', 'Superboard'].map((text, index) => (
           <ListItem key={text} disablePadding className={index >= 7 ? 'last-two-items' : ''}>
             <ListItemButton>
-              <Link className='list-item' to={`/${text.toLowerCase()}`}>
+              <Link className='list-item-link' to={`/${text.toLowerCase()}`}>
                 <ListItemIcon>
                   <img className="icons" src={`/assets/icons/${icons.slice(-2)[index]}.png`}  />
                 </ListItemIcon>
@@ -90,7 +89,6 @@ const MenuLeftBar = () => {
         open={state[anchor]}
         onClose={toggleDrawer(anchor, false)}
         onOpen={toggleDrawer(anchor, true)}
-        
       >
         {list(anchor)}
       </SwipeableDrawer>

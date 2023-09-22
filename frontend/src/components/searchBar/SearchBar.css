@@ -1,4 +1,4 @@
-.paper {
+#paper {
     flex-flow: row;
     flex-direction: row;
     display: none;
@@ -10,7 +10,8 @@
 }
 
 @media (min-width: 768px) {
-    .paper {
+    #paper {
         display: flex;
+        box-shadow: none;
     }
 }

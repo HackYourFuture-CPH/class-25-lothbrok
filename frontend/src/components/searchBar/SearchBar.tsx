@@ -7,7 +7,7 @@ const SearchBar = () => {
     <Paper
       component="form"
       sx={{ p: "2px 4px", alignItems: "center", width: 213 }}
-      className="paper"
+      id="paper"
     >
       <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
         <img className="img-search-icon" src="/assets/icons/search.png" />

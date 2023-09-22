@@ -5,7 +5,6 @@ import PageTitle from "../pageTitle/PageTitle";
 import MenuLeftBar from "../MenuLeftBar/MenuLeftBar";
 
 const Header = () => {
-  const [showMenu, setShowMenu] = useState(false);
 
   return (
     <div className="header container">
