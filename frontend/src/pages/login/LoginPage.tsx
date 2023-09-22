@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-import React from "react";
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
-=======
 import React, { useEffect, useState } from 'react';
->>>>>>> f0bdc65a94e44a0d792ec9ed203e0ba3e1e04d22
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import {
   Container,
   Grid,
@@ -27,7 +23,6 @@ import {
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-<<<<<<< HEAD
 type FormData = {
   email: string;
   password: string;
@@ -35,21 +30,16 @@ type FormData = {
 };
 
 const LoginPage: React.FC = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
-
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
-=======
-const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormData>();
 
   useEffect(() => {
     const auth = getAuth();
@@ -60,18 +50,18 @@ const LoginPage: React.FC = () => {
     });
   }, []);
 
-  const handleLogin = async () => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    console.log(data);
     try {
       const auth = getAuth();
       await setPersistence(
         auth,
         rememberMe ? browserLocalPersistence : browserSessionPersistence
       );
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, data.email, data.password);
     } catch (e) {
       console.error(e);
     }
->>>>>>> f0bdc65a94e44a0d792ec9ed203e0ba3e1e04d22
   };
 
   return (
@@ -107,16 +97,14 @@ const LoginPage: React.FC = () => {
 
           <Typography
             style={{
-<<<<<<< HEAD
-              fontFamily: "Poppins",
-              fontSize: "17px",
-              fontWeight: "400",
-              lineHeight: "22px",
-              letterSpacing: "-0.42px",
-              textAlign: "left",
-              color: "#89899C",
-            }}
-          >
+              fontFamily: 'Poppins',
+              fontSize: '17px',
+              fontWeight: '400',
+              lineHeight: '22px',
+              letterSpacing: '-0.42px',
+              textAlign: 'left',
+              color: '#89899C'
+            }}>
             Easy steps to enter the platform
           </Typography>
 
@@ -126,11 +114,11 @@ const LoginPage: React.FC = () => {
               control={control}
               defaultValue=""
               rules={{
-                required: "Email is required",
+                required: 'Email is required',
                 pattern: {
                   value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,
-                  message: "Invalid email address",
-                },
+                  message: 'Invalid email address'
+                }
               }}
               render={({ field }) => (
                 <>
@@ -150,7 +138,7 @@ const LoginPage: React.FC = () => {
               name="password"
               control={control}
               defaultValue=""
-              rules={{ required: "Password is required" }}
+              rules={{ required: 'Password is required' }}
               render={({ field }) => (
                 <>
                   <label className="style2-label">Password</label>
@@ -173,14 +161,20 @@ const LoginPage: React.FC = () => {
                   control={control}
                   defaultValue={false}
                   render={({ field }) => (
-                    <Checkbox {...field} name="rememberMe" color="primary" />
+                    <Checkbox
+                      {...field}
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      name="rememberMe"
+                      color="primary"
+                    />
                   )}
                 />
               }
               label="Remember me"
             />
 
-            <Link className="forgot" href="#">
+            <Link to={'/forgot-password'} className="forgot">
               Forgot password
             </Link>
 
@@ -189,88 +183,14 @@ const LoginPage: React.FC = () => {
               color="primary"
               fullWidth
               type="submit"
-              disabled={Object.keys(errors).length > 0}
-            >
+              disabled={Object.keys(errors).length > 0}>
               Login
             </Button>
           </form>
 
           <Typography variant="body2">
-            Don't have an account?{" "}
-            <Link className="sign" href="#">
-=======
-              fontFamily: 'Poppins',
-              fontSize: '17px',
-              fontWeight: '400',
-              lineHeight: '22px',
-              letterSpacing: '-0.4099999964237213px',
-              textAlign: 'left',
-              color: '#89899C'
-            }}>
-            Easy steps to enter the platform
-          </Typography>
-
-          <label className="style-label">Email</label>
-          <TextField
-            fullWidth
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Input text here"
-          />
-          <label className="style2-label">Password</label>
-          <TextField
-            fullWidth
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Input text here"
-            style={{
-              width: 'Fill (273px)',
-              height: 'Hug (49px)',
-              padding: '14px, 16px, 14px, 16px',
-              borderRadius: '8px',
-              border: '1px',
-              gap: '10px'
-            }}
-          />
-
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                name="rememberMe"
-                color="primary"
-              />
-            }
-            label="Remember me"
-          />
-          <Link className="forgot" to={'/forgot-password'}>
-            Forgot password
-          </Link>
-          <Typography
-            variant="body2"
-            style={{
-              fontFamily: 'Inter',
-              fontSize: '15px',
-              fontWeight: '400',
-              lineHeight: '20px',
-              letterSpacing: '-0.24px',
-              textAlign: 'right'
-            }}></Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            onClick={handleLogin}
-            disabled={!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)}>
-            Login
-          </Button>
-
-          <Typography className="account">
-            Don't have an account?
+            Don't have an account?{' '}
             <Link to={'/sign-up'} className="sign">
->>>>>>> f0bdc65a94e44a0d792ec9ed203e0ba3e1e04d22
               Sign up
             </Link>
           </Typography>
