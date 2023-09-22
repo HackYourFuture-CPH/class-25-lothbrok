@@ -1,15 +1,10 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useState } from 'react';
 import './signUp.css';
 import { Button, TextField, InputLabel, Checkbox } from '@mui/material';
 import logo from '../../assets/images/authLogo.svg';
 import image from '../../assets/images/Hands Show.svg';
 import { useNavigate } from 'react-router';
-import {
-  createUserWithEmailAndPassword,
-  IdTokenResult,
-  UserCredential
-} from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase_config';
 import { passwordPattern } from '../../passwordPattern';
 
@@ -29,24 +24,14 @@ const SignUp = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      const result: UserCredential = await createUserWithEmailAndPassword(
+      const user = await createUserWithEmailAndPassword(
         auth,
         data.email,
         data.password
       );
-      const accessToken: IdTokenResult = await result.user.getIdTokenResult();
-      console.log(accessToken);
-      const res = await fetch('http://localhost:3000/api/main-page', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${accessToken.token}`
-        }
-      });
-      res.ok
-        ? navigate('/')
-        : console.error('Error:', res.status, res.statusText);
-    } catch (e) {
-      console.error(e);
+      navigate('/login');
+    } catch (err) {
+      console.log(err);
     }
   };
 
