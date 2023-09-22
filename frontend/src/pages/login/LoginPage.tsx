@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import {
   Container,
   Grid,
@@ -13,15 +14,21 @@ import logo from "../../assets/images/Logo for auth.jpg";
 import image from "../../assets/images/Stuck at Home Imagination.jpg";
 import "./LoginPage.css";
 
-const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+type FormData = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+};
 
-  const handleLogin = () => {
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Remember Me:", rememberMe);
+const LoginPage: React.FC = () => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    console.log(data);
   };
 
   return (
@@ -63,7 +70,7 @@ const LoginPage: React.FC = () => {
               fontSize: "17px",
               fontWeight: "400",
               lineHeight: "22px",
-              letterSpacing: "-0.4099999964237213px",
+              letterSpacing: "-0.42px",
               textAlign: "left",
               color: "#89899C",
             }}
@@ -71,66 +78,82 @@ const LoginPage: React.FC = () => {
             Easy steps to enter the platform
           </Typography>
 
-          <label className="style-label">Email</label>
-          <TextField
-            fullWidth
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Input text here"
-          />
-          <label className="style2-label">Password</label>
-          <TextField
-            fullWidth
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Input text here"
-            style={{
-              width: "Fill (273px)",
-              height: "Hug (49px)",
-              padding: "14px, 16px, 14px, 16px",
-              borderRadius: "8px",
-              border: "1px",
-              gap: "10px",
-            }}
-          />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+              name="email"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: "Email is required",
+                pattern: {
+                  value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,
+                  message: "Invalid email address",
+                },
+              }}
+              render={({ field }) => (
+                <>
+                  <label className="style-label">Email</label>
+                  <TextField
+                    fullWidth
+                    {...field}
+                    placeholder="Input text here"
+                    error={Boolean(errors.email)}
+                    helperText={errors.email?.message}
+                  />
+                </>
+              )}
+            />
 
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                name="rememberMe"
-                color="primary"
-              />
-            }
-            label="Remember me"
-          />
-          <Link className="forgot" href="#">
-            Forgot password
-          </Link>
-          <Typography
-            variant="body2"
-            style={{
-              fontFamily: "Inter",
-              fontSize: "15px",
-              fontWeight: "400",
-              lineHeight: "20px",
-              letterSpacing: "-0.24px",
-              textAlign: "right",
-            }}
-          ></Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            onClick={handleLogin}
-            disabled={!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)}
-          >
-            Login
-          </Button>
+            <Controller
+              name="password"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Password is required" }}
+              render={({ field }) => (
+                <>
+                  <label className="style2-label">Password</label>
+                  <TextField
+                    fullWidth
+                    type="password"
+                    {...field}
+                    placeholder="Input text here"
+                    error={Boolean(errors.password)}
+                    helperText={errors.password?.message}
+                  />
+                </>
+              )}
+            />
 
-          <Typography className="account">
+            <FormControlLabel
+              control={
+                <Controller
+                  name="rememberMe"
+                  control={control}
+                  defaultValue={false}
+                  render={({ field }) => (
+                    <Checkbox {...field} name="rememberMe" color="primary" />
+                  )}
+                />
+              }
+              label="Remember me"
+            />
+
+            <Link className="forgot" href="#">
+              Forgot password
+            </Link>
+
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              type="submit"
+              disabled={Object.keys(errors).length > 0}
+            >
+              Login
+            </Button>
+          </form>
+
+          <Typography variant="body2">
             Don't have an account?{" "}
             <Link className="sign" href="#">
               Sign up
