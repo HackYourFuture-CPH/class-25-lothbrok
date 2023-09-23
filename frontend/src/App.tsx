@@ -1,10 +1,18 @@
-import React from 'react';
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import {Dashboard, Project, MyTask, Activity, Team, Message, Setting} from './IndexForImport';
-import ForgotPassword from './pages/forgotPassword/ForgotPassword';
-import ResetPassword from './pages/resetPassword/ResetPassword';
-import SignUp from './pages/signUp/SignUp';
+import React from "react";
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  Dashboard,
+  Project,
+  MyTask,
+  Activity,
+  Team,
+  Message,
+  Setting,
+} from "./IndexForImport";
+import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
+import ResetPassword from "./pages/resetPassword/ResetPassword";
+import SignUp from "./pages/signUp/SignUp";
 
 function App() {
   return (
