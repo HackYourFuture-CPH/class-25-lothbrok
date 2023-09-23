@@ -5,10 +5,22 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase_config";
 import { confirmPasswordReset } from "firebase/auth";
 import "./resetPassword.css";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { passwordPattern } from "../../passwordPattern";
+
+interface FormData {
+  password: string;
+  confirmPassword: string;
+}
 
 const ResetPassword = () => {
-  const [pass, setPass] = useState<string>("");
-  const [confirmPass, setConfirmPass] = useState<string>("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    getValues,
+  } = useForm<FormData>({ mode: "all" });
+
   const [oobCode, setOobCode] = useState("");
   const navigate = useNavigate();
 
@@ -18,53 +30,62 @@ const ResetPassword = () => {
     setOobCode(urlParams.get("oobCode"));
   }, []);
 
-  const submit = async (e: any) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      e.preventDefault();
-      await confirmPasswordReset(auth, oobCode, pass);
+      await confirmPasswordReset(auth, oobCode, data.password);
       navigate("/login");
     } catch (e) {
       console.error(e);
     }
   };
 
+  const passwordPatternValidator = (value: string) => {
+    return (
+      passwordPattern.test(value) ||
+      "Password must contain at least one uppercase letter and at least one symbol (! or _)"
+    );
+  };
+
+  const passwordMatchValidator = () => {
+    const { password, confirmPassword } = getValues();
+    return password === confirmPassword || "Passwords do not match";
+  };
+
   return (
     <ForgotPasswordLayout>
       <p>To change your password, please fill in the fields below</p>
-      <form onSubmit={submit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <InputLabel htmlFor="pass" style={{ color: "#55555F" }}>
           New Password
         </InputLabel>
         <TextField
           className="input-styles"
-          id="pass"
-          value={pass}
-          placeholder="Input text here"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setPass(e.target.value);
-          }}
           type="password"
-          required
+          {...register("password", {
+            required: "Password is required",
+            validate: {
+              pattern: passwordPatternValidator,
+            },
+          })}
         />
-        <InputLabel htmlFor="confirm-pass" style={{ color: "#55555F" }}>
+        <InputLabel htmlFor="confirm-pass" style={{ color: '#55555F' }}>
           Confirm New Password
         </InputLabel>
         <TextField
           className="input-styles"
-          id="confirm-pass"
-          value={confirmPass}
-          placeholder="Input text here"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setConfirmPass(e.target.value);
-          }}
           type="password"
-          required
+          {...register("confirmPassword", {
+            required: "Please confirm your password",
+            validate: {
+              pattern: passwordPatternValidator,
+              matches: passwordMatchValidator,
+            },
+          })}
         />
         <Button
-          className="button-style"
           type="submit"
           variant="contained"
-          disabled={pass.trim() !== confirmPass || !pass.trim()}
+          disabled={!isValid}
         >
           Submit
         </Button>

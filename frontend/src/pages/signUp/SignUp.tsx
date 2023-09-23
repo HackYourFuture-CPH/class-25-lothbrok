@@ -23,12 +23,16 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    const user = await createUserWithEmailAndPassword(
-      auth,
-      data.email,
-      data.password
-    );
-    navigate('/');
+    try {
+      const user = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
