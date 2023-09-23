@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
-import './forgotPassword.css';
-import '../../App.css';
-import { Button, TextField, InputLabel } from '@mui/material';
-import ForgotPasswordLayout from '../../components/ForgotPasswordLayout';
+import React, { useState } from "react";
+import "./forgotPassword.css";
+import "../../App.css";
+import { Button, TextField, InputLabel } from "@mui/material";
+import ForgotPasswordLayout from "../../components/ForgotPasswordLayout";
+import { auth } from "../../firebase_config";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 function ForgotPassword() {
   const [submitted, setSubmitted] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState<string>("");
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // add when firebase auth configured
-      // firebase.auth().sendPasswordResetEmail(email)
+      await sendPasswordResetEmail(auth, email);
       setSubmitted(true);
     } catch (e) {
       console.error(e);
@@ -25,33 +26,26 @@ function ForgotPassword() {
         <>
           <p>We will send reset password you link on your mail</p>
           <form onSubmit={submit}>
-            <InputLabel htmlFor="email" style={{ color: '#55555F' }}>
+            <InputLabel htmlFor="email" style={{ color: "#55555F" }}>
               Email
             </InputLabel>
             <TextField
+              className="input-styles"
               id="email"
               value={email}
-              style={{
-                borderRadius: '8px',
-                border: '1px solid #D8E0E8',
-                background: '#F8F9FD'
-              }}
               placeholder="Input text here"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setEmail(e.target.value);
               }}
-              type={'email'}
+              type={"email"}
               required
             />
             <Button
+              className="button-style"
               type="submit"
               variant="contained"
-              style={{
-                color: '#F1F2F4',
-                borderRadius: '8px',
-                height: '3rem'
-              }}
-              disabled={!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)}>
+              disabled={!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)}
+            >
               Reset Password
             </Button>
           </form>
