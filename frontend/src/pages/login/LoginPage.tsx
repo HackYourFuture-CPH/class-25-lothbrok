@@ -51,7 +51,7 @@ const LoginPage: React.FC = () => {
   }, []);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    console.log(data);
+    
     try {
       const auth = getAuth();
       await setPersistence(
