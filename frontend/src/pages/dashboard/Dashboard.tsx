@@ -1,8 +1,42 @@
-import React from "react";
-import "./Dashboard.css";
-import { Link } from "react-router-dom";
+import React, { useEffect } from 'react';
+import './Dashboard.css';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+  createUserWithEmailAndPassword,
+  User,
+  getAuth,
+  onAuthStateChanged
+} from '@firebase/auth';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+
+  const checkToken = () => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, async (user: User | null) => {
+      if (user) {
+        try {
+          const accessToken = await user.getIdTokenResult();
+          const res = await fetch('api/main-page', {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${accessToken.token}`
+            }
+          });
+          res.ok ? navigate('/') : navigate('/login');
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
+        navigate('/login');
+      }
+    });
+  };
+
+  useEffect(() => {
+    checkToken();
+  }, []);
+
   return (
     <div>
       <h2>This is Dashboard page</h2>
