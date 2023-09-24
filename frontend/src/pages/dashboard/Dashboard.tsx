@@ -1,9 +1,23 @@
-import React from "react";
-import "./Dashboard.css";
-import { Header } from "../../IndexForImport";
-import { Link } from "react-router-dom";
+import React, { useEffect } from 'react';
+import './Dashboard.css';
+import { Link } from 'react-router-dom';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate('/login');
+      }
+    });
+  }, []);
+
+  const handleSignOut = () => signOut(getAuth());
+
   return (
     <div>
       <Header/>
@@ -15,6 +29,7 @@ const Dashboard = () => {
         <Link to="/team">Team</Link>
         <Link to="/message">Message</Link>
         <Link to="/setting">Setting</Link>
+        <button onClick={handleSignOut}>Sign out</button>
       </div>
     </div>
   );
