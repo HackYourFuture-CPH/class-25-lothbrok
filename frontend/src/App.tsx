@@ -7,6 +7,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import LoginPage from './pages/login/LoginPage';
 import {
   Dashboard,
   Project,
