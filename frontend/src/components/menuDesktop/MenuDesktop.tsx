@@ -6,6 +6,7 @@ import {
   ListItemText,
   ListItemButton,
 } from "@mui/material";
+import {GridViewRounded} from '@mui/icons-material';
 import { Link } from "react-router-dom";
 import "./MenuDesktop.css";
 
@@ -27,13 +28,13 @@ const MenuDesktop = () => {
       <div className="logo-div">
         <img
           className="logo-menu"
-          src="/assets/icons/logo-menu.png"
+          src="/assets/icons/logo-menu.svg"
           alt="Logo"
         />
         <h4>Dashhhboard</h4>
         <img
           className="logo-menu"
-          src="/assets/icons/plus.png"
+          src="/assets/icons/plus.svg"
           alt="Plus Icon"
         />
       </div>
@@ -60,7 +61,7 @@ const MenuDesktop = () => {
                 <ListItemIcon>
                   <img
                     className="icons"
-                    src={`/assets/icons/${icons[index]}.png`}
+                    src={`/assets/icons/${icons[index]}.svg`}
                     alt={`${text}-icon`}
                   />
                 </ListItemIcon>
@@ -82,7 +83,7 @@ const MenuDesktop = () => {
                 <ListItemIcon>
                   <img
                     className="icons"
-                    src={`/assets/icons/${icons.slice(-2)[index]}.png`}
+                    src={`/assets/icons/${icons.slice(-2)[index]}.svg`}
                     alt={`${text}-icon`}
                   />
                 </ListItemIcon>
@@ -98,4 +99,4 @@ const MenuDesktop = () => {
 
 export default MenuDesktop;
 
-// 'My Task', 'Activity', 'Team', 'Message', 'Setting'
+

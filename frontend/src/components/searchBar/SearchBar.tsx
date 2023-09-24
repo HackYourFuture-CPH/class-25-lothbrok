@@ -10,7 +10,7 @@ const SearchBar = () => {
       id="paper"
     >
       <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-        <img className="img-search-icon" src="/assets/icons/search.png" />
+        <img className="img-search-icon" src="/assets/icons/search.svg" />
       </IconButton>
       <InputBase
         sx={{ ml: 1, flex: 1 }}

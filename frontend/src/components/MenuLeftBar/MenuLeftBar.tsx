@@ -41,9 +41,9 @@ const MenuLeftBar = () => {
       className="swipeableDrawer"
     > 
       <div className='logo-div'>
-        <img className='logo-menu' src='/assets/icons/logo-menu.png'/>
+        <img className='logo-menu' src='/assets/icons/logo-menu.svg'/>
         <h4>Dashhhboard</h4>
-        <img className='logo-menu' src='/assets/icons/plus.png'/>
+        <img className='logo-menu' src='/assets/icons/plus.svg'/>
       </div>
       <List className='list-top'>
         {['Dashboard', 'Project', 'My Task', 'Activity', 'Team', 'Message', 'Setting'].map((text, index) => (
@@ -51,7 +51,7 @@ const MenuLeftBar = () => {
             <ListItemButton>
               <Link className='list-item-link' to={index === 0 ? '/' : `/${text.toLowerCase()}`}>
                 <ListItemIcon>
-                  <img className="icons" src={`/assets/icons/${icons[index]}.png`} alt={`${text}-icon`} />
+                  <img className="icons" src={`/assets/icons/${icons[index]}.svg`} alt={`${text}-icon`} />
                 </ListItemIcon>
                 <ListItemText className='list-name' primary={text} />
               </Link>
@@ -66,7 +66,7 @@ const MenuLeftBar = () => {
             <ListItemButton>
               <Link className='list-item-link' to={`/${text.toLowerCase()}`}>
                 <ListItemIcon>
-                  <img className="icons" src={`/assets/icons/${icons.slice(-2)[index]}.png`}  />
+                  <img className="icons" src={`/assets/icons/${icons.slice(-2)[index]}.svg`}  />
                 </ListItemIcon>
                 <ListItemText className='list-name' primary={text} />
               </Link>
@@ -82,7 +82,7 @@ const MenuLeftBar = () => {
   return (
     <div>
       <Button onClick={toggleDrawer(anchor, true)}>
-        <img className="burger-btn" src="/assets/icons/burger.png"/>
+        <img className="burger-btn" src="/assets/icons/burger.svg"/>
       </Button> 
       <SwipeableDrawer
         anchor={anchor}
