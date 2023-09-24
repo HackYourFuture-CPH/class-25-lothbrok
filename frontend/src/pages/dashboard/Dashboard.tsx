@@ -11,16 +11,16 @@ import { useNavigate } from 'react-router-dom';
 const Dashboard = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        navigate('/login');
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   const auth = getAuth();
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (!user) {
+  //       navigate('/login');
+  //     }
+  //   });
+  // }, []);
 
-  const handleSignOut = () => signOut(getAuth());
+  // const handleSignOut = () => signOut(getAuth());
 
   return (
     <div className="pages">
