@@ -47,9 +47,11 @@ const Dashboard = () => {
         <Link to="/team">Team</Link>
         <Link to="/message">Message</Link>
         <Link to="/setting">Setting</Link>
+        <button onClick={handleSignOut}>Sign out</button>
       </div>
     </div>
   );
 };
 
 export default Dashboard;
+
