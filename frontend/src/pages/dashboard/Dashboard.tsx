@@ -39,6 +39,7 @@ const Dashboard = () => {
 
   return (
     <div>
+      <Header/>
       <h2>This is Dashboard page</h2>
       <div className="link-container">
         <Link to="/project">Project</Link>
