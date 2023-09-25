@@ -7,7 +7,6 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import LoginPage from './pages/login/LoginPage';
 import {
   Dashboard,
   Project,
@@ -18,6 +17,7 @@ import {
   Setting,
   ErrorPage,
 } from "./IndexForImport";
+import LoginPage from "./pages/login/LoginPage";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import ResetPassword from "./pages/resetPassword/ResetPassword";
 import SignUp from "./pages/signUp/SignUp";
@@ -52,6 +52,22 @@ const router = createBrowserRouter([
         path: "/setting",
         element: <Setting />,
       },
+      {
+        path: "/sign-up",
+        element: <SignUp />,
+      },
+      {
+        path: "/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "/reset-password",
+        element: <ResetPassword />,
+      },
     ],
   },
 ]);
@@ -65,4 +81,3 @@ function App() {
 }
 
 export default App;
-

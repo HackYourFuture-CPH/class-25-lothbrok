@@ -1,4 +1,3 @@
-import React from "react";
 import {
   List,
   ListItem,
@@ -6,7 +5,6 @@ import {
   ListItemText,
   ListItemButton,
 } from "@mui/material";
-import {GridViewRounded} from '@mui/icons-material';
 import { Link } from "react-router-dom";
 import "./MenuDesktop.css";
 
@@ -22,10 +20,9 @@ const icons = [
   "superboard",
 ];
 
-const MenuDesktop = () => {
-  return (
-    <div className="desktop-left-bar">
-      <div className="logo-div">
+ export const Menu=()=>{
+  return <>
+     <div className="logo-div">
         <img
           className="logo-menu"
           src="/assets/icons/logo-menu.svg"
@@ -93,6 +90,13 @@ const MenuDesktop = () => {
           </ListItem>
         ))}
       </List>
+  </>
+}
+
+const MenuDesktop = () => {
+  return (
+    <div className="desktop-left-bar">
+   <Menu/>
     </div>
   );
 };

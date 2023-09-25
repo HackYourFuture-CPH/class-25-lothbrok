@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Header.css";
 import SearchBar from "../searchBar/SearchBar";
 import PageTitle from "../pageTitle/PageTitle";
-import MenuLeftBar from "../MenuLeftBar/MenuLeftBar";
+import MenuLeftBar from "../menuMobile/MenuLeftBar";
 import Select from "../../components/select/Select";
 const Header = () => {
   return (
