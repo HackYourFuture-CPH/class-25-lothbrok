@@ -218,6 +218,17 @@ const allTasks = [
     priority: 'medium',
     project_id: 5,
     user_id: 5
+  },
+  {
+    id: 21,
+    description: 'Task 21',
+    status: 'documentation',
+    due_date: '2023-09-25',
+    assignee: 'John Doe',
+    completed: true,
+    priority: 'medium',
+    project_id: 1,
+    user_id: 1
   }
 ];
 

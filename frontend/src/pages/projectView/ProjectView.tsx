@@ -4,8 +4,9 @@ import allTasks from './tasks';
 import projects from './projects';
 import thumbnail from '../../assets/images/Rectangle 3025.svg';
 import './projectView.css';
+import ProjectListView from '../../components/projectListView/ProjectListView';
 
-type Task = {
+export type Task = {
   id: number;
   description: string;
   status: string;
@@ -61,6 +62,9 @@ const ProjectView = () => {
           <span className={view === 'kanban' ? 'bold' : ''}>Kanban</span>{' '}
           <span className={view === 'list' ? 'bold' : ''}>List</span>
         </div>
+      </div>
+      <div>
+        <ProjectListView tasks={tasks} />
       </div>
     </div>
   ) : (
