@@ -14,6 +14,7 @@ import {
 import ForgotPassword from './pages/forgotPassword/ForgotPassword';
 import ResetPassword from './pages/resetPassword/ResetPassword';
 import SignUp from './pages/signUp/SignUp';
+import ProjectView from './pages/projectView/ProjectView';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/project" element={<Project />} />
+          <Route path="/project/:id" element={<ProjectView />} />
           <Route path="/mytask" element={<MyTask />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/team" element={<Team />} />
