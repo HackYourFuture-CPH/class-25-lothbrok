@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import './Dashboard.css';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-  signOut,
   createUserWithEmailAndPassword,
   User,
   getAuth,
@@ -25,7 +24,6 @@ const Dashboard = () => {
             }
           });
           res.ok ? navigate('/') : navigate('/login');
-          console.log(accessToken.token);
         } catch (e) {
           console.error(e);
         }
@@ -38,8 +36,6 @@ const Dashboard = () => {
   useEffect(() => {
     checkToken();
   }, []);
-
-  const handleSignOut = () => signOut(getAuth());
 
   return (
     <div>
