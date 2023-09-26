@@ -6,6 +6,10 @@
   padding: 2rem;
 }
 
+.manrope-font {
+  font-family: 'Manrope', sans-serif;
+}
+
 .project-box {
   background-color: #fff;
   font-family: 'Manrope', sans-serif;

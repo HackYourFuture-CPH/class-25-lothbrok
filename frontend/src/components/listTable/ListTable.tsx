@@ -1,7 +1,7 @@
 import { Task } from '../../pages/projectView/ProjectView';
 import './listTable.css';
 import React from 'react';
-import Checkbox from '@mui/material/Checkbox';
+import { Checkbox, useMediaQuery } from '@mui/material';
 import { CheckCircle, RadioButtonUnchecked, Flag } from '@mui/icons-material';
 
 type ListTableProps = {
@@ -10,6 +10,8 @@ type ListTableProps = {
 };
 
 const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks }) => {
+  const isMobile = useMediaQuery('(max-width: 550px)');
+
   const handleCheckbox = (task: Task) => {
     setTasks((tasks) => {
       return tasks.map((item) =>
@@ -20,16 +22,21 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks }) => {
 
   return (
     <div className="border-radius">
-      <div className="grid-container">
-        <div className="grid-item first-row">Task</div>
-        <div className="grid-item first-row">DueDate</div>
-        <div className="grid-item first-row">Priority</div>
-        <div className="grid-item first-row">Assigne</div>
-      </div>
+      {!isMobile ? (
+        <div className="grid-container">
+          <div className="grid-item first-row title">Task</div>
+          <div className="grid-item first-row">DueDate</div>
+          <div className="grid-item first-row">Priority</div>
+          <div className="grid-item first-row">Assigne</div>
+        </div>
+      ) : null}
       {tasks.map((task) => {
         return (
           <div className="grid-container task-row" key={task.id}>
-            <div className="grid-item">
+            <div
+              className={`grid-item title ${
+                task.completed ? 'completed-task' : ''
+              }`}>
               <Checkbox
                 checked={task.completed}
                 icon={<RadioButtonUnchecked style={{ color: '#7D7A89' }} />}
@@ -46,19 +53,22 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks }) => {
                   })
                 : '—'}
             </div>
-            <div className="grid-item">
-              <Flag
-                style={{
-                  color:
-                    task.priority === 'easy'
-                      ? '#1AC391'
-                      : task.priority === 'hard'
-                      ? '#F14D4D'
-                      : '#F18524'
-                }}
-              />
-              {task.priority}
-            </div>
+            {!isMobile ? (
+              <div className="grid-item">
+                <Flag
+                  style={{
+                    color:
+                      task.priority === 'easy'
+                        ? '#1AC391'
+                        : task.priority === 'hard'
+                        ? '#F14D4D'
+                        : '#F18524'
+                  }}
+                />
+                {task.priority}
+              </div>
+            ) : null}
+
             <div className="grid-item">{task.assignee}</div>
           </div>
         );

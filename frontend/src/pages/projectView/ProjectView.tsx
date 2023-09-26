@@ -63,7 +63,7 @@ const ProjectView = () => {
           <span className={view === 'list' ? 'bold' : ''}>List</span>
         </div>
       </div>
-      <div>
+      <div className="manrope-font">
         <ProjectListView tasks={tasks} />
       </div>
     </div>

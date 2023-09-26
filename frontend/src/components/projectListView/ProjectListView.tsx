@@ -54,7 +54,7 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
     tasks: Task[],
     status: string
   ) => {
-    if (id) {
+    if (id && description.trim()) {
       setTasks([
         ...tasks,
         {
@@ -78,7 +78,8 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
         <h4>Documentation</h4>
         {documentationEditing ? (
           <form
-            onSubmit={() => {
+            onSubmit={(e) => {
+              e.preventDefault();
               addNewTask(
                 setDocumentation,
                 documentationDescription,
@@ -89,12 +90,23 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
               setDocumentationDescription('');
             }}>
             <TextField
+              placeholder="New Task Title"
+              variant="filled"
               value={documentationDescription}
               onChange={(e) => setDocumentationDescription(e.target.value)}
+              inputProps={{
+                style: {
+                  padding: 5,
+                  background: 'white'
+                }
+              }}
             />
           </form>
         ) : (
-          <AddCircleOutline onClick={() => setDocumentationEditing(true)} />
+          <AddCircleOutline
+            sx={{ cursor: 'pointer' }}
+            onClick={() => setDocumentationEditing(true)}
+          />
         )}
       </div>
       <ListTable tasks={documentation} setTasks={setDocumentation} />
@@ -102,18 +114,30 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
         <h4>Ongoing</h4>
         {ongoingEditing ? (
           <form
-            onSubmit={() => {
+            onSubmit={(e) => {
+              e.preventDefault();
               addNewTask(setOngoing, ongoingDescription, ongoing, 'ongoing');
               setOngoingEditing(false);
               setOngoingDescription('');
             }}>
             <TextField
+              placeholder="New Task Title"
+              variant="filled"
               value={ongoingDescription}
               onChange={(e) => setOngoingDescription(e.target.value)}
+              inputProps={{
+                style: {
+                  padding: 5,
+                  background: 'white'
+                }
+              }}
             />
           </form>
         ) : (
-          <AddCircleOutline onClick={() => setOngoingEditing(true)} />
+          <AddCircleOutline
+            sx={{ cursor: 'pointer' }}
+            onClick={() => setOngoingEditing(true)}
+          />
         )}
       </div>
       <ListTable tasks={ongoing} setTasks={setOngoing} />
@@ -121,18 +145,30 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
         <h4>Pending</h4>
         {todoEditing ? (
           <form
-            onSubmit={() => {
+            onSubmit={(e) => {
+              e.preventDefault();
               addNewTask(setTodo, todoDescription, todo, 'todo');
               setTodoEditing(false);
               setTodoDescription('');
             }}>
             <TextField
+              placeholder="New Task Title"
+              variant="filled"
               value={todoDescription}
               onChange={(e) => setTodoDescription(e.target.value)}
+              inputProps={{
+                style: {
+                  padding: 5,
+                  background: 'white'
+                }
+              }}
             />
           </form>
         ) : (
-          <AddCircleOutline onClick={() => setTodoEditing(true)} />
+          <AddCircleOutline
+            sx={{ cursor: 'pointer' }}
+            onClick={() => setTodoEditing(true)}
+          />
         )}
       </div>
       <ListTable tasks={todo} setTasks={setTodo} />
@@ -140,18 +176,30 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
         <h4>Done</h4>
         {doneEditing ? (
           <form
-            onSubmit={() => {
+            onSubmit={(e) => {
+              e.preventDefault();
               addNewTask(setDone, doneDescription, done, 'done');
               setDoneEditing(false);
               setDoneDescription('');
             }}>
             <TextField
+              placeholder="New Task Title"
+              variant="filled"
               value={doneDescription}
               onChange={(e) => setDoneDescription(e.target.value)}
+              inputProps={{
+                style: {
+                  padding: 5,
+                  background: 'white'
+                }
+              }}
             />
           </form>
         ) : (
-          <AddCircleOutline onClick={() => setDoneEditing(true)} />
+          <AddCircleOutline
+            sx={{ cursor: 'pointer' }}
+            onClick={() => setDoneEditing(true)}
+          />
         )}
       </div>
       <ListTable tasks={done} setTasks={setDone} />
