@@ -2,14 +2,16 @@ import React, { useEffect } from 'react';
 import './Dashboard.css';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-  createUserWithEmailAndPassword,
+  signOut,
   User,
   getAuth,
   onAuthStateChanged
 } from '@firebase/auth';
+import { Header } from '../../IndexForImport';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const handleSignOut = () => signOut(getAuth());
 
   const checkToken = () => {
     const auth = getAuth();
@@ -39,7 +41,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Header/>
+      <Header />
       <h2>This is Dashboard page</h2>
       <div className="link-container">
         <Link to="/project">Project</Link>
