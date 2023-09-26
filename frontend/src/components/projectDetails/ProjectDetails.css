@@ -1,0 +1,21 @@
+.projectDetails {
+    padding: 1rem;
+    border: 2px solid red;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.details-icon {
+    width: 0.8rem;
+    height: 0.8rem;
+    color: #7D7A89;
+}
+
+.single-title {
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+    color: #2B283D;
+}
