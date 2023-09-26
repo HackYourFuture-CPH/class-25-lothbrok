@@ -6,3 +6,4 @@
 .env.production.local
 /dist/
 /server/
+/src/config/serviceAccountKey.json
