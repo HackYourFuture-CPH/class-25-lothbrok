@@ -14,6 +14,7 @@ import {
 import ForgotPassword from './pages/forgotPassword/ForgotPassword';
 import ResetPassword from './pages/resetPassword/ResetPassword';
 import SignUp from './pages/signUp/SignUp';
+import ProjectList from './pages/projectPage/ProjectList';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/projectPage" element={<ProjectList />} />
         </Routes>
       </BrowserRouter>
     </div>
