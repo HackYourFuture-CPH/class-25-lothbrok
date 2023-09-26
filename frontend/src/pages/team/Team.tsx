@@ -1,4 +1,3 @@
-import React from 'react'
 
 const Team = () => {
   return (
@@ -6,4 +5,4 @@ const Team = () => {
   )
 }
 
-export default Team
+export default Team;
