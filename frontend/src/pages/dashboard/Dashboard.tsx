@@ -13,31 +13,31 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const handleSignOut = () => signOut(getAuth());
 
-  const checkToken = () => {
-    const auth = getAuth();
-    onAuthStateChanged(auth, async (user: User | null) => {
-      if (user) {
-        try {
-          const accessToken = await user.getIdTokenResult();
-          const res = await fetch('api/main-page', {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${accessToken.token}`
-            }
-          });
-          res.ok ? navigate('/') : navigate('/login');
-        } catch (e) {
-          console.error(e);
-        }
-      } else {
-        navigate('/login');
-      }
-    });
-  };
+  // const checkToken = () => {
+  //   const auth = getAuth();
+  //   onAuthStateChanged(auth, async (user: User | null) => {
+  //     if (user) {
+  //       try {
+  //         const accessToken = await user.getIdTokenResult();
+  //         const res = await fetch('api/main-page', {
+  //           method: 'GET',
+  //           headers: {
+  //             'Authorization': `Bearer ${accessToken.token}`
+  //           }
+  //         });
+  //         res.ok ? navigate('/') : navigate('/login');
+  //       } catch (e) {
+  //         console.error(e);
+  //       }
+  //     } else {
+  //       navigate('/login');
+  //     }
+  //   });
+  // };
 
-  useEffect(() => {
-    checkToken();
-  }, []);
+  // useEffect(() => {
+  //   checkToken();
+  // }, []);
 
   return (
     <div>

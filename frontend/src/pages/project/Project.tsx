@@ -1,8 +1,12 @@
-import React from 'react'
+import './Project.css'
+import ProjectDetails from '../../components/projectDetails/ProjectDetails';
 
 const Project = () => {
   return (
-    <div>This is Project page</div>
+    <div className='project'>
+      <div className='main'></div>
+      <ProjectDetails/>
+    </div>
   )
 }
 
