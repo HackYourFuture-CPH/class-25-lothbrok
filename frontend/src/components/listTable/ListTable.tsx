@@ -28,7 +28,7 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks }) => {
       </div>
       {tasks.map((task) => {
         return (
-          <div className="grid-container" key={task.id}>
+          <div className="grid-container task-row" key={task.id}>
             <div className="grid-item">
               <Checkbox
                 checked={task.completed}
@@ -39,10 +39,12 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks }) => {
               {task.description}
             </div>
             <div className="grid-item">
-              {new Date(task.due_date).toLocaleString('en-GB', {
-                day: 'numeric',
-                month: 'short'
-              })}
+              {task.due_date
+                ? new Date(task.due_date).toLocaleString('en-GB', {
+                    day: 'numeric',
+                    month: 'short'
+                  })
+                : '—'}
             </div>
             <div className="grid-item">
               <Flag

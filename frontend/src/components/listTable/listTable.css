@@ -23,3 +23,7 @@
 .first-row {
   background-color: #fbfbfb;
 }
+
+.task-row {
+  cursor: pointer;
+}
