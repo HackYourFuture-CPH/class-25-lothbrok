@@ -1,5 +1,7 @@
 import React from "react";
 import "./TaskItem.css";
+import calendarIcon from "../../assets/icons/calendar-icon.png";
+import tasksIcon from "../../assets/icons/tasks-icon.png";
 
 interface Project {
   id: number;
@@ -21,10 +23,16 @@ function TaskItem({ project }: TaskItemProps) {
   return (
     <div className="task-item">
       <div className="task-info">
-        <img src={thumbnail_link} alt={title} />
-        <h3>{title}</h3>
-        <p>{date_of_creation}</p>
-        <p> {amount_of_tasks}</p>
+        <img src={thumbnail_link} alt={title} className="thumbnail-image" />
+        <div>
+          <h3>{title}</h3>
+          <p>
+            <img src={calendarIcon} alt="Calendar Icon" /> {date_of_creation} {/* Use your custom calendar icon */}
+          </p>
+          <p>
+            <img src={tasksIcon} alt="Tasks Icon" /> {amount_of_tasks} {/* Use your custom tasks icon */}
+          </p>
+        </div>
         <p className="percentage-out-of-line">{completedPercentage}%</p>
       </div>
       <div className="progress-bar">
@@ -35,3 +43,4 @@ function TaskItem({ project }: TaskItemProps) {
 }
 
 export default TaskItem;
+
