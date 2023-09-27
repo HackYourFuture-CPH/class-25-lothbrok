@@ -3,7 +3,8 @@ import './listTable.css';
 import React from 'react';
 import { Checkbox, useMediaQuery } from '@mui/material';
 import { CheckCircle, RadioButtonUnchecked, Flag } from '@mui/icons-material';
-import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { useEffect, useState } from 'react';
 
 type ListTableProps = {
   tasks: Task[];
@@ -21,6 +22,18 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
       );
     });
   };
+
+  const [enabled, setEnabled] = useState(false);
+  useEffect(() => {
+    const animation = requestAnimationFrame(() => setEnabled(true));
+    return () => {
+      cancelAnimationFrame(animation);
+      setEnabled(false);
+    };
+  }, []);
+  if (!enabled) {
+    return null;
+  }
 
   return (
     <div className="border-radius">
