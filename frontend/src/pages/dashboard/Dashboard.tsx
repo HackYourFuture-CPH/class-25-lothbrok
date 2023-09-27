@@ -1,25 +1,47 @@
 import React, { useEffect } from 'react';
 import './Dashboard.css';
-import { Link } from 'react-router-dom';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+  signOut,
+  User,
+  getAuth,
+  onAuthStateChanged
+} from '@firebase/auth';
+import { Header } from '../../IndexForImport';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const handleSignOut = () => signOut(getAuth());
 
-  useEffect(() => {
+  const checkToken = () => {
     const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
+    onAuthStateChanged(auth, async (user: User | null) => {
+      if (user) {
+        try {
+          const accessToken = await user.getIdTokenResult();
+          const res = await fetch('api/main-page', {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${accessToken.token}`
+            }
+          });
+          res.ok ? navigate('/') : navigate('/login');
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
         navigate('/login');
       }
     });
-  }, []);
+  };
 
-  const handleSignOut = () => signOut(getAuth());
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   return (
     <div>
+      <Header />
       <h2>This is Dashboard page</h2>
       <div className="link-container">
         <Link to="/project">Project</Link>
@@ -35,3 +57,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
