@@ -3,7 +3,7 @@ import "./Header.css";
 import SearchBar from "../searchBar/SearchBar";
 import PageTitle from "../pageTitle/PageTitle";
 import MenuLeftBar from "../menuMobile/MenuLeftBar";
-import Select from "../../components/select/Select";
+import CustomDropdown from "../dropdown/CustomDropDown";
 const Header = () => {
   return (
     <div className="header container">
@@ -13,18 +13,18 @@ const Header = () => {
       </div>
       <div className="logo">
         <div className="logo-icon-div">
-          <img className="image-Arash" src="/assets/icons/tablet-logo.svg" />
+          <img src="/assets/icons/tablet-logo.svg" />
         </div>
-        <h3>Dashboard</h3>
+        <h3>Dashhhboard</h3>
       </div>
       <div className="header-right">
         <SearchBar />
         <div className="notification-icon-div">
-          <img className="image-Arash" src="/assets/icons/notification.svg" />
+          <img src="/assets/icons/notification.svg" />
         </div>
         <div className="img-account-div">
           <img src="/assets/images/avatar.svg" alt="" />
-          <Select />
+          <CustomDropdown />
         </div>
       </div>
     </div>

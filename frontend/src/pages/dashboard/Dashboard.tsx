@@ -33,9 +33,9 @@ const Dashboard = () => {
     });
   };
 
-  useEffect(() => {
-    checkToken();
-  }, []);
+  // useEffect(() => {
+  //   checkToken();
+  // }, []);
 
   return (
     <div className="pages">
