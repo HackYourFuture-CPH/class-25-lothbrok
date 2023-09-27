@@ -1,9 +1,8 @@
-import React from 'react';
+import React from "react";
+import { Header, MenuDesktop } from "../../IndexForImport";
 
 const MyTask = () => {
-  return (
-    <div>This is MyTask</div>
-  )
-}
+  return <div>Here is My task</div>;
+};
 
 export default MyTask;

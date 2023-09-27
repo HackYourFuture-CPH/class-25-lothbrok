@@ -1,9 +1,12 @@
-import React from 'react';
+import React from "react";
+import { Header, MenuDesktop } from "../../IndexForImport";
 
 const Message = () => {
   return (
-    <div>This is Message page</div>
-  )
-}
+    <div>
+      <p>message page</p>
+    </div>
+  );
+};
 
 export default Message;
