@@ -86,6 +86,27 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
             : task
         )
       );
+    } else {
+      const changeOrder = (
+        setTasks: React.Dispatch<React.SetStateAction<Task[]>>,
+        tasksArr: Task[]
+      ) => {
+        setTasks((tasksArr) => {
+          const tasks = [...tasksArr];
+          const [removed] = tasks.splice(source.index, 1);
+          tasks.splice(destination.index, 0, removed);
+          return tasks;
+        });
+      };
+      if (destination.droppableId === 'documentation') {
+        changeOrder(setDocumentation, documentation);
+      } else if (destination.droppableId === 'ongoing') {
+        changeOrder(setOngoing, ongoing);
+      } else if (destination.droppableId === 'to_do') {
+        changeOrder(setTodo, todo);
+      } else if (destination.droppableId === 'done') {
+        changeOrder(setDone, done);
+      }
     }
   };
 
@@ -129,7 +150,7 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
       <ListTable
         listId="documentation"
         tasks={documentation}
-        setTasks={setDocumentation}
+        setTasks={setAllTasks}
       />
       <div className="section-title">
         <h4>Ongoing</h4>
@@ -161,7 +182,7 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
           />
         )}
       </div>
-      <ListTable listId="ongoing" tasks={ongoing} setTasks={setOngoing} />
+      <ListTable listId="ongoing" tasks={ongoing} setTasks={setAllTasks} />
       <div className="section-title">
         <h4>Pending</h4>
         {todoEditing ? (
@@ -192,7 +213,7 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
           />
         )}
       </div>
-      <ListTable listId="to_do" tasks={todo} setTasks={setTodo} />
+      <ListTable listId="to_do" tasks={todo} setTasks={setAllTasks} />
       <div className="section-title">
         <h4>Done</h4>
         {doneEditing ? (
@@ -223,7 +244,7 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
           />
         )}
       </div>
-      <ListTable listId="done" tasks={done} setTasks={setDone} />
+      <ListTable listId="done" tasks={done} setTasks={setAllTasks} />
     </DragDropContext>
   );
 };
