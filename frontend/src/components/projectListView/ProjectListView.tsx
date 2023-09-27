@@ -7,8 +7,11 @@ import './projectList.css';
 import { v4 as uuid } from 'uuid';
 import { useParams } from 'react-router-dom';
 import { User, getAuth, onAuthStateChanged } from '@firebase/auth';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
+  const [allTasks, setAllTasks] = useState<Task[]>(tasks);
+
   const [documentation, setDocumentation] = useState<Task[]>([]);
   const [ongoing, setOngoing] = useState<Task[]>([]);
   const [todo, setTodo] = useState<Task[]>([]);
@@ -31,7 +34,7 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
 
   useEffect(() => {
     const filterTaskByStatus = (status: string) => {
-      return tasks.filter((task) => task.status === status);
+      return allTasks.filter((task) => task.status === status);
     };
     const setUser = () => {
       const auth = getAuth();
@@ -46,7 +49,7 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
     setTodo(filterTaskByStatus('to_do'));
     setDone(filterTaskByStatus('done'));
     setUser();
-  }, []);
+  }, [allTasks]);
 
   const addNewTask = (
     setTasks: React.Dispatch<React.SetStateAction<Task[]>>,
@@ -58,7 +61,7 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
       setTasks([
         ...tasks,
         {
-          id: uuid(),
+          id: uuid(), // for mocked data
           description,
           status,
           due_date: '',
@@ -72,8 +75,22 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
     }
   };
 
+  const onDragEnd = (result: any) => {
+    const { source, destination } = result;
+    if (!destination) return;
+    if (source.droppableId !== destination.droppableId) {
+      setAllTasks(
+        allTasks.map((task) =>
+          task.id === +result.draggableId
+            ? { ...task, status: destination.droppableId }
+            : task
+        )
+      );
+    }
+  };
+
   return (
-    <>
+    <DragDropContext onDragEnd={onDragEnd}>
       <div className="section-title">
         <h4>Documentation</h4>
         {documentationEditing ? (
@@ -109,7 +126,11 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
           />
         )}
       </div>
-      <ListTable tasks={documentation} setTasks={setDocumentation} />
+      <ListTable
+        listId="documentation"
+        tasks={documentation}
+        setTasks={setDocumentation}
+      />
       <div className="section-title">
         <h4>Ongoing</h4>
         {ongoingEditing ? (
@@ -140,7 +161,7 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
           />
         )}
       </div>
-      <ListTable tasks={ongoing} setTasks={setOngoing} />
+      <ListTable listId="ongoing" tasks={ongoing} setTasks={setOngoing} />
       <div className="section-title">
         <h4>Pending</h4>
         {todoEditing ? (
@@ -171,7 +192,7 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
           />
         )}
       </div>
-      <ListTable tasks={todo} setTasks={setTodo} />
+      <ListTable listId="to_do" tasks={todo} setTasks={setTodo} />
       <div className="section-title">
         <h4>Done</h4>
         {doneEditing ? (
@@ -202,8 +223,8 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
           />
         )}
       </div>
-      <ListTable tasks={done} setTasks={setDone} />
-    </>
+      <ListTable listId="done" tasks={done} setTasks={setDone} />
+    </DragDropContext>
   );
 };
 
