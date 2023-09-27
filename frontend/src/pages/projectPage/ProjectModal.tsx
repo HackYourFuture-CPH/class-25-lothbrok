@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./ProjectModal.css";
-
+import image1 from "../../assets/images/Rectangle 2996.jpg";
 interface ProjectModalProps {
   closeModal: () => void;
 }
@@ -26,15 +26,12 @@ function ProjectModal({ closeModal }: ProjectModalProps) {
         <div className="modal-header">
           <h2>New Project</h2>
           <button className="close-button" onClick={closeModal}>
-            +
+            x
           </button>
         </div>
         <label>Thumbnail</label>
-        <input
-          type="text"
-          value={projectThumbnail}
-          onChange={(e) => setProjectThumbnail(e.target.value)}
-        />
+        <img src={projectThumbnail || image1} alt="Thumbnail" className="thumbnail-image" />
+        
         <label>Project name</label>
         <input
           type="text"

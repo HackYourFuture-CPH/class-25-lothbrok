@@ -13,7 +13,6 @@ const projects = [
     thumbnail_link: image1,
     date_of_creation: "2023-09-20",
     amount_of_tasks: 5,
-    user_id: 1,
   },
   {
     id: 2,
@@ -21,7 +20,6 @@ const projects = [
     thumbnail_link: image2,
     date_of_creation: "2023-09-21",
     amount_of_tasks: 8,
-    user_id: 2,
   },
   {
     id: 3,
@@ -29,7 +27,6 @@ const projects = [
     thumbnail_link: image3,
     date_of_creation: "2023-09-22",
     amount_of_tasks: 3,
-    user_id: 3,
   },
   {
     id: 4,
@@ -37,7 +34,6 @@ const projects = [
     thumbnail_link: image4,
     date_of_creation: "2023-09-23",
     amount_of_tasks: 7,
-    user_id: 4,
   },
   {
     id: 5,
@@ -45,7 +41,6 @@ const projects = [
     thumbnail_link: image1,
     date_of_creation: "2023-09-24",
     amount_of_tasks: 10,
-    user_id: 5,
   },
   {
     id: 6,
@@ -53,7 +48,6 @@ const projects = [
     thumbnail_link: image2,
     date_of_creation: "2023-09-24",
     amount_of_tasks: 9,
-    user_id: 6,
   },
 ];
 

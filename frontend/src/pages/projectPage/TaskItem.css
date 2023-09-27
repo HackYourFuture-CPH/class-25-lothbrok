@@ -1,42 +1,49 @@
 .task-item {
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin: 10px;
-    padding: 10px;
-    width: 300px;
-    display: inline-block;
-  }
-  
-  .task-item img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-  }
-  
-  .task-item h3 {
-    margin: 10px 0;
-  }
-  
-  .task-item p {
-    margin: 5px 0;
-    font-size: 14px;
-  }
-  
-  .progress-bar {
-    background-color: #eee;
-    height: 10px;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-top: 10px;
-  }
-  
-  .progress-bar div {
-    background-color: #5FB918;
-;
-    height: 100%;
-    width: 0;
-    transition: width 0.3s;
-  }
-  
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  padding: 10px;
+  width: 300px;
+  display: inline-block;
+}
+
+.task-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.task-item p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.progress-bar {
+  background-color: #eee;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress-bar div {
+  background-color: #5fb918;
+  height: 100%;
+  width: 0;
+  transition: width 0.3s;
+}
+
+.h3 {
+  font: Manrope;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 2%;
+  text-align: left;
+  align-items: left;
+  color: #2b283d;
+  width: 255px;
+  height: 24px;
+}

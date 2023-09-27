@@ -81,3 +81,10 @@
   text-align: right;
   justify-content: right;
 }
+
+.thumbnail_link {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+

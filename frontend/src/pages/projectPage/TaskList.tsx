@@ -7,7 +7,6 @@ interface Project {
   thumbnail_link: string;
   date_of_creation: string;
   amount_of_tasks: number;
-  user_id: number;
 }
 
 interface TaskListProps {
