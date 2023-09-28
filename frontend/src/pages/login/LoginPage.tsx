@@ -7,7 +7,9 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
-  Typography
+  Typography,
+  Alert,
+  AlertTitle
 } from '@mui/material';
 import logo from '../../assets/images/Logo for auth.jpg';
 import image from '../../assets/images/Stuck at Home Imagination.jpg';
@@ -31,6 +33,7 @@ type FormData = {
 
 const LoginPage: React.FC = () => {
   const [rememberMe, setRememberMe] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const navigate = useNavigate();
   const {
@@ -56,8 +59,15 @@ const LoginPage: React.FC = () => {
         rememberMe ? browserLocalPersistence : browserSessionPersistence
       );
       await signInWithEmailAndPassword(auth, data.email, data.password);
-    } catch (e) {
-      console.error(e);
+      setErrorMessage('');
+    } catch (e: any) {
+      if (e.message === 'Firebase: Error (auth/invalid-login-credentials).') {
+        setErrorMessage('Invalid email or password');
+      } else if (e.message) {
+        setErrorMessage(e.message);
+      } else {
+        setErrorMessage('Something went wrong. Please try again');
+      }
     }
   };
 
@@ -68,7 +78,12 @@ const LoginPage: React.FC = () => {
         alt="Image"
         style={{ width: '140px', height: '30px', top: '40px', left: '76px' }}
       />
-
+      {errorMessage ? (
+        <Alert severity="error" onClose={() => setErrorMessage('')}>
+          <AlertTitle>Error</AlertTitle>
+          {errorMessage}
+        </Alert>
+      ) : null}
       <Grid
         container
         justifyContent="center"
