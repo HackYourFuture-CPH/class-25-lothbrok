@@ -1,6 +1,6 @@
 import React from 'react';
 import './ProjectDetailsRest.css';
-import {Add, CheckCircleRounded, RadioButtonUnchecked} from '@mui/icons-material/';
+import {Add, CheckCircleRounded, RadioButtonUnchecked, AccountCircle, Circle} from '@mui/icons-material/';
 import { Divider } from '@mui/material';
 
 const ProjectDetailsRest = () => {
@@ -39,6 +39,29 @@ const ProjectDetailsRest = () => {
                 <Divider/>
             </div>
             <textarea className="question" >Ask question or post an update</textarea>
+        </div>
+        <div className='single-detail'>
+        <p className='single-title'>Comments(1)</p>
+        <div className='comment'>
+          <div className='comment-section'>
+            <AccountCircle/>
+            <p>Jackson Pierce</p>
+          </div>
+          <p className='comment-text'>
+            It is a long and a reader will be distracted by the readable content of a page when looking at its layout. The point of
+          </p>
+
+        </div>
+        <div className='comment'>
+          <div className='comment-section'>
+            <Circle/>
+            <p>Superboard</p>
+          </div>
+          <p className='comment-text'>
+            The leap into electronic typesetting, remaining essentially unchanged
+          </p>
+
+        </div>
         </div>
     </div>
   )

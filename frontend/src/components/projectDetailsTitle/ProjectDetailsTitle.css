@@ -34,6 +34,7 @@ p, h6 {
 }
 
 .label h6 {
+    font-family: 'Manrope', sans-serif;
     font-size: 18PX;
     font-weight: 700;
     color: #2B283D;
@@ -63,15 +64,15 @@ p, h6 {
 }
 
 .details-status p {
-    /* font-family: manrope; */
+    font-family: 'Manrope', sans-serif;
     font-size: 0.8rem;
     font-weight: 500;
     color: #2B283D;
 }
 
 .details-topic  p {
-    /* font-family: manrope; */
-    /* font-size: 0.8rem; */
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.8rem;
     font-weight: 600;
     color: #2B283D;
 }

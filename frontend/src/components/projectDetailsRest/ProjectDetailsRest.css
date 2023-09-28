@@ -46,14 +46,14 @@
     gap: 0.5rem;
 }
 
-.object {
+.object, .comment-section {
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
-.object p {
-    font-family: Manrope;
+.object p, .comment-section p {
+    font-family: 'Manrope', sans-serif;
     font-size: 14px;
     font-weight: 500;
     line-height: 21px;
@@ -68,4 +68,13 @@
     border-radius: 8px;
     padding: 0.8rem;
     color: #B3B1BB;
+}
+
+.comment-text {
+    font-size: 14px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+    line-height: 21px;
+    color: #4C4958;
+    padding-left: 2rem;
 }

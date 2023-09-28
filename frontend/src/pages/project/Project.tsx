@@ -1,13 +1,13 @@
+import React from 'react';
 import './Project.css'
-import ProjectDetails from '../../components/projectDetails/ProjectDetails';
-
+import ProjectDetails from '../../components/projectDetails/ProjectDetails'
 const Project = () => {
   return (
     <div className='project'>
-      <div className='main'></div>
+      <div className='top-box'>top-box under navigation-bar</div>
+      <div className='kristina-task'> Kristina- task</div>
       <ProjectDetails/>
     </div>
   )
 }
-
 export default Project;
