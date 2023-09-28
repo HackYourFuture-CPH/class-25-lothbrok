@@ -1,6 +1,14 @@
-import { useForm, SubmitHandler } from 'react-hook-form';
+import React, { useState } from 'react';
+import { useForm, SubmitHandler, useFormState } from 'react-hook-form';
 import './signUp.css';
-import { Button, TextField, InputLabel, Checkbox } from '@mui/material';
+import {
+  Button,
+  TextField,
+  InputLabel,
+  Checkbox,
+  Alert,
+  AlertTitle
+} from '@mui/material';
 import logo from '../../assets/images/authLogo.svg';
 import image from '../../assets/images/Hands Show.svg';
 import { useNavigate } from 'react-router';
@@ -18,26 +26,39 @@ interface FormData {
 const SignUp = () => {
   const { register, formState, handleSubmit } = useForm<FormData>();
 
-  const { isDirty, isValid } = formState;
+  const { isDirty, isValid, touchedFields } = formState;
 
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [editingPass, setEditingPass] = useState<boolean>(false);
+
+  console.log(formState);
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      const user = await createUserWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      );
-      navigate("/login");
-    } catch (err) {
-      console.log(err);
+      await createUserWithEmailAndPassword(auth, data.email, data.password);
+      setErrorMessage('');
+      navigate('/login');
+    } catch (e: any) {
+      if (e.message === 'Firebase: Error (auth/email-already-in-use).') {
+        setErrorMessage(`Email address '${data.email}' is already in use `);
+      } else if (e.message) {
+        setErrorMessage(e.message);
+      } else {
+        setErrorMessage('Something went wrong. Please try again');
+      }
     }
   };
 
   return (
     <div className="sign-up">
       <img src={logo} className="icon" alt="logo" />
+      {errorMessage ? (
+        <Alert severity="error" onClose={() => setErrorMessage('')}>
+          <AlertTitle>Error</AlertTitle>
+          {errorMessage}
+        </Alert>
+      ) : null}
       <div className="flex-container">
         <img className="image" src={image} alt="hand holding globe" />
         <div className="form">
@@ -100,6 +121,13 @@ const SignUp = () => {
                     'Password must contain at least one uppercase letter and at least one symbol (! or _)'
                 }
               })}
+              onFocus={() => setEditingPass(true)}
+              onBlur={() => setEditingPass(false)}
+              helperText={
+                editingPass
+                  ? 'Password must be at least 6 characters, contain an uppercase letter and a symbol'
+                  : ''
+              }
               placeholder="Password"
             />
             <div>

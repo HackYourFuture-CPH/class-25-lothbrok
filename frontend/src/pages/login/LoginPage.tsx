@@ -195,15 +195,13 @@ const LoginPage: React.FC = () => {
               color="primary"
               fullWidth
               type="submit"
-              disabled={
-                (Object.keys(errors).length > 0 && !isDirty) || !isValid
-              }>
+              disabled={!isDirty || !isValid}>
               Login
             </Button>
           </form>
 
           <Typography variant="body2">
-            Don't have an account?{' '}
+            Don't have an account?
             <Link to={'/sign-up'} className="sign">
               Sign up
             </Link>
