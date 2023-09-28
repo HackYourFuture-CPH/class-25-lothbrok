@@ -1,7 +1,9 @@
 const Team = () => {
   return (
-    <div>This is Team page</div>
-  )
-}
+    <div>
+      <p>Team page</p>
+    </div>
+  );
+};
 
 export default Team;

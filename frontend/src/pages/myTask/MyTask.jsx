@@ -1,7 +1,5 @@
 const MyTask = () => {
-  return (
-    <div>This is MyTask</div>
-  )
-}
+  return <div>Here is My task</div>;
+};
 
 export default MyTask;

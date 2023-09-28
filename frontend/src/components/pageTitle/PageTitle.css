@@ -1,0 +1,12 @@
+h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text--100);
+    display: none;
+}
+
+@media (min-width: 768px) {
+    h2 {
+        display: block;
+    }
+}

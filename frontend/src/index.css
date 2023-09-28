@@ -1,13 +1,133 @@
+:root {
+
+  --text--10: #FFFFFF;
+  --text--20: #B3B1BB;
+  --text--40: #7D7A89;
+  --text--60: #55555F;
+  --text--80: #4C4958;
+  --text--100: #2B283D;
+
+  --purple--10: #DAD9F5;
+  --purple--20: #B4B1E5;
+  --purple--40: #7E7BB2;
+  --purple--60: #44408A;
+  --purple--80: #28246F;
+  --purple--100: #110D59;
+
+  --blue--10: #CFE8FF;
+  --blue--20: #A3D1FC;
+  --blue--40: #3F9CF2;
+  --blue--60: #0E77D9;
+  --blue--80: #0B5FAE;
+  --blue--100: #08437A;
+
+  --cyan--10: #D5ECF5;
+  --cyan--20: #9FD1E4;
+  --cyan--40: #6AB8D6;
+  --cyan--60: #3FA0C6;
+  --cyan--80: #2086AD;
+  --cyan--100: #005F84;
+
+  --green--10: #D9FCF1;
+  --green--20: #C7F8E9;
+  --green--40: #95F4D8;
+  --green--60: #55E7BB;
+  --green--80: #1AC391;
+  --green--100: #039267;
+
+  --green2--10: #DDFBC5;
+  --green2--20: #C2F799;
+  --green2--40: #9AEC59;
+  --green2--60: #76DE24;
+  --green2--80: #5FB918;
+  --green2--100: #49950D;
+
+  --yellow--10: #FCE9C0;
+  --yellow--20: #FDE2A1;
+  --yellow--40: #FFCC5A;
+  --yellow--60: #FFBC26;
+  --yellow--80: #ECAA18;
+  --yellow--100: #D39405;
+
+  --orange--10: #FFECDC;
+  --orange--20: #FDD5B2;
+  --orange--40: #F9BC87;
+  --orange--60: #F9BC87;
+  --orange--80: #F18524;
+  --orange--100: #DF6F0B;
+
+  --red--10: #FCDBDB;
+  --red--20: #FBB4B4;
+  --red--40: #FF7878;
+  --red--60: #F14D4D;
+  --red--80: #C91616;
+  --red--100: #980808;
+
+  --magenta--10: #FED5F2;
+  --magenta--20: #F8B0E4;
+  --magenta--40: #F173CE;
+  --magenta--60: #E924B1;
+  --magenta--80: #C11390;
+  --magenta--100: #930C6D;
+
+  --lightPurple--10: #F3CEFA;
+  --lightPurple--20: #E3A7ED;
+  --lightPurple--40: #D97DE9;
+  --lightPurple--60: #C750DB;
+  --lightPurple--80: #AF20C7;
+  --lightPurple--100: #800C93;
+
+  --background--10: #F1F2F4;
+
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Manrope', sans-serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: 'Manrope', sans-serif;
+
+}
+
+.container {
+  margin-inline: auto;
+  width: min(90%, 70.5rem);
+}
+
+
+.pages {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--background--10);
+}
+
+.menu-desktop {
+  display: none;
+  height: 100vh;
+}
+
+
+@media (min-width: 768px) {
+
+  .menu-desktop {
+      display: block;
+  }
+
+  .pages {
+      display: grid;
+      grid-template-columns: 20% 80%;
+      width: 100vw;
+      height: 100vh;
+  }
+
+  .main {
+      background-color: var(--background--10);
+      
+  }
+  
 }

@@ -1,7 +1,12 @@
-import React from 'react';
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import LoginPage from './pages/login/LoginPage';
+import React from "react";
+import "./App.css";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import {
   Dashboard,
   Project,
@@ -9,30 +14,68 @@ import {
   Activity,
   Team,
   Message,
-  Setting
-} from './IndexForImport';
-import ForgotPassword from './pages/forgotPassword/ForgotPassword';
-import ResetPassword from './pages/resetPassword/ResetPassword';
-import SignUp from './pages/signUp/SignUp';
+  Setting,
+  ErrorPage,
+} from "./IndexForImport";
+import LoginPage from "./pages/login/LoginPage";
+import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
+import ResetPassword from "./pages/resetPassword/ResetPassword";
+import SignUp from "./pages/signUp/SignUp";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Dashboard />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/project",
+        element: <Project />,
+      },
+      {
+        path: "/mytask",
+        element: <MyTask />,
+      },
+      {
+        path: "/activity",
+        element: <Activity />,
+      },
+      {
+        path: "/team",
+        element: <Team />,
+      },
+      {
+        path: "/message",
+        element: <Message />,
+      },
+      {
+        path: "/setting",
+        element: <Setting />,
+      },
+      {
+        path: "/sign-up",
+        element: <SignUp />,
+      },
+      {
+        path: "/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "/reset-password",
+        element: <ResetPassword />,
+      },
+    ],
+  },
+]);
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/project" element={<Project />} />
-          <Route path="/mytask" element={<MyTask />} />
-          <Route path="/activity" element={<Activity />} />
-          <Route path="/team" element={<Team />} />
-          <Route path="/message" element={<Message />} />
-          <Route path="/setting" element={<Setting />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/login" element={<LoginPage />} />
-        </Routes>
-      </BrowserRouter>
+      <RouterProvider router={router} />
     </div>
   );
 }
