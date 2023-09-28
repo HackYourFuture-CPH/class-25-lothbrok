@@ -1,11 +1,11 @@
-import "./Dashboard.css";
-import { Outlet } from "react-router-dom";
-import { Header, MenuDesktop } from "../../IndexForImport";
-import React, { useEffect } from "react";
-import "./Dashboard.css";
-import firebase from "firebase/app";
-import { Link, useNavigate } from "react-router-dom";
-import { signOut, User, getAuth, onAuthStateChanged } from "@firebase/auth";
+import './Dashboard.css';
+import { Outlet } from 'react-router-dom';
+import { Header, MenuDesktop } from '../../IndexForImport';
+import React, { useEffect } from 'react';
+import './Dashboard.css';
+import firebase from 'firebase/app';
+import { Link, useNavigate } from 'react-router-dom';
+import { signOut, User, getAuth, onAuthStateChanged } from '@firebase/auth';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -17,25 +17,25 @@ const Dashboard = () => {
       if (user) {
         try {
           const accessToken = await user.getIdTokenResult();
-          const res = await fetch("api/main-page", {
-            method: "GET",
+          const res = await fetch('api/main-page', {
+            method: 'GET',
             headers: {
-              Authorization: `Bearer ${accessToken.token}`,
-            },
+              Authorization: `Bearer ${accessToken.token}`
+            }
           });
-          res.ok ? navigate("/") : navigate("/login");
+          res.ok ? navigate('/') : navigate('/login');
         } catch (e) {
           console.error(e);
         }
       } else {
-        navigate("/login");
+        navigate('/login');
       }
     });
   };
 
-  // useEffect(() => {
-  //   checkToken();
-  // }, []);
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   return (
     <div className="pages">
