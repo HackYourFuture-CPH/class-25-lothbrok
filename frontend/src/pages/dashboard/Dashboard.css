@@ -1,9 +1,9 @@
 .link-container {
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
 }
 
 .link-container > * {
-    text-decoration: none;
+  text-decoration: none;
 }

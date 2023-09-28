@@ -5,9 +5,9 @@ import SearchBar from '../searchBar/SearchBar';
 const Header = () => {
   return (
     <div>
-        <SearchBar/>
+      <SearchBar />
     </div>
-  )
-}
+  );
+};
 
 export default Header;

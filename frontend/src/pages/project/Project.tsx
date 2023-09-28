@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const Project = () => {
-  return (
-    <div>This is Project page</div>
-  )
-}
+  return <div>This is Project page</div>;
+};
 
-export default Project
+export default Project;
