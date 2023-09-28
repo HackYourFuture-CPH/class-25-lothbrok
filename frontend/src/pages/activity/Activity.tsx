@@ -3,13 +3,8 @@ import { Header, MenuDesktop } from "../../IndexForImport";
 
 const Activity = () => {
   return (
-    <div className="pages">
-      <div className="menu-desktop">
-        <MenuDesktop />
-      </div>
-      <div className="main">
-        <Header />
-      </div>
+    <div>
+      <p>Here is Activity page</p>
     </div>
   );
 };

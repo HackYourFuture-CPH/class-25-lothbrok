@@ -1,8 +1,11 @@
+import "./Dashboard.css";
+import { Outlet } from "react-router-dom";
+import { Header, MenuDesktop } from "../../IndexForImport";
 import React, { useEffect } from "react";
 import "./Dashboard.css";
+import firebase from "firebase/app";
 import { Link, useNavigate } from "react-router-dom";
 import { signOut, User, getAuth, onAuthStateChanged } from "@firebase/auth";
-import { Header } from "../../IndexForImport";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -21,7 +24,6 @@ const Dashboard = () => {
             },
           });
           res.ok ? navigate("/") : navigate("/login");
-          console.log(accessToken.token);
         } catch (e) {
           console.error(e);
         }
@@ -31,21 +33,18 @@ const Dashboard = () => {
     });
   };
 
-  useEffect(() => {
-    checkToken();
-  }, []);
+  // useEffect(() => {
+  //   checkToken();
+  // }, []);
 
   return (
-    <div>
-      <Header />
-      <h2>This is Dashboard page</h2>
-      <div className="link-container">
-        <Link to="/project">Project</Link>
-        <Link to="/mytask">My Task</Link>
-        <Link to="/activity">Activity</Link>
-        <Link to="/team">Team</Link>
-        <Link to="/message">Message</Link>
-        <Link to="/setting">Setting</Link>
+    <div className="pages">
+      <div className="menu-desktop">
+        <MenuDesktop />
+      </div>
+      <div className="main">
+        <Header />
+        <Outlet />
         <button onClick={handleSignOut}>Sign out</button>
       </div>
     </div>
