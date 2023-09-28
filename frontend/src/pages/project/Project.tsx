@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
+import "./Project.css";
+import { Header, MenuDesktop } from "../../IndexForImport";
 
 const Project = () => {
   return (
-    <div>This is Project page</div>
-  )
-}
+      <div className="main">here is my Project****</div>
+  );
+};
 
-export default Project
+export default Project;
