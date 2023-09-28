@@ -30,15 +30,13 @@ type FormData = {
 };
 
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
   const {
     control,
     handleSubmit,
-    formState: { errors }
+    formState: { errors, isDirty, isValid }
   } = useForm<FormData>();
 
   useEffect(() => {
@@ -51,7 +49,6 @@ const LoginPage: React.FC = () => {
   }, []);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    
     try {
       const auth = getAuth();
       await setPersistence(
@@ -183,7 +180,9 @@ const LoginPage: React.FC = () => {
               color="primary"
               fullWidth
               type="submit"
-              disabled={Object.keys(errors).length > 0}>
+              disabled={
+                (Object.keys(errors).length > 0 && !isDirty) || !isValid
+              }>
               Login
             </Button>
           </form>
