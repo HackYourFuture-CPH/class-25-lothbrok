@@ -32,7 +32,7 @@ const SignUp = () => {
       setErrorMessage('');
       navigate('/login');
     } catch (e: any) {
-      if (e.message === 'Firebase: Error (auth/email-already-in-use).') {
+      if (e.code === 'auth/email-already-in-use') {
         setErrorMessage(`Email address '${data.email}' is already in use `);
       } else if (e.message) {
         setErrorMessage(e.message);

@@ -58,7 +58,7 @@ const LoginPage: React.FC = () => {
       await signInWithEmailAndPassword(auth, data.email, data.password);
       setErrorMessage('');
     } catch (e: any) {
-      if (e.message === 'Firebase: Error (auth/invalid-login-credentials).') {
+      if (e.code === 'auth/invalid-login-credentials') {
         setErrorMessage('Invalid email or password');
       } else if (e.message) {
         setErrorMessage(e.message);
