@@ -1,23 +1,20 @@
 .dashboard {
-    background-color: var(--background--10);
-    width: 100vw;
-    height: 100vh;
+  background-color: var(--background--10);
+  width: 100vw;
+  height: 100vh;
 }
 
 .link-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 5rem;
 }
 
 .link-container > * {
-    text-decoration: none;
+  text-decoration: none;
 }
 
-
-
 @media (min-width: 768px) {
- 
 }

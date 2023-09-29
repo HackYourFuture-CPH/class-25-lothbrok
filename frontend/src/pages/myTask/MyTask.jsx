@@ -1,5 +1,4 @@
-import React from "react";
-import { Header, MenuDesktop } from "../../IndexForImport";
+import React from 'react';
 
 const MyTask = () => {
   return <div>Here is My task</div>;

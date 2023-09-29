@@ -1,12 +1,6 @@
 import React from 'react';
 import './App.css';
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  createBrowserRouter,
-  RouterProvider
-} from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import {
   Dashboard,
   Project,
@@ -76,7 +70,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <RouterProvider router={router} />
     </div>
   );
