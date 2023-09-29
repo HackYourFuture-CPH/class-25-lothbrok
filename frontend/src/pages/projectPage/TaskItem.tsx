@@ -1,7 +1,8 @@
 import React from "react";
 import "./TaskItem.css";
-import calendarIcon from "../../assets/icons/calendar-icon.png";
-import tasksIcon from "../../assets/icons/tasks-icon.png";
+import Calendar from "../../assets/icons/Calendar.png";
+import Assigned from "../../assets/icons/assigned-task.png";
+import Circle from "../../assets/icons/Danger Circle.png";
 
 interface Project {
   id: number;
@@ -23,24 +24,31 @@ function TaskItem({ project }: TaskItemProps) {
   return (
     <div className="task-item">
       <div className="task-info">
-        <img src={thumbnail_link} alt={title} className="thumbnail-image" />
+        <img src={thumbnail_link} className="thumbnail-image" />
         <div>
           <h3>{title}</h3>
-          <p>
-            <img src={calendarIcon} alt="Calendar Icon" /> {date_of_creation} {/* Use your custom calendar icon */}
-          </p>
-          <p>
-            <img src={tasksIcon} alt="Tasks Icon" /> {amount_of_tasks} {/* Use your custom tasks icon */}
-          </p>
+          <div className="icon-container">
+            <p>
+              <img src={Calendar} alt="Calendar" /> {date_of_creation}
+            </p>
+            <p>
+              <img src={Assigned} alt="search" /> {amount_of_tasks}
+            </p>
+            <p>
+              <img src={Circle} alt="Circle" /> {amount_of_tasks}
+            </p>
+          </div>
         </div>
-        <p className="percentage-out-of-line">{completedPercentage}%</p>
       </div>
       <div className="progress-bar">
-        <div style={{ width: `${completedPercentage}%` }}></div>
+        <div
+          className="percentage-bar"
+          style={{ width: `${completedPercentage}%` }}
+        ></div>
       </div>
+      <p className="percentage-number">{completedPercentage}%</p>
     </div>
   );
 }
 
 export default TaskItem;
-

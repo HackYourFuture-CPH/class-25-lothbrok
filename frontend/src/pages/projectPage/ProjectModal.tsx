@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./ProjectModal.css";
-import image1 from "../../assets/images/Rectangle 2996.jpg";
+import Rectangle from "../../assets/icons/Rectangle.png";
+import Close from "../../assets/icons/x.png";
+
 interface ProjectModalProps {
   closeModal: () => void;
 }
@@ -8,14 +10,15 @@ interface ProjectModalProps {
 function ProjectModal({ closeModal }: ProjectModalProps) {
   const [projectName, setProjectName] = useState("");
   const [projectThumbnail, setProjectThumbnail] = useState("");
+  const [projectDate, setProjectDate] = useState("");
+  const [projectTask, setProjectTask] = useState("");
 
   const handleCreateProject = () => {
-    // Implement logic to create a new project with projectName and projectThumbnail
-    // You can use state management or API calls here
     const newProject = {
       title: projectName,
       thumbnail_link: projectThumbnail,
-      // Other properties as needed
+      date_of_creation: projectDate,
+      amount_of_tasks: projectTask,
     };
     closeModal();
   };
@@ -23,15 +26,19 @@ function ProjectModal({ closeModal }: ProjectModalProps) {
   return (
     <div className="modal">
       <div className="modal-content">
-        <div className="modal-header">
-          <h2>New Project</h2>
-          <button className="close-button" onClick={closeModal}>
-            x
-          </button>
+        <h2>New Project</h2>
+        <button className="close-button" onClick={closeModal}>
+          <img src={Close} alt="Close" className="close-icon" />
+        </button>
+
+        <div className="left-content">
+          <label>Thumbnail</label>
+          <img
+            src={Rectangle}
+            alt="Thumbnail"
+            className="modal-thumbnail-image"
+          />
         </div>
-        <label>Thumbnail</label>
-        <img src={projectThumbnail || image1} alt="Thumbnail" className="thumbnail-image" />
-        
         <label>Project name</label>
         <input
           type="text"
@@ -42,18 +49,20 @@ function ProjectModal({ closeModal }: ProjectModalProps) {
         <label>Team</label>
         <input
           type="text"
-          value={projectName}
+          value={projectDate}
           placeholder="Superboard"
           onChange={(e) => setProjectName(e.target.value)}
         />
         <label>Privacy</label>
         <input
           type="text"
-          value={projectName}
+          value={projectTask}
           placeholder="Public to team"
           onChange={(e) => setProjectName(e.target.value)}
         />
-        <button onClick={handleCreateProject}>Create Project</button>
+        <button className="create-button" onClick={handleCreateProject}>
+          Create Project
+        </button>
       </div>
     </div>
   );

@@ -64,7 +64,9 @@ function ProjectList() {
 
   return (
     <div>
-      <button onClick={openModal}>Create Project</button>
+      <button className="create-project" onClick={openModal}>
+        Create Project
+      </button>
       <TaskList projects={projects} />
       {isModalOpen && <ProjectModal closeModal={closeModal} />}
     </div>
