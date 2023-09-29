@@ -9,7 +9,7 @@ import {
   FormControlLabel,
   Typography,
   Alert,
-  AlertTitle
+  AlertTitle,
 } from '@mui/material';
 import logo from '../../assets/images/Logo for auth.jpg';
 import image from '../../assets/images/Stuck at Home Imagination.jpg';
@@ -20,7 +20,7 @@ import {
   setPersistence,
   browserLocalPersistence,
   onAuthStateChanged,
-  browserSessionPersistence
+  browserSessionPersistence,
 } from 'firebase/auth';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -39,7 +39,7 @@ const LoginPage: React.FC = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors, isDirty, isValid }
+    formState: { errors, isDirty, isValid },
   } = useForm<FormData>();
 
   useEffect(() => {
@@ -54,10 +54,7 @@ const LoginPage: React.FC = () => {
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
       const auth = getAuth();
-      await setPersistence(
-        auth,
-        rememberMe ? browserLocalPersistence : browserSessionPersistence
-      );
+      await setPersistence(auth, rememberMe ? browserLocalPersistence : browserSessionPersistence);
       await signInWithEmailAndPassword(auth, data.email, data.password);
       setErrorMessage('');
     } catch (e: any) {
@@ -75,20 +72,16 @@ const LoginPage: React.FC = () => {
     <Container>
       <img
         src={logo}
-        alt="Image"
+        alt='Image'
         style={{ width: '140px', height: '30px', top: '40px', left: '76px' }}
       />
       {errorMessage ? (
-        <Alert severity="error" onClose={() => setErrorMessage('')}>
+        <Alert severity='error' onClose={() => setErrorMessage('')}>
           <AlertTitle>Error</AlertTitle>
           {errorMessage}
         </Alert>
       ) : null}
-      <Grid
-        container
-        justifyContent="center"
-        alignItems="center"
-        style={{ height: '100vh' }}>
+      <Grid container justifyContent='center' alignItems='center' style={{ height: '100vh' }}>
         <Grid item xs={12} sm={6}>
           <Typography
             style={{
@@ -102,8 +95,9 @@ const LoginPage: React.FC = () => {
               width: '113px',
               height: '46px',
               top: '129px',
-              left: '100px'
-            }}>
+              left: '100px',
+            }}
+          >
             Login
           </Typography>
 
@@ -115,30 +109,31 @@ const LoginPage: React.FC = () => {
               lineHeight: '22px',
               letterSpacing: '-0.42px',
               textAlign: 'left',
-              color: '#89899C'
-            }}>
+              color: '#89899C',
+            }}
+          >
             Easy steps to enter the platform
           </Typography>
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <Controller
-              name="email"
+              name='email'
               control={control}
-              defaultValue=""
+              defaultValue=''
               rules={{
                 required: 'Email is required',
                 pattern: {
-                  value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,
-                  message: 'Invalid email address'
-                }
+                  value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i,
+                  message: 'Invalid email address',
+                },
               }}
               render={({ field }) => (
                 <>
-                  <label className="style-label">Email</label>
+                  <label className='style-label'>Email</label>
                   <TextField
                     fullWidth
                     {...field}
-                    placeholder="Input text here"
+                    placeholder='Input text here'
                     error={Boolean(errors.email)}
                     helperText={errors.email?.message}
                   />
@@ -147,18 +142,18 @@ const LoginPage: React.FC = () => {
             />
 
             <Controller
-              name="password"
+              name='password'
               control={control}
-              defaultValue=""
+              defaultValue=''
               rules={{ required: 'Password is required' }}
               render={({ field }) => (
                 <>
-                  <label className="style2-label">Password</label>
+                  <label className='style2-label'>Password</label>
                   <TextField
                     fullWidth
-                    type="password"
+                    type='password'
                     {...field}
-                    placeholder="Input text here"
+                    placeholder='Input text here'
                     error={Boolean(errors.password)}
                     helperText={errors.password?.message}
                   />
@@ -169,7 +164,7 @@ const LoginPage: React.FC = () => {
             <FormControlLabel
               control={
                 <Controller
-                  name="rememberMe"
+                  name='rememberMe'
                   control={control}
                   defaultValue={false}
                   render={({ field }) => (
@@ -177,42 +172,39 @@ const LoginPage: React.FC = () => {
                       {...field}
                       checked={rememberMe}
                       onChange={(e) => setRememberMe(e.target.checked)}
-                      name="rememberMe"
-                      color="primary"
+                      name='rememberMe'
+                      color='primary'
                     />
                   )}
                 />
               }
-              label="Remember me"
+              label='Remember me'
             />
 
-            <Link to={'/forgot-password'} className="forgot">
+            <Link to={'/forgot-password'} className='forgot'>
               Forgot password
             </Link>
 
             <Button
-              variant="contained"
-              color="primary"
+              variant='contained'
+              color='primary'
               fullWidth
-              type="submit"
-              disabled={!isDirty || !isValid}>
+              type='submit'
+              disabled={!isDirty || !isValid}
+            >
               Login
             </Button>
           </form>
 
-          <Typography variant="body2">
-            Don't have an account?
-            <Link to={'/sign-up'} className="sign">
+          <Typography variant='body2'>
+            Don&apos;t have an account?
+            <Link to={'/sign-up'} className='sign'>
               Sign up
             </Link>
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <img
-            src={image}
-            alt="Image"
-            style={{ width: '100%', height: 'auto' }}
-          />
+          <img src={image} alt='Image' style={{ width: '100%', height: 'auto' }} />
         </Grid>
       </Grid>
     </Container>

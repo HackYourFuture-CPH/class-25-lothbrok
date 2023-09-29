@@ -3,8 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Header, MenuDesktop } from '../../IndexForImport';
 import React, { useEffect } from 'react';
 import './Dashboard.css';
-import firebase from 'firebase/app';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { signOut, User, getAuth, onAuthStateChanged } from '@firebase/auth';
 
 const Dashboard = () => {
@@ -20,8 +19,8 @@ const Dashboard = () => {
           const res = await fetch('api/main-page', {
             method: 'GET',
             headers: {
-              Authorization: `Bearer ${accessToken.token}`
-            }
+              Authorization: `Bearer ${accessToken.token}`,
+            },
           });
           res.ok ? navigate('/') : navigate('/login');
         } catch (e) {
@@ -38,11 +37,11 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="pages">
-      <div className="menu-desktop">
+    <div className='pages'>
+      <div className='menu-desktop'>
         <MenuDesktop />
       </div>
-      <div className="main">
+      <div className='main'>
         <Header />
         <Outlet />
         <button onClick={handleSignOut}>Sign out</button>

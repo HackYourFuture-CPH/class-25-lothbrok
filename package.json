@@ -11,19 +11,26 @@
     "backend"
   ],
   "scripts": {
-    "init-project": "npm i --workspaces; npm i",
+    "init-project": "npm i && npm i --workspaces",
     "build": "npm run build --workspaces",
     "start-prod": "node ./backend/server/index.js",
-    "start": "concurrently \"npm run start --workspace=frontend\" \"npm run dev --workspace=backend\""
+    "start": "concurrently \"npm run start --workspace=frontend\" \"npm run dev --workspace=backend\"",
+    "prepare": "husky install",
+    "lint": "eslint . --ext .ts,.tsx",
+    "prettier": "prettier --write .",
+    "ts-check": "npm run typescript --workspaces"
   },
   "devDependencies": {
-    "concurrently": "^5.1.0"
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
+    "concurrently": "^5.1.0",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "husky": "^8.0.3",
+    "prettier": "3.0.3"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "firebase": "^10.4.0",
-    "firebase-admin": "^11.10.1",
-    "nodemon": "^3.0.1"
+    "lint-staged": "^14.0.1"
   }
 }

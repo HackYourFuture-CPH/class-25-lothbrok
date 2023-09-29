@@ -1,5 +1,5 @@
-import { Request, Response } from "express"
+import { Request, Response } from 'express';
 
 export const getAllTasks = (req: Request, res: Response) => {
-  res.status(200).send({message: 'Successfully got all the tasks'})
-}
+  res.status(200).send({ message: 'Successfully got all the tasks' });
+};
