@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import "./MenuLeftBar.css";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import { Box, Button } from "@mui/material/";
-import { Menu } from "../menuDesktop/MenuDesktop";
+import React, { useState } from 'react';
+import './MenuLeftBar.css';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import { Box, Button } from '@mui/material/';
+import { Menu } from '../menuDesktop/MenuDesktop';
 
-type Anchor = "top" | "left" | "bottom" | "right";
+type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 const MenuLeftBar = () => {
   const [state, setState] = useState({
@@ -15,13 +15,12 @@ const MenuLeftBar = () => {
   });
 
   const toggleDrawer =
-    (anchor: Anchor, open: boolean) =>
-    (event: React.KeyboardEvent | React.MouseEvent) => {
+    (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
         event &&
-        event.type === "keydown" &&
-        ((event as React.KeyboardEvent).key === "Tab" ||
-          (event as React.KeyboardEvent).key === "Shift")
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
       ) {
         return;
       }
@@ -31,22 +30,22 @@ const MenuLeftBar = () => {
 
   const list = (anchor: Anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
-      role="presentation"
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      role='presentation'
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
-      className="swipeableDrawer"
+      className='swipeableDrawer'
     >
       <Menu />
     </Box>
   );
 
-  const anchor: Anchor = "left"; // Defining the anchor for the Button
+  const anchor: Anchor = 'left'; // Defining the anchor for the Button
 
   return (
     <div>
       <Button onClick={toggleDrawer(anchor, true)}>
-        <img className="burger-btn" src="/assets/icons/burger.svg" />
+        <img className='burger-btn' src='/assets/icons/burger.svg' />
       </Button>
       <SwipeableDrawer
         anchor={anchor}

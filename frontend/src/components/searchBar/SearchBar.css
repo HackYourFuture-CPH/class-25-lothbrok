@@ -1,17 +1,17 @@
 #paper {
-    flex-flow: row;
-    flex-direction: row;
-    display: none;
+  flex-flow: row;
+  flex-direction: row;
+  display: none;
 }
 
 .img-search-icon {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 @media (min-width: 768px) {
-    #paper {
-        display: flex;
-        box-shadow: none;
-    }
+  #paper {
+    display: flex;
+    box-shadow: none;
+  }
 }
