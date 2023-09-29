@@ -6,3 +6,5 @@ export { default as Team } from './pages/team/Team';
 export { default as Message } from './pages/message/Message';
 export { default as Setting } from './pages/setting/Setting';
 export { default as Header } from './components/header/Header';
+export { default as MenuDesktop } from './components/menuDesktop/MenuDesktop';
+export { default as ErrorPage } from './pages/error/Error';
