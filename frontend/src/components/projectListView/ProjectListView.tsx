@@ -1,5 +1,5 @@
 import { Task } from '../../pages/projectView/ProjectView';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ListTable from '../listTable/ListTable';
 import { AddCircleOutline } from '@mui/icons-material';
 import { TextField } from '@mui/material';
@@ -7,33 +7,21 @@ import './projectList.css';
 import { v4 as uuid } from 'uuid';
 import { useParams } from 'react-router-dom';
 import { User, getAuth, onAuthStateChanged } from '@firebase/auth';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
   const [allTasks, setAllTasks] = useState<Task[]>(tasks);
-
-  const [documentation, setDocumentation] = useState<Task[]>([]);
-  const [ongoing, setOngoing] = useState<Task[]>([]);
-  const [todo, setTodo] = useState<Task[]>([]);
-  const [done, setDone] = useState<Task[]>([]);
-
-  const [documentationDescription, setDocumentationDescription] = useState<string>('');
-  const [ongoingDescription, setOngoingDescription] = useState<string>('');
-  const [todoDescription, setTodoDescription] = useState<string>('');
-  const [doneDescription, setDoneDescription] = useState<string>('');
-
-  const [documentationEditing, setDocumentationEditing] = useState<boolean>(false);
-  const [ongoingEditing, setOngoingEditing] = useState<boolean>(false);
-  const [todoEditing, setTodoEditing] = useState<boolean>(false);
-  const [doneEditing, setDoneEditing] = useState<boolean>(false);
+  const [description, setDescription] = useState<string>('');
+  const [editing, setEditing] = useState<string>('');
+  const documentation = 'documentation';
+  const ongoing = 'ongoing';
+  const todo = 'to_do';
+  const done = 'done';
 
   const { id } = useParams();
   const [userId, setUserId] = useState<string>('');
 
   useEffect(() => {
-    const filterTaskByStatus = (status: string) => {
-      return allTasks.filter((task) => task.status === status);
-    };
     const setUser = () => {
       const auth = getAuth();
       onAuthStateChanged(auth, async (user: User | null) => {
@@ -42,21 +30,12 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
         }
       });
     };
-    setDocumentation(filterTaskByStatus('documentation'));
-    setOngoing(filterTaskByStatus('ongoing'));
-    setTodo(filterTaskByStatus('to_do'));
-    setDone(filterTaskByStatus('done'));
     setUser();
-  }, [allTasks]);
+  }, []);
 
-  const addNewTask = (
-    setTasks: React.Dispatch<React.SetStateAction<Task[]>>,
-    description: string,
-    tasks: Task[],
-    status: string,
-  ) => {
+  const addNewTask = (status: string) => {
     if (id && description.trim()) {
-      setTasks([
+      setAllTasks([
         ...tasks,
         {
           id: uuid(), // for mocked data
@@ -79,169 +58,76 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
     if (source.droppableId !== destination.droppableId) {
       setAllTasks(
         allTasks.map((task) =>
-          task.id === +result.draggableId ? { ...task, status: destination.droppableId } : task,
+          String(task.id) === result.draggableId
+            ? { ...task, status: destination.droppableId }
+            : task,
         ),
       );
     } else {
-      const changeOrder = (
-        setTasks: React.Dispatch<React.SetStateAction<Task[]>>,
-        tasksArr: Task[],
-      ) => {
-        setTasks((tasksArr) => {
-          const tasks = [...tasksArr];
-          const [removed] = tasks.splice(source.index, 1);
-          tasks.splice(destination.index, 0, removed);
-          return tasks;
-        });
-      };
-      const droppableIdDocumentation = 'documentation';
-      const droppableIdOngoing = 'ongoing';
-      const droppableIdToDo = 'to_do';
-      const droppableIdDone = 'done';
-
-      switch (destination.droppableId) {
-        case droppableIdDocumentation:
-          changeOrder(setDocumentation, documentation);
-          break;
-        case droppableIdOngoing:
-          changeOrder(setOngoing, ongoing);
-          break;
-        case droppableIdToDo:
-          changeOrder(setTodo, todo);
-          break;
-        case droppableIdDone:
-          changeOrder(setDone, done);
-          break;
-      }
+      setAllTasks((allTasks) => {
+        const tasks = [...allTasks];
+        const [removed] = tasks.splice(source.index, 1);
+        tasks.splice(destination.index, 0, removed);
+        return tasks;
+      });
     }
+  };
+
+  const editDescription = (status: string) => {
+    setEditing(status);
+    setDescription('');
   };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className='section-title'>
-        <h4>Documentation</h4>
-        {documentationEditing ? (
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              addNewTask(
-                setDocumentation,
-                documentationDescription,
-                documentation,
-                'documentation',
-              );
-              setDocumentationEditing(false);
-              setDocumentationDescription('');
-            }}
-          >
-            <TextField
-              placeholder='New Task Title'
-              variant='filled'
-              value={documentationDescription}
-              onChange={(e) => setDocumentationDescription(e.target.value)}
-              inputProps={{
-                style: {
-                  padding: 5,
-                  background: 'white',
-                },
-              }}
-            />
-          </form>
-        ) : (
-          <AddCircleOutline
-            sx={{ cursor: 'pointer' }}
-            onClick={() => setDocumentationEditing(true)}
+      {[documentation, ongoing, todo, done].map((section) => (
+        <React.Fragment key={section}>
+          <div className='section-title'>
+            <h4>
+              {section === documentation
+                ? 'Documentation'
+                : section === ongoing
+                ? 'Ongoing'
+                : section === todo
+                ? 'Pending'
+                : 'Done'}
+            </h4>
+            {editing === section ? (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  addNewTask(section);
+                  setEditing('');
+                  setDescription('');
+                }}
+              >
+                <TextField
+                  placeholder='New Task Title'
+                  variant='filled'
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  inputProps={{
+                    style: {
+                      padding: 5,
+                      background: 'white',
+                    },
+                  }}
+                />
+              </form>
+            ) : (
+              <AddCircleOutline
+                sx={{ cursor: 'pointer' }}
+                onClick={() => editDescription(section)}
+              />
+            )}
+          </div>
+          <ListTable
+            listId={section}
+            tasks={allTasks.filter((task) => task.status === section)}
+            setTasks={setAllTasks}
           />
-        )}
-      </div>
-      <ListTable listId='documentation' tasks={documentation} setTasks={setAllTasks} />
-      <div className='section-title'>
-        <h4>Ongoing</h4>
-        {ongoingEditing ? (
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              addNewTask(setOngoing, ongoingDescription, ongoing, 'ongoing');
-              setOngoingEditing(false);
-              setOngoingDescription('');
-            }}
-          >
-            <TextField
-              placeholder='New Task Title'
-              variant='filled'
-              value={ongoingDescription}
-              onChange={(e) => setOngoingDescription(e.target.value)}
-              inputProps={{
-                style: {
-                  padding: 5,
-                  background: 'white',
-                },
-              }}
-            />
-          </form>
-        ) : (
-          <AddCircleOutline sx={{ cursor: 'pointer' }} onClick={() => setOngoingEditing(true)} />
-        )}
-      </div>
-      <ListTable listId='ongoing' tasks={ongoing} setTasks={setAllTasks} />
-      <div className='section-title'>
-        <h4>Pending</h4>
-        {todoEditing ? (
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              addNewTask(setTodo, todoDescription, todo, 'todo');
-              setTodoEditing(false);
-              setTodoDescription('');
-            }}
-          >
-            <TextField
-              placeholder='New Task Title'
-              variant='filled'
-              value={todoDescription}
-              onChange={(e) => setTodoDescription(e.target.value)}
-              inputProps={{
-                style: {
-                  padding: 5,
-                  background: 'white',
-                },
-              }}
-            />
-          </form>
-        ) : (
-          <AddCircleOutline sx={{ cursor: 'pointer' }} onClick={() => setTodoEditing(true)} />
-        )}
-      </div>
-      <ListTable listId='to_do' tasks={todo} setTasks={setAllTasks} />
-      <div className='section-title'>
-        <h4>Done</h4>
-        {doneEditing ? (
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              addNewTask(setDone, doneDescription, done, 'done');
-              setDoneEditing(false);
-              setDoneDescription('');
-            }}
-          >
-            <TextField
-              placeholder='New Task Title'
-              variant='filled'
-              value={doneDescription}
-              onChange={(e) => setDoneDescription(e.target.value)}
-              inputProps={{
-                style: {
-                  padding: 5,
-                  background: 'white',
-                },
-              }}
-            />
-          </form>
-        ) : (
-          <AddCircleOutline sx={{ cursor: 'pointer' }} onClick={() => setDoneEditing(true)} />
-        )}
-      </div>
-      <ListTable listId='done' tasks={done} setTasks={setAllTasks} />
+        </React.Fragment>
+      ))}
     </DragDropContext>
   );
 };

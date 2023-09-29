@@ -14,9 +14,9 @@ const Dashboard = () => {
         <MenuDesktop />
       </div>
       <div className='main'>
+        <button onClick={handleSignOut}>Sign out</button>
         <Header />
         <Outlet />
-        <button onClick={handleSignOut}>Sign out</button>
       </div>
     </div>
   );
