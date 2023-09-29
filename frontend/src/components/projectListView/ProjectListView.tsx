@@ -17,14 +17,12 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
   const [todo, setTodo] = useState<Task[]>([]);
   const [done, setDone] = useState<Task[]>([]);
 
-  const [documentationDescription, setDocumentationDescription] =
-    useState<string>('');
+  const [documentationDescription, setDocumentationDescription] = useState<string>('');
   const [ongoingDescription, setOngoingDescription] = useState<string>('');
   const [todoDescription, setTodoDescription] = useState<string>('');
   const [doneDescription, setDoneDescription] = useState<string>('');
 
-  const [documentationEditing, setDocumentationEditing] =
-    useState<boolean>(false);
+  const [documentationEditing, setDocumentationEditing] = useState<boolean>(false);
   const [ongoingEditing, setOngoingEditing] = useState<boolean>(false);
   const [todoEditing, setTodoEditing] = useState<boolean>(false);
   const [doneEditing, setDoneEditing] = useState<boolean>(false);
@@ -55,7 +53,7 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
     setTasks: React.Dispatch<React.SetStateAction<Task[]>>,
     description: string,
     tasks: Task[],
-    status: string
+    status: string,
   ) => {
     if (id && description.trim()) {
       setTasks([
@@ -69,8 +67,8 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
           completed: false,
           priority: '',
           project_id: +id,
-          user_id: userId
-        }
+          user_id: userId,
+        },
       ]);
     }
   };
@@ -81,15 +79,13 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
     if (source.droppableId !== destination.droppableId) {
       setAllTasks(
         allTasks.map((task) =>
-          task.id === +result.draggableId
-            ? { ...task, status: destination.droppableId }
-            : task
-        )
+          task.id === +result.draggableId ? { ...task, status: destination.droppableId } : task,
+        ),
       );
     } else {
       const changeOrder = (
         setTasks: React.Dispatch<React.SetStateAction<Task[]>>,
-        tasksArr: Task[]
+        tasksArr: Task[],
       ) => {
         setTasks((tasksArr) => {
           const tasks = [...tasksArr];
@@ -98,21 +94,31 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
           return tasks;
         });
       };
-      if (destination.droppableId === 'documentation') {
-        changeOrder(setDocumentation, documentation);
-      } else if (destination.droppableId === 'ongoing') {
-        changeOrder(setOngoing, ongoing);
-      } else if (destination.droppableId === 'to_do') {
-        changeOrder(setTodo, todo);
-      } else if (destination.droppableId === 'done') {
-        changeOrder(setDone, done);
+      const droppableIdDocumentation = 'documentation';
+      const droppableIdOngoing = 'ongoing';
+      const droppableIdToDo = 'to_do';
+      const droppableIdDone = 'done';
+
+      switch (destination.droppableId) {
+        case droppableIdDocumentation:
+          changeOrder(setDocumentation, documentation);
+          break;
+        case droppableIdOngoing:
+          changeOrder(setOngoing, ongoing);
+          break;
+        case droppableIdToDo:
+          changeOrder(setTodo, todo);
+          break;
+        case droppableIdDone:
+          changeOrder(setDone, done);
+          break;
       }
     }
   };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="section-title">
+      <div className='section-title'>
         <h4>Documentation</h4>
         {documentationEditing ? (
           <form
@@ -122,21 +128,22 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
                 setDocumentation,
                 documentationDescription,
                 documentation,
-                'documentation'
+                'documentation',
               );
               setDocumentationEditing(false);
               setDocumentationDescription('');
-            }}>
+            }}
+          >
             <TextField
-              placeholder="New Task Title"
-              variant="filled"
+              placeholder='New Task Title'
+              variant='filled'
               value={documentationDescription}
               onChange={(e) => setDocumentationDescription(e.target.value)}
               inputProps={{
                 style: {
                   padding: 5,
-                  background: 'white'
-                }
+                  background: 'white',
+                },
               }}
             />
           </form>
@@ -147,12 +154,8 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
           />
         )}
       </div>
-      <ListTable
-        listId="documentation"
-        tasks={documentation}
-        setTasks={setAllTasks}
-      />
-      <div className="section-title">
+      <ListTable listId='documentation' tasks={documentation} setTasks={setAllTasks} />
+      <div className='section-title'>
         <h4>Ongoing</h4>
         {ongoingEditing ? (
           <form
@@ -161,29 +164,27 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
               addNewTask(setOngoing, ongoingDescription, ongoing, 'ongoing');
               setOngoingEditing(false);
               setOngoingDescription('');
-            }}>
+            }}
+          >
             <TextField
-              placeholder="New Task Title"
-              variant="filled"
+              placeholder='New Task Title'
+              variant='filled'
               value={ongoingDescription}
               onChange={(e) => setOngoingDescription(e.target.value)}
               inputProps={{
                 style: {
                   padding: 5,
-                  background: 'white'
-                }
+                  background: 'white',
+                },
               }}
             />
           </form>
         ) : (
-          <AddCircleOutline
-            sx={{ cursor: 'pointer' }}
-            onClick={() => setOngoingEditing(true)}
-          />
+          <AddCircleOutline sx={{ cursor: 'pointer' }} onClick={() => setOngoingEditing(true)} />
         )}
       </div>
-      <ListTable listId="ongoing" tasks={ongoing} setTasks={setAllTasks} />
-      <div className="section-title">
+      <ListTable listId='ongoing' tasks={ongoing} setTasks={setAllTasks} />
+      <div className='section-title'>
         <h4>Pending</h4>
         {todoEditing ? (
           <form
@@ -192,29 +193,27 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
               addNewTask(setTodo, todoDescription, todo, 'todo');
               setTodoEditing(false);
               setTodoDescription('');
-            }}>
+            }}
+          >
             <TextField
-              placeholder="New Task Title"
-              variant="filled"
+              placeholder='New Task Title'
+              variant='filled'
               value={todoDescription}
               onChange={(e) => setTodoDescription(e.target.value)}
               inputProps={{
                 style: {
                   padding: 5,
-                  background: 'white'
-                }
+                  background: 'white',
+                },
               }}
             />
           </form>
         ) : (
-          <AddCircleOutline
-            sx={{ cursor: 'pointer' }}
-            onClick={() => setTodoEditing(true)}
-          />
+          <AddCircleOutline sx={{ cursor: 'pointer' }} onClick={() => setTodoEditing(true)} />
         )}
       </div>
-      <ListTable listId="to_do" tasks={todo} setTasks={setAllTasks} />
-      <div className="section-title">
+      <ListTable listId='to_do' tasks={todo} setTasks={setAllTasks} />
+      <div className='section-title'>
         <h4>Done</h4>
         {doneEditing ? (
           <form
@@ -223,28 +222,26 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
               addNewTask(setDone, doneDescription, done, 'done');
               setDoneEditing(false);
               setDoneDescription('');
-            }}>
+            }}
+          >
             <TextField
-              placeholder="New Task Title"
-              variant="filled"
+              placeholder='New Task Title'
+              variant='filled'
               value={doneDescription}
               onChange={(e) => setDoneDescription(e.target.value)}
               inputProps={{
                 style: {
                   padding: 5,
-                  background: 'white'
-                }
+                  background: 'white',
+                },
               }}
             />
           </form>
         ) : (
-          <AddCircleOutline
-            sx={{ cursor: 'pointer' }}
-            onClick={() => setDoneEditing(true)}
-          />
+          <AddCircleOutline sx={{ cursor: 'pointer' }} onClick={() => setDoneEditing(true)} />
         )}
       </div>
-      <ListTable listId="done" tasks={done} setTasks={setAllTasks} />
+      <ListTable listId='done' tasks={done} setTasks={setAllTasks} />
     </DragDropContext>
   );
 };
