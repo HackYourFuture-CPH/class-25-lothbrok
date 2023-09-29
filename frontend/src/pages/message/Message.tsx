@@ -2,8 +2,10 @@ import React from 'react';
 
 const Message = () => {
   return (
-    <div>This is Message page</div>
-  )
-}
+    <div>
+      <p>message page</p>
+    </div>
+  );
+};
 
 export default Message;

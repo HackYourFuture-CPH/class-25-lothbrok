@@ -1,0 +1,50 @@
+/* CustomDropdown.css */
+
+.TriggerButton {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  box-sizing: border-box;
+  line-height: 1.5;
+  background: transparent;
+  cursor: pointer;
+  border: 0;
+  color: #24292f;
+  position: relative;
+}
+
+.TriggerButton::after {
+  content: '\25BE';
+  position: absolute;
+  top: 9px;
+  right: -10px;
+  font-size: 16px;
+  color: #24292f;
+}
+
+.CustomMenu {
+  z-index: 1;
+  font-family:
+    IBM Plex Sans,
+    sans-serif;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+  padding: 6px;
+  margin: 15px 0;
+  min-width: 140px;
+  border-radius: 8px;
+  overflow: auto;
+  outline: 0px;
+  background: #fff;
+  border: 0;
+  color: #24292f;
+  border-radius: 4px;
+}
+
+.CustomMenu > * {
+  list-style: none;
+  padding: 0px 8px;
+  border-radius: 4px;
+  cursor: default;
+  user-select: none;
+}

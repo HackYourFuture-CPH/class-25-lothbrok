@@ -1,7 +1,7 @@
 import React from "react";
 import "./TaskItem.css";
 import Calendar from "../../assets/icons/Calendar.png";
-import Assigned from "../../assets/icons/assigned-task.png";
+import Assigned from "../../assets/icons/assigned task.png";
 import Circle from "../../assets/icons/Danger Circle.png";
 
 interface Project {
@@ -32,7 +32,7 @@ function TaskItem({ project }: TaskItemProps) {
               <img src={Calendar} alt="Calendar" /> {date_of_creation}
             </p>
             <p>
-              <img src={Assigned} alt="search" /> {amount_of_tasks}
+              <img src={Assigned} alt="assigned-task" /> {amount_of_tasks}
             </p>
             <p>
               <img src={Circle} alt="Circle" /> {amount_of_tasks}

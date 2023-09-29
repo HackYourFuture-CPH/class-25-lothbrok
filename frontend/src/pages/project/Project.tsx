@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
+import './Project.css';
 
 const Project = () => {
-  return (
-    <div>This is Project page</div>
-  )
-}
+  return <div className='main'>here is my Project****</div>;
+};
 
-export default Project
+export default Project;
