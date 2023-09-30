@@ -1,13 +1,12 @@
 import React from 'react';
-import './Project.css'
-import ProjectDetails from '../../components/projectDetails/ProjectDetails'
+import './Project.css';
+import ProjectView from '../projectView/ProjectView';
 const Project = () => {
   return (
     <div className='project'>
       <div className='top-box'>top-box under navigation-bar</div>
-      <div className='kristina-task'> Kristina- task</div>
-      <ProjectDetails/>
+      <ProjectView />
     </div>
-  )
-}
+  );
+};
 export default Project;

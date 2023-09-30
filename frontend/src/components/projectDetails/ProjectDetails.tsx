@@ -1,16 +1,22 @@
 import './ProjectDetails.css';
 import ProjectDetailsHeader from '../projectDetailsHeader/ProjectDetailsHeader';
-import ProjectDetailsTitle from '../projectDetailsTitle/ProjectDetailsTitle';
+import ProjectDetailsBody from '../projectDetailsBody/ProjectDetailsBody';
 import ProjectDetailsRest from '../projectDetailsRest/ProjectDetailsRest';
+import { Task } from '../../pages/projectView/ProjectView';
 
-const ProjectDetails = () => {
+type ProjectDetailsType = {
+  task: Task;
+};
+
+const ProjectDetails = ({ task }: ProjectDetailsType) => {
+  console.log(task);
   return (
     <div className='projectDetails'>
-      <ProjectDetailsHeader/>
-      <ProjectDetailsTitle/>
-      <ProjectDetailsRest/>
+      <ProjectDetailsHeader />
+      <ProjectDetailsBody task={task} />
+      <ProjectDetailsRest />
     </div>
-  )
-}
+  );
+};
 
 export default ProjectDetails;
