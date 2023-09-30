@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
-import { adminFireAuth } from "../../firebase";
-import { user } from "../../interfaces/user";
-import db from "../../config/db-config";
+import { Request, Response } from 'express';
+import { adminFireAuth } from '../../firebase';
+import { user } from '../../interfaces/user';
+import db from '../../config/db-config';
 
 export const getUserById = async (req: Request, res: Response) => {
   try {
@@ -24,13 +24,11 @@ export const updateUserById = async (req: Request, res: Response) => {
       phoneNumber: phone_number,
     });
 
-    const userInfo = await db("users")
-      .where("id", uid)
+    const userInfo = await db('users')
+      .where('id', uid)
       .update(first_name, last_name, photourl, phone_number);
 
-    console.log(`User ${uid} has been updated ${userInfo} `);
-
-    res.status(200).send({ user });
+    res.status(200).send({ user, userInfo });
   } catch (error) {
     res.status(400).json(error);
   }
@@ -38,10 +36,9 @@ export const updateUserById = async (req: Request, res: Response) => {
 
 export const registerUserToDb = async (req: Request, res: Response) => {
   try {
-    const { uid, first_name, last_name, email, photourl, phone_number }: user =
-      req.body;
+    const { uid, first_name, last_name, email, photourl, phone_number }: user = req.body;
 
-    const newUser = await db("users").insert({
+    const newUser = await db('users').insert({
       uid,
       first_name,
       last_name,
