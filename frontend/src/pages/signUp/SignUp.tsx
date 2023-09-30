@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase_config';
 import { passwordPattern } from '../../passwordPattern';
+import { AuthErrorCodes } from 'firebase/auth';
 
 interface FormData {
   firstName: string;
@@ -32,7 +33,7 @@ const SignUp = () => {
       setErrorMessage('');
       navigate('/login');
     } catch (e: any) {
-      if (e.code === 'auth/email-already-in-use') {
+      if (e.code === AuthErrorCodes.EMAIL_EXISTS) {
         setErrorMessage(`Email address '${data.email}' is already in use `);
       } else if (e.message) {
         setErrorMessage(e.message);
