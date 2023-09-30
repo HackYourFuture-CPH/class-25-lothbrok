@@ -6,7 +6,7 @@ export const getAllTasks = async (req: Request, res: Response) => {
     const tasks = await db('tasks').select('*').from('tasks');
     res.json(tasks);
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(401);
   }
 };
 
@@ -28,7 +28,7 @@ export const getTasksForProjectAndUser = async (req: Request, res: Response) => 
 
     res.json(tasks);
   } catch (error) {
-    res.status(500).json({ error: 'Unable to fetch tasks' });
+    res.status(401);
   }
 };
 
@@ -48,8 +48,8 @@ export const addNewTask = async (req: Request, res: Response) => {
       project_id,
     });
 
-    res.status(201).json({ message: 'Task created successfully' });
+    res.status(201);
   } catch (error) {
-    res.status(500).json({ error: 'Unable to create task' });
+    res.status(500);
   }
 };

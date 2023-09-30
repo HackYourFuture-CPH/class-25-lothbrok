@@ -1,8 +1,8 @@
 export interface user {
   uid: string;
-  first_name: string | null;
-  last_name: string | null;
-  email: string | null;
+  first_name: string;
+  last_name: string;
+  email: string;
   photourl: string | null;
-  phone_number: string;
+  phone_number: string | null;
 }

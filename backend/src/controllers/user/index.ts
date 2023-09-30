@@ -9,7 +9,7 @@ export const getUserById = async (req: Request, res: Response) => {
     const user = await adminFireAuth.getUser(uid);
     res.status(200).send({ user });
   } catch (error) {
-    res.status(400).json(error);
+    res.status(404);
   }
 };
 
@@ -30,7 +30,7 @@ export const updateUserById = async (req: Request, res: Response) => {
 
     res.status(200).send({ user, userInfo });
   } catch (error) {
-    res.status(400).json(error);
+    res.status(404);
   }
 };
 
@@ -49,6 +49,6 @@ export const registerUserToDb = async (req: Request, res: Response) => {
 
     res.status(200).send({ newUser });
   } catch (error) {
-    res.status(400).json(error);
+    res.status(500);
   }
 };
