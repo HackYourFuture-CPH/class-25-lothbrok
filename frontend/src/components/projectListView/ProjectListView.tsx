@@ -1,4 +1,4 @@
-import { Task } from '../../pages/projectView/ProjectView';
+import { Task } from '../../types/Task';
 import React, { useState, useEffect } from 'react';
 import ListTable from '../listTable/ListTable';
 import { AddCircleOutline } from '@mui/icons-material';
@@ -13,10 +13,12 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
   const [allTasks, setAllTasks] = useState<Task[]>(tasks);
   const [description, setDescription] = useState<string>('');
   const [editing, setEditing] = useState<string>('');
-  const documentation = 'documentation';
-  const ongoing = 'ongoing';
-  const todo = 'to_do';
-  const done = 'done';
+  const categories = {
+    documentation: 'documentation',
+    ongoing: 'ongoing',
+    todo: 'to_do',
+    done: 'done',
+  };
 
   const { id } = useParams();
   const [userId, setUserId] = useState<string>('');
@@ -80,17 +82,19 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      {[documentation, ongoing, todo, done].map((section) => (
+      {Object.values(categories).map((section) => (
         <React.Fragment key={section}>
           <div className='section-title'>
             <h4>
-              {section === documentation
+              {section === categories.documentation
                 ? 'Documentation'
-                : section === ongoing
+                : section === categories.ongoing
                 ? 'Ongoing'
-                : section === todo
+                : section === categories.todo
                 ? 'Pending'
-                : 'Done'}
+                : section === categories.done
+                ? 'Done'
+                : section}
             </h4>
             {editing === section ? (
               <form

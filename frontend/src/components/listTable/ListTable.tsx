@@ -1,4 +1,4 @@
-import { Task } from '../../pages/projectView/ProjectView';
+import { Task } from '../../types/Task';
 import './listTable.css';
 import React from 'react';
 import { Checkbox, useMediaQuery } from '@mui/material';
@@ -18,7 +18,7 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
   const handleCheckbox = (task: Task) => {
     setTasks((tasks) => {
       return tasks.map((item) =>
-        item.id === task.id ? { ...item, completed: !item.completed } : item
+        item.id === task.id ? { ...item, completed: !item.completed } : item,
       );
     });
   };
@@ -36,13 +36,13 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
   }
 
   return (
-    <div className="border-radius">
+    <div className='border-radius'>
       {!isMobile ? (
-        <div className="grid-container">
-          <div className="grid-item first-row title">Task</div>
-          <div className="grid-item first-row">DueDate</div>
-          <div className="grid-item first-row">Priority</div>
-          <div className="grid-item first-row">Assigne</div>
+        <div className='grid-container'>
+          <div className='grid-item first-row title'>Task</div>
+          <div className='grid-item first-row'>DueDate</div>
+          <div className='grid-item first-row'>Priority</div>
+          <div className='grid-item first-row'>Assigne</div>
         </div>
       ) : null}
       <Droppable droppableId={listId} isDropDisabled={false}>
@@ -50,44 +50,35 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
           <div {...provided.droppableProps} ref={provided.innerRef}>
             {tasks.map((task, index) => {
               return (
-                <Draggable
-                  key={task.id}
-                  draggableId={String(task.id)}
-                  index={index}>
+                <Draggable key={task.id} draggableId={String(task.id)} index={index}>
                   {(provided) => (
                     <div
                       ref={provided.innerRef}
                       {...provided.draggableProps}
-                      {...provided.dragHandleProps}>
-                      <div className="grid-container task-row" key={task.id}>
+                      {...provided.dragHandleProps}
+                    >
+                      <div className='grid-container task-row' key={task.id}>
                         <div
-                          className={`grid-item title ${
-                            task.completed ? 'completed-task' : ''
-                          }`}>
+                          className={`grid-item title ${task.completed ? 'completed-task' : ''}`}
+                        >
                           <Checkbox
                             checked={task.completed}
-                            icon={
-                              <RadioButtonUnchecked
-                                style={{ color: '#7D7A89' }}
-                              />
-                            }
-                            checkedIcon={
-                              <CheckCircle style={{ color: '#5FB918' }} />
-                            }
+                            icon={<RadioButtonUnchecked style={{ color: '#7D7A89' }} />}
+                            checkedIcon={<CheckCircle style={{ color: '#5FB918' }} />}
                             onClick={() => handleCheckbox(task)}
                           />
                           {task.description}
                         </div>
-                        <div className="grid-item">
+                        <div className='grid-item'>
                           {task.due_date
                             ? new Date(task.due_date).toLocaleString('en-GB', {
                                 day: 'numeric',
-                                month: 'short'
+                                month: 'short',
                               })
                             : '—'}
                         </div>
                         {!isMobile ? (
-                          <div className="grid-item">
+                          <div className='grid-item'>
                             <Flag
                               style={{
                                 color:
@@ -95,14 +86,14 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
                                     ? '#1AC391'
                                     : task.priority === 'hard'
                                     ? '#F14D4D'
-                                    : '#F18524'
+                                    : '#F18524',
                               }}
                             />
                             {task.priority}
                           </div>
                         ) : null}
 
-                        <div className="grid-item">{task.assignee}</div>
+                        <div className='grid-item'>{task.assignee}</div>
                       </div>
                     </div>
                   )}
