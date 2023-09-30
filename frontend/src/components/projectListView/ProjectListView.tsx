@@ -14,10 +14,10 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
   const [description, setDescription] = useState<string>('');
   const [editing, setEditing] = useState<string>('');
   const categories = {
-    documentation: 'documentation',
-    ongoing: 'ongoing',
-    todo: 'to_do',
-    done: 'done',
+    Documentation: 'documentation',
+    Ongoing: 'ongoing',
+    Todo: 'to_do',
+    Done: 'done',
   };
 
   const { id } = useParams();
@@ -85,25 +85,15 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      {Object.values(categories).map((section) => (
-        <React.Fragment key={section}>
+      {Object.entries(categories).map(([title, status]) => (
+        <React.Fragment key={status}>
           <div className='section-title'>
-            <h4>
-              {section === categories.documentation
-                ? 'Documentation'
-                : section === categories.ongoing
-                ? 'Ongoing'
-                : section === categories.todo
-                ? 'Pending'
-                : section === categories.done
-                ? 'Done'
-                : section}
-            </h4>
-            {editing === section ? (
+            <h4>{title}</h4>
+            {editing === status ? (
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  addNewTask(section);
+                  addNewTask(status);
                   setEditing('');
                   setDescription('');
                 }}
@@ -124,11 +114,11 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
             ) : (
               <AddCircleOutline
                 sx={{ cursor: 'pointer' }}
-                onClick={() => editDescription(section)}
+                onClick={() => editDescription(status)}
               />
             )}
           </div>
-          <ListTable listId={section} tasks={allTasks} setTasks={setAllTasks} />
+          <ListTable listId={status} tasks={allTasks} setTasks={setAllTasks} />
         </React.Fragment>
       ))}
     </DragDropContext>
