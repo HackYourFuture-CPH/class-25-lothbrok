@@ -1,12 +1,6 @@
-import React from "react";
-import "./App.css";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import React from 'react';
+import './App.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import {
   Dashboard,
   Project,
@@ -16,56 +10,56 @@ import {
   Message,
   Setting,
   ErrorPage,
-} from "./IndexForImport";
-import LoginPage from "./pages/login/LoginPage";
-import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
-import ResetPassword from "./pages/resetPassword/ResetPassword";
-import SignUp from "./pages/signUp/SignUp";
+} from './IndexForImport';
+import LoginPage from './pages/login/LoginPage';
+import ForgotPassword from './pages/forgotPassword/ForgotPassword';
+import ResetPassword from './pages/resetPassword/ResetPassword';
+import SignUp from './pages/signUp/SignUp';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Dashboard />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/project",
+        path: '/project',
         element: <Project />,
       },
       {
-        path: "/mytask",
+        path: '/mytask',
         element: <MyTask />,
       },
       {
-        path: "/activity",
+        path: '/activity',
         element: <Activity />,
       },
       {
-        path: "/team",
+        path: '/team',
         element: <Team />,
       },
       {
-        path: "/message",
+        path: '/message',
         element: <Message />,
       },
       {
-        path: "/setting",
+        path: '/setting',
         element: <Setting />,
       },
       {
-        path: "/sign-up",
+        path: '/sign-up',
         element: <SignUp />,
       },
       {
-        path: "/login",
+        path: '/login',
         element: <LoginPage />,
       },
       {
-        path: "/forgot-password",
+        path: '/forgot-password',
         element: <ForgotPassword />,
       },
       {
-        path: "/reset-password",
+        path: '/reset-password',
         element: <ResetPassword />,
       },
     ],
@@ -74,7 +68,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <RouterProvider router={router} />
     </div>
   );

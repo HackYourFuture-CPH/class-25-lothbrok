@@ -12,7 +12,7 @@ export const config: Record<string, any> = {
     },
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
   },
   production: {
@@ -26,7 +26,7 @@ export const config: Record<string, any> = {
     },
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
-  }
+  },
 };

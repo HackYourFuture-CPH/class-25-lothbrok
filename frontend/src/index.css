@@ -1,84 +1,82 @@
 :root {
+  --text--10: #ffffff;
+  --text--20: #b3b1bb;
+  --text--40: #7d7a89;
+  --text--60: #55555f;
+  --text--80: #4c4958;
+  --text--100: #2b283d;
 
-  --text--10: #FFFFFF;
-  --text--20: #B3B1BB;
-  --text--40: #7D7A89;
-  --text--60: #55555F;
-  --text--80: #4C4958;
-  --text--100: #2B283D;
+  --purple--10: #dad9f5;
+  --purple--20: #b4b1e5;
+  --purple--40: #7e7bb2;
+  --purple--60: #44408a;
+  --purple--80: #28246f;
+  --purple--100: #110d59;
 
-  --purple--10: #DAD9F5;
-  --purple--20: #B4B1E5;
-  --purple--40: #7E7BB2;
-  --purple--60: #44408A;
-  --purple--80: #28246F;
-  --purple--100: #110D59;
+  --blue--10: #cfe8ff;
+  --blue--20: #a3d1fc;
+  --blue--40: #3f9cf2;
+  --blue--60: #0e77d9;
+  --blue--80: #0b5fae;
+  --blue--100: #08437a;
 
-  --blue--10: #CFE8FF;
-  --blue--20: #A3D1FC;
-  --blue--40: #3F9CF2;
-  --blue--60: #0E77D9;
-  --blue--80: #0B5FAE;
-  --blue--100: #08437A;
+  --cyan--10: #d5ecf5;
+  --cyan--20: #9fd1e4;
+  --cyan--40: #6ab8d6;
+  --cyan--60: #3fa0c6;
+  --cyan--80: #2086ad;
+  --cyan--100: #005f84;
 
-  --cyan--10: #D5ECF5;
-  --cyan--20: #9FD1E4;
-  --cyan--40: #6AB8D6;
-  --cyan--60: #3FA0C6;
-  --cyan--80: #2086AD;
-  --cyan--100: #005F84;
-
-  --green--10: #D9FCF1;
-  --green--20: #C7F8E9;
-  --green--40: #95F4D8;
-  --green--60: #55E7BB;
-  --green--80: #1AC391;
+  --green--10: #d9fcf1;
+  --green--20: #c7f8e9;
+  --green--40: #95f4d8;
+  --green--60: #55e7bb;
+  --green--80: #1ac391;
   --green--100: #039267;
 
-  --green2--10: #DDFBC5;
-  --green2--20: #C2F799;
-  --green2--40: #9AEC59;
-  --green2--60: #76DE24;
-  --green2--80: #5FB918;
-  --green2--100: #49950D;
+  --green2--10: #ddfbc5;
+  --green2--20: #c2f799;
+  --green2--40: #9aec59;
+  --green2--60: #76de24;
+  --green2--80: #5fb918;
+  --green2--100: #49950d;
 
-  --yellow--10: #FCE9C0;
-  --yellow--20: #FDE2A1;
-  --yellow--40: #FFCC5A;
-  --yellow--60: #FFBC26;
-  --yellow--80: #ECAA18;
-  --yellow--100: #D39405;
+  --yellow--10: #fce9c0;
+  --yellow--20: #fde2a1;
+  --yellow--40: #ffcc5a;
+  --yellow--60: #ffbc26;
+  --yellow--80: #ecaa18;
+  --yellow--100: #d39405;
 
-  --orange--10: #FFECDC;
-  --orange--20: #FDD5B2;
-  --orange--40: #F9BC87;
-  --orange--60: #F9BC87;
-  --orange--80: #F18524;
-  --orange--100: #DF6F0B;
+  --orange--10: #ffecdc;
+  --orange--20: #fdd5b2;
+  --orange--40: #f9bc87;
+  --orange--60: #f9bc87;
+  --orange--80: #f18524;
+  --orange--100: #df6f0b;
 
-  --red--10: #FCDBDB;
-  --red--20: #FBB4B4;
-  --red--40: #FF7878;
-  --red--60: #F14D4D;
-  --red--80: #C91616;
+  --red--10: #fcdbdb;
+  --red--20: #fbb4b4;
+  --red--40: #ff7878;
+  --red--60: #f14d4d;
+  --red--80: #c91616;
   --red--100: #980808;
 
-  --magenta--10: #FED5F2;
-  --magenta--20: #F8B0E4;
-  --magenta--40: #F173CE;
-  --magenta--60: #E924B1;
-  --magenta--80: #C11390;
-  --magenta--100: #930C6D;
+  --magenta--10: #fed5f2;
+  --magenta--20: #f8b0e4;
+  --magenta--40: #f173ce;
+  --magenta--60: #e924b1;
+  --magenta--80: #c11390;
+  --magenta--100: #930c6d;
 
-  --lightPurple--10: #F3CEFA;
-  --lightPurple--20: #E3A7ED;
-  --lightPurple--40: #D97DE9;
-  --lightPurple--60: #C750DB;
-  --lightPurple--80: #AF20C7;
-  --lightPurple--100: #800C93;
+  --lightPurple--10: #f3cefa;
+  --lightPurple--20: #e3a7ed;
+  --lightPurple--40: #d97de9;
+  --lightPurple--60: #c750db;
+  --lightPurple--80: #af20c7;
+  --lightPurple--100: #800c93;
 
-  --background--10: #F1F2F4;
-
+  --background--10: #f1f2f4;
 }
 
 body {
@@ -91,14 +89,12 @@ body {
 
 code {
   font-family: 'Manrope', sans-serif;
-
 }
 
 .container {
   margin-inline: auto;
   width: min(90%, 70.5rem);
 }
-
 
 .pages {
   width: 100vw;
@@ -111,23 +107,19 @@ code {
   height: 100vh;
 }
 
-
 @media (min-width: 768px) {
-
   .menu-desktop {
-      display: block;
+    display: block;
   }
 
   .pages {
-      display: grid;
-      grid-template-columns: 20% 80%;
-      width: 100vw;
-      height: 100vh;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    width: 100vw;
+    height: 100vh;
   }
 
   .main {
-      background-color: var(--background--10);
-      
+    background-color: var(--background--10);
   }
-  
 }

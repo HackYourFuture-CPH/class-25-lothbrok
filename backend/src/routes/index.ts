@@ -3,7 +3,7 @@ import auth from "./auth";
 import dashboard from "./dashboard";
 import userRoute from "./user";
 
-import { validateAuth } from "../helpers/auth";
+import { validateAuth } from '../helpers/auth';
 
 const router: Router = express.Router();
 
