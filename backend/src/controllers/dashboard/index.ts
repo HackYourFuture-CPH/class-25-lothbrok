@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 
 export const getAllTasks = async (req: Request, res: Response) => {
   try {
-    const tasks = await db("project_management_db").select("*").from("tasks");
+    const tasks = await db("tasks").select("*").from("tasks");
     res.json(tasks);
   } catch (error) {
     console.log(error);
@@ -31,14 +31,11 @@ export const getTasksForProjectAndUser = async (
 
     res.json(tasks);
   } catch (error) {
-    console.error("Error fetching tasks:", error);
-
     res.status(500).json({ error: "Unable to fetch tasks" });
   }
 };
 
 export const addNewTask = async (req: Request, res: Response) => {
-
   try {
     const {
       description,
@@ -51,7 +48,6 @@ export const addNewTask = async (req: Request, res: Response) => {
       project_id,
     } = req.body;
 
-    // Use Knex.js to insert a new task into the "tasks" table
     await db("tasks").insert({
       description,
       status,
@@ -65,8 +61,6 @@ export const addNewTask = async (req: Request, res: Response) => {
 
     res.status(201).json({ message: "Task created successfully" });
   } catch (error) {
-    console.error("Error creating task:", error);
-    // Send an error response if there's an issue
     res.status(500).json({ error: "Unable to create task" });
   }
 };
