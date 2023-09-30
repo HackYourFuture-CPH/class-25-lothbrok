@@ -58,8 +58,11 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
     const { source, destination } = result;
     if (!destination) return;
     if (source.droppableId !== destination.droppableId) {
+      const tasks = [...allTasks];
+      const [removed] = tasks.splice(source.index, 1);
+      tasks.splice(destination.index, 0, removed);
       setAllTasks(
-        allTasks.map((task) =>
+        tasks.map((task) =>
           String(task.id) === result.draggableId
             ? { ...task, status: destination.droppableId }
             : task,
@@ -125,11 +128,7 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
               />
             )}
           </div>
-          <ListTable
-            listId={section}
-            tasks={allTasks.filter((task) => task.status === section)}
-            setTasks={setAllTasks}
-          />
+          <ListTable listId={section} tasks={allTasks} setTasks={setAllTasks} />
         </React.Fragment>
       ))}
     </DragDropContext>
