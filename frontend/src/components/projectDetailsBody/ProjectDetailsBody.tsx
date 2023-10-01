@@ -23,7 +23,7 @@ const ProjectDetailsBody = ({ task }: ProjectDetailsBodyType) => {
       <div className='project-name'>
         <Checkbox
           readOnly
-          // checked={task.completed}
+          checked={task.completed}
           icon={<RadioButtonUnchecked style={{ color: '#7D7A89' }} />}
           checkedIcon={<CheckCircle style={{ color: '#5FB918' }} />}
         />
