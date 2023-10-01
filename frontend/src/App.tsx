@@ -15,6 +15,7 @@ import LoginPage from './pages/login/LoginPage';
 import ForgotPassword from './pages/forgotPassword/ForgotPassword';
 import ResetPassword from './pages/resetPassword/ResetPassword';
 import SignUp from './pages/signUp/SignUp';
+import ProjectView from './pages/projectView/ProjectView';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
         path: '/project',
         element: <Project />,
       },
+      { path: '/project/:id', element: <ProjectView /> },
       {
         path: '/mytask',
         element: <MyTask />,
