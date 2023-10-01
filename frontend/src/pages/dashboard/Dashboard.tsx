@@ -24,7 +24,9 @@ const Dashboard = () => {
               Authorization: `Bearer ${accessToken.token}`,
             },
           });
-          res.ok ? navigate('/') : navigate('/login');
+          if (!res.ok) {
+            navigate('/login');
+          }
           setLoading(false);
         } catch (e) {
           console.error(e);
