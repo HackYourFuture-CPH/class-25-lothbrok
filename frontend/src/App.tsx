@@ -1,16 +1,7 @@
 import React from 'react';
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import {
-  Dashboard,
-  Project,
-  MyTask,
-  Activity,
-  Team,
-  Message,
-  Setting,
-  ErrorPage,
-} from './IndexForImport';
+import { Dashboard, MyTask, Activity, Team, Message, Setting, ErrorPage } from './IndexForImport';
 import LoginPage from './pages/login/LoginPage';
 import ForgotPassword from './pages/forgotPassword/ForgotPassword';
 import ResetPassword from './pages/resetPassword/ResetPassword';
@@ -25,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/project',
-        element: <Project />,
+        element: <ProjectList />,
       },
       {
         path: '/mytask',
@@ -62,10 +53,6 @@ const router = createBrowserRouter([
       {
         path: '/reset-password',
         element: <ResetPassword />,
-      },
-      {
-        path: '/project-page',
-        element: <ProjectList />,
       },
     ],
   },
