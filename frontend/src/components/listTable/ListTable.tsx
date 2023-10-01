@@ -59,62 +59,67 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }: ListTa
         <Droppable droppableId={listId} isDropDisabled={false}>
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
-              {tasks.map((task, index) => {
-                return (
-                  <Draggable key={task.id} draggableId={String(task.id)} index={index}>
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
+              {tasks
+                .filter((task) => task.status === listId)
+                .map((task) => {
+                  const globalIndex = tasks.findIndex((item) => item.id === task.id);
+                  return (
+                    <Draggable key={task.id} draggableId={String(task.id)} index={globalIndex}>
+                      {(provided) => (
                         <div
-                          onClick={(e) => handleOpenDetails(e, task.id)}
-                          className='grid-container task-row'
-                          key={task.id}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
                         >
                           <div
-                            className={`grid-item title ${task.completed ? 'completed-task' : ''}`}
+                            onClick={(e) => handleOpenDetails(e, task.id)}
+                            className='grid-container task-row'
+                            key={task.id}
                           >
-                            <Checkbox
-                              checked={task.completed}
-                              icon={<RadioButtonUnchecked style={{ color: '#7D7A89' }} />}
-                              checkedIcon={<CheckCircle style={{ color: '#5FB918' }} />}
-                              onClick={() => handleCheckbox(task)}
-                            />
-                            {task.description}
-                          </div>
-                          <div className='grid-item'>
-                            {task.due_date
-                              ? new Date(task.due_date).toLocaleString('en-GB', {
-                                  day: 'numeric',
-                                  month: 'short',
-                                })
-                              : '—'}
-                          </div>
-                          {!isMobile ? (
-                            <div className='grid-item'>
-                              <Flag
-                                style={{
-                                  color:
-                                    task.priority === 'easy'
-                                      ? '#1AC391'
-                                      : task.priority === 'hard'
-                                      ? '#F14D4D'
-                                      : '#F18524',
-                                }}
+                            <div
+                              className={`grid-item title ${
+                                task.completed ? 'completed-task' : ''
+                              }`}
+                            >
+                              <Checkbox
+                                checked={task.completed}
+                                icon={<RadioButtonUnchecked style={{ color: '#7D7A89' }} />}
+                                checkedIcon={<CheckCircle style={{ color: '#5FB918' }} />}
+                                onClick={() => handleCheckbox(task)}
                               />
-                              {task.priority}
+                              {task.description}
                             </div>
-                          ) : null}
+                            <div className='grid-item'>
+                              {task.due_date
+                                ? new Date(task.due_date).toLocaleString('en-GB', {
+                                    day: 'numeric',
+                                    month: 'short',
+                                  })
+                                : '—'}
+                            </div>
+                            {!isMobile ? (
+                              <div className='grid-item'>
+                                <Flag
+                                  style={{
+                                    color:
+                                      task.priority === 'easy'
+                                        ? '#1AC391'
+                                        : task.priority === 'hard'
+                                        ? '#F14D4D'
+                                        : '#F18524',
+                                  }}
+                                />
+                                {task.priority}
+                              </div>
+                            ) : null}
 
-                          <div className='grid-item'>{task.assignee}</div>
+                            <div className='grid-item'>{task.assignee}</div>
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </Draggable>
-                );
-              })}
+                      )}
+                    </Draggable>
+                  );
+                })}
               {provided.placeholder}
             </div>
           )}
