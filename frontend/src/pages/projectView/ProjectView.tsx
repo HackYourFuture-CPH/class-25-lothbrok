@@ -37,6 +37,7 @@ const ProjectView = () => {
   const [view, setView] = useState<string>('list');
   const { task } = useTaskStore();
   console.log(task);
+
   useEffect(() => {
     if (id) {
       setTasks(allTasks.filter((task) => task.project_id === +id));

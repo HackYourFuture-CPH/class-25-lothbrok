@@ -1,10 +1,14 @@
 import React from 'react';
 import './ProjectDetailsBody.css';
+import { Checkbox } from '@mui/material';
 import {
   CheckCircleRounded,
   AccountCircleRounded,
   CalendarMonthRounded,
   FlagRounded,
+  CheckCircle,
+  RadioButtonUnchecked,
+  Flag,
 } from '@mui/icons-material/';
 
 import { Task } from '../../pages/projectView/ProjectView';
@@ -17,7 +21,10 @@ const ProjectDetailsBody = ({ task }: ProjectDetailsBodyType) => {
   return (
     <div className='details-title'>
       <div className='project-name'>
-        <CheckCircleRounded id='check-icon' />
+        <Checkbox
+          icon={<RadioButtonUnchecked style={{ color: task.completed ? '#7D7A89' : '#fffff' }} />}
+          checkedIcon={<CheckCircle style={{ color: task.completed ? '#5FB918' : '#66666' }} />}
+        />
         <div className='label'>
           <p>Bookum App</p>
           <h6>{task.description}</h6>
