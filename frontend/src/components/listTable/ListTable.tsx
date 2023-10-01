@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Task } from '../../pages/projectView/ProjectView';
+import { Task } from '../../types/Task';
 import { Checkbox, useMediaQuery } from '@mui/material';
 import { CheckCircle, RadioButtonUnchecked, Flag } from '@mui/icons-material';
 import { Draggable, Droppable } from 'react-beautiful-dnd';

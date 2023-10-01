@@ -22,8 +22,9 @@ const ProjectDetailsBody = ({ task }: ProjectDetailsBodyType) => {
     <div className='details-title'>
       <div className='project-name'>
         <Checkbox
-          icon={<RadioButtonUnchecked style={{ color: task.completed ? '#7D7A89' : '#fffff' }} />}
-          checkedIcon={<CheckCircle style={{ color: task.completed ? '#5FB918' : '#66666' }} />}
+          checked={task.completed}
+          icon={<RadioButtonUnchecked style={{ color: '#7D7A89' }} />}
+          checkedIcon={<CheckCircle style={{ color: '#5FB918' }} />}
         />
         <div className='label'>
           <p>Bookum App</p>
@@ -36,7 +37,6 @@ const ProjectDetailsBody = ({ task }: ProjectDetailsBodyType) => {
           <div className='status'>
             <div className='icon-and-name'>
               <p>Assignee</p>
-              {/* <img src="" alt="avatar" className="avatar"/> */}
               <AccountCircleRounded />
               <p>{task.assignee}</p>{' '}
             </div>

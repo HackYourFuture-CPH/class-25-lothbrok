@@ -9,7 +9,6 @@ type ProjectDetailsType = {
 };
 
 const ProjectDetails = ({ task }: ProjectDetailsType) => {
-  console.log(task);
   return (
     <div className='projectDetails'>
       <ProjectDetailsHeader />

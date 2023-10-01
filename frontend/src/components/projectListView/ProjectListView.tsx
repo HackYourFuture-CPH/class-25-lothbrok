@@ -1,4 +1,4 @@
-import { Task } from '../../pages/projectView/ProjectView';
+import { Task } from '../../types/Task';
 import React, { useState, useEffect } from 'react';
 import ListTable from '../listTable/ListTable';
 import { AddCircleOutline } from '@mui/icons-material';
@@ -13,10 +13,12 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
   const [allTasks, setAllTasks] = useState<Task[]>(tasks);
   const [description, setDescription] = useState<string>('');
   const [editing, setEditing] = useState<string>('');
-  const documentation = 'documentation';
-  const ongoing = 'ongoing';
-  const todo = 'to_do';
-  const done = 'done';
+  const categories = {
+    Documentation: 'documentation',
+    Ongoing: 'ongoing',
+    Todo: 'to_do',
+    Done: 'done',
+  };
 
   const { id } = useParams();
   const [userId, setUserId] = useState<string>('');
@@ -56,8 +58,11 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
     const { source, destination } = result;
     if (!destination) return;
     if (source.droppableId !== destination.droppableId) {
+      const tasks = [...allTasks];
+      const [removed] = tasks.splice(source.index, 1);
+      tasks.splice(destination.index, 0, removed);
       setAllTasks(
-        allTasks.map((task) =>
+        tasks.map((task) =>
           String(task.id) === result.draggableId
             ? { ...task, status: destination.droppableId }
             : task,
@@ -80,23 +85,15 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      {[documentation, ongoing, todo, done].map((section) => (
-        <React.Fragment key={section}>
+      {Object.entries(categories).map(([title, status]) => (
+        <React.Fragment key={status}>
           <div className='section-title'>
-            <h4>
-              {section === documentation
-                ? 'Documentation'
-                : section === ongoing
-                ? 'Ongoing'
-                : section === todo
-                ? 'Pending'
-                : 'Done'}
-            </h4>
-            {editing === section ? (
+            <h4>{title}</h4>
+            {editing === status ? (
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  addNewTask(section);
+                  addNewTask(status);
                   setEditing('');
                   setDescription('');
                 }}
@@ -117,15 +114,11 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
             ) : (
               <AddCircleOutline
                 sx={{ cursor: 'pointer' }}
-                onClick={() => editDescription(section)}
+                onClick={() => editDescription(status)}
               />
             )}
           </div>
-          <ListTable
-            listId={section}
-            tasks={allTasks.filter((task) => task.status === section)}
-            setTasks={setAllTasks}
-          />
+          <ListTable listId={status} tasks={allTasks} setTasks={setAllTasks} />
         </React.Fragment>
       ))}
     </DragDropContext>
