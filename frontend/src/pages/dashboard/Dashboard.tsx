@@ -1,12 +1,14 @@
 import './Dashboard.css';
 import { Outlet } from 'react-router-dom';
 import { Header, MenuDesktop } from '../../IndexForImport';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Dashboard.css';
 import { useNavigate } from 'react-router-dom';
 import { signOut, User, getAuth, onAuthStateChanged } from '@firebase/auth';
 
 const Dashboard = () => {
+  const [loading, setLoading] = useState<boolean>(true);
+
   const navigate = useNavigate();
   const handleSignOut = () => signOut(getAuth());
 
@@ -23,6 +25,7 @@ const Dashboard = () => {
             },
           });
           res.ok ? navigate('/') : navigate('/login');
+          setLoading(false);
         } catch (e) {
           console.error(e);
         }
@@ -37,16 +40,22 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className='pages'>
-      <div className='menu-desktop'>
-        <MenuDesktop />
-      </div>
-      <div className='main'>
-        <Header />
-        <Outlet />
-        <button onClick={handleSignOut}>Sign out</button>
-      </div>
-    </div>
+    <>
+      {loading ? (
+        <></>
+      ) : (
+        <div className='pages'>
+          <div className='menu-desktop'>
+            <MenuDesktop />
+          </div>
+          <div className='main'>
+            <Header />
+            <Outlet />
+            <button onClick={handleSignOut}>Sign out</button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
