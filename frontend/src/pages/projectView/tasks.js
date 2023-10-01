@@ -8,7 +8,7 @@ const allTasks = [
     completed: true,
     priority: 'medium',
     project_id: 1,
-    user_id: 1
+    user_id: 1,
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const allTasks = [
     completed: false,
     priority: 'easy',
     project_id: 2,
-    user_id: 2
+    user_id: 2,
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ const allTasks = [
     completed: false,
     priority: 'medium',
     project_id: 3,
-    user_id: 3
+    user_id: 3,
   },
   {
     id: 4,
@@ -41,7 +41,7 @@ const allTasks = [
     completed: true,
     priority: 'hard',
     project_id: 4,
-    user_id: 4
+    user_id: 4,
   },
   {
     id: 5,
@@ -52,7 +52,7 @@ const allTasks = [
     completed: false,
     priority: 'easy',
     project_id: 5,
-    user_id: 5
+    user_id: 5,
   },
   {
     id: 6,
@@ -63,7 +63,7 @@ const allTasks = [
     completed: false,
     priority: 'medium',
     project_id: 1,
-    user_id: 1
+    user_id: 1,
   },
   {
     id: 7,
@@ -74,7 +74,7 @@ const allTasks = [
     completed: false,
     priority: 'medium',
     project_id: 2,
-    user_id: 2
+    user_id: 2,
   },
   {
     id: 8,
@@ -85,7 +85,7 @@ const allTasks = [
     completed: true,
     priority: 'hard',
     project_id: 3,
-    user_id: 3
+    user_id: 3,
   },
   {
     id: 9,
@@ -96,7 +96,7 @@ const allTasks = [
     completed: true,
     priority: 'easy',
     project_id: 4,
-    user_id: 4
+    user_id: 4,
   },
   {
     id: 10,
@@ -107,7 +107,7 @@ const allTasks = [
     completed: false,
     priority: 'medium',
     project_id: 5,
-    user_id: 5
+    user_id: 5,
   },
   {
     id: 11,
@@ -118,7 +118,7 @@ const allTasks = [
     completed: false,
     priority: 'easy',
     project_id: 1,
-    user_id: 1
+    user_id: 1,
   },
   {
     id: 12,
@@ -129,7 +129,7 @@ const allTasks = [
     completed: true,
     priority: 'hard',
     project_id: 2,
-    user_id: 2
+    user_id: 2,
   },
   {
     id: 13,
@@ -140,7 +140,7 @@ const allTasks = [
     completed: false,
     priority: 'medium',
     project_id: 3,
-    user_id: 3
+    user_id: 3,
   },
   {
     id: 14,
@@ -151,7 +151,7 @@ const allTasks = [
     completed: false,
     priority: 'medium',
     project_id: 4,
-    user_id: 4
+    user_id: 4,
   },
   {
     id: 15,
@@ -162,7 +162,7 @@ const allTasks = [
     completed: true,
     priority: 'easy',
     project_id: 5,
-    user_id: 5
+    user_id: 5,
   },
   {
     id: 16,
@@ -173,7 +173,7 @@ const allTasks = [
     completed: true,
     priority: 'medium',
     project_id: 1,
-    user_id: 1
+    user_id: 1,
   },
   {
     id: 17,
@@ -184,7 +184,7 @@ const allTasks = [
     completed: false,
     priority: 'medium',
     project_id: 2,
-    user_id: 2
+    user_id: 2,
   },
   {
     id: 18,
@@ -195,7 +195,7 @@ const allTasks = [
     completed: false,
     priority: 'hard',
     project_id: 3,
-    user_id: 3
+    user_id: 3,
   },
   {
     id: 19,
@@ -206,7 +206,7 @@ const allTasks = [
     completed: true,
     priority: 'easy',
     project_id: 4,
-    user_id: 4
+    user_id: 4,
   },
   {
     id: 20,
@@ -217,7 +217,7 @@ const allTasks = [
     completed: true,
     priority: 'medium',
     project_id: 5,
-    user_id: 5
+    user_id: 5,
   },
   {
     id: 21,
@@ -228,8 +228,8 @@ const allTasks = [
     completed: true,
     priority: 'medium',
     project_id: 1,
-    user_id: 1
-  }
+    user_id: 1,
+  },
 ];
 
 export default allTasks;

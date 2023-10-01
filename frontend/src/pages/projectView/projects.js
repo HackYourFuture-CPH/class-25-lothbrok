@@ -6,7 +6,7 @@ const projects = [
     thumbnail_link: 'thumbnail_a.jpg',
     date_of_creation: '2023-09-20',
     amount_of_tasks: 5,
-    user_id: 1
+    user_id: 1,
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ const projects = [
     thumbnail_link: 'thumbnail_b.jpg',
     date_of_creation: '2023-09-21',
     amount_of_tasks: 8,
-    user_id: 2
+    user_id: 2,
   },
   {
     id: 3,
@@ -24,7 +24,7 @@ const projects = [
     thumbnail_link: 'thumbnail_c.jpg',
     date_of_creation: '2023-09-22',
     amount_of_tasks: 3,
-    user_id: 3
+    user_id: 3,
   },
   {
     id: 4,
@@ -33,7 +33,7 @@ const projects = [
     thumbnail_link: 'thumbnail_d.jpg',
     date_of_creation: '2023-09-23',
     amount_of_tasks: 7,
-    user_id: 4
+    user_id: 4,
   },
   {
     id: 5,
@@ -42,8 +42,8 @@ const projects = [
     thumbnail_link: 'thumbnail_e.jpg',
     date_of_creation: '2023-09-24',
     amount_of_tasks: 10,
-    user_id: 5
-  }
+    user_id: 5,
+  },
 ];
 
 export default projects;

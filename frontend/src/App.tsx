@@ -9,7 +9,7 @@ import {
   Team,
   Message,
   Setting,
-  ErrorPage
+  ErrorPage,
 } from './IndexForImport';
 import LoginPage from './pages/login/LoginPage';
 import ForgotPassword from './pages/forgotPassword/ForgotPassword';
@@ -25,47 +25,47 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/project',
-        element: <Project />
+        element: <Project />,
       },
       { path: '/project/:id', element: <ProjectView /> },
       {
         path: '/mytask',
-        element: <MyTask />
+        element: <MyTask />,
       },
       {
         path: '/activity',
-        element: <Activity />
+        element: <Activity />,
       },
       {
         path: '/team',
-        element: <Team />
+        element: <Team />,
       },
       {
         path: '/message',
-        element: <Message />
+        element: <Message />,
       },
       {
         path: '/setting',
-        element: <Setting />
+        element: <Setting />,
       },
-      {
-        path: '/sign-up',
-        element: <SignUp />
-      },
-      {
-        path: '/login',
-        element: <LoginPage />
-      },
-      {
-        path: '/forgot-password',
-        element: <ForgotPassword />
-      },
-      {
-        path: '/reset-password',
-        element: <ResetPassword />
-      }
-    ]
-  }
+    ],
+  },
+  {
+    path: '/sign-up',
+    element: <SignUp />,
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
+  },
+  {
+    path: '/forgot-password',
+    element: <ForgotPassword />,
+  },
+  {
+    path: '/reset-password',
+    element: <ResetPassword />,
+  },
 ]);
 
 function App() {
