@@ -1,12 +1,13 @@
 import db from '../../config/db-config';
 import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 
 export const getAllTasks = async (req: Request, res: Response) => {
   try {
     const tasks = await db('tasks').select('*').from('tasks');
-    res.json(tasks);
+    res.status(StatusCodes.OK).send(tasks);
   } catch (error) {
-    res.status(401);
+    res.status(StatusCodes.UNAUTHORIZED);
   }
 };
 
@@ -26,9 +27,9 @@ export const getTasksForProjectAndUser = async (req: Request, res: Response) => 
       .leftJoin('projects', 'tasks.project_id', 'projects.id')
       .leftJoin('users', 'tasks.user_id', 'users.id');
 
-    res.json(tasks);
+    res.status(StatusCodes.OK).send(tasks);
   } catch (error) {
-    res.status(401);
+    res.status(StatusCodes.UNAUTHORIZED);
   }
 };
 
@@ -48,8 +49,8 @@ export const addNewTask = async (req: Request, res: Response) => {
       project_id,
     });
 
-    res.status(201);
+    res.status(StatusCodes.CREATED);
   } catch (error) {
-    res.status(500);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 };

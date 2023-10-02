@@ -30,7 +30,7 @@ export const updateProfileInFirebase = async (req: Request, res: Response) => {
     }
     res.status(StatusCodes.OK).send({ user });
   } catch (error) {
-    res.send(StatusCodes.INTERNAL_SERVER_ERROR);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 };
 
@@ -48,7 +48,7 @@ export const updateUserByIdInDB = async (req: Request, res: Response) => {
     }
     res.status(StatusCodes.OK).send({ userInfo });
   } catch (error) {
-    res.send(StatusCodes.INTERNAL_SERVER_ERROR);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 };
 
