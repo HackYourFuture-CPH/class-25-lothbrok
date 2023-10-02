@@ -1,7 +1,7 @@
 import { Task } from '../../types/Task';
 import React, { useState, useEffect } from 'react';
 import ListTable from '../listTable/ListTable';
-import { AddCircleOutline } from '@mui/icons-material';
+import { Add } from '@mui/icons-material';
 import { TextField } from '@mui/material';
 import './projectList.css';
 import { v4 as uuid } from 'uuid';
@@ -113,7 +113,7 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
                 />
               </form>
             ) : (
-              <AddCircleOutline sx={{ cursor: 'pointer' }} onClick={() => editTitle(status)} />
+              <Add sx={{ cursor: 'pointer' }} onClick={() => editTitle(status)} />
             )}
           </div>
           <ListTable listId={status} tasks={allTasks} setTasks={setAllTasks} />
