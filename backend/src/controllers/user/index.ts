@@ -2,14 +2,15 @@ import { Request, Response } from 'express';
 import { adminFireAuth } from '../../firebase';
 import { user } from '../../interfaces/user';
 import db from '../../config/db-config';
+import { StatusCodes } from 'http-status-codes';
 
 export const getUserById = async (req: Request, res: Response) => {
   try {
     const uid = req.params.uid;
     const user = await adminFireAuth.getUser(uid);
-    res.status(200).send({ user });
+    res.status(StatusCodes.OK).send({ user });
   } catch (error) {
-    res.status(404);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 };
 
@@ -24,10 +25,12 @@ export const updateProfileInFirebase = async (req: Request, res: Response) => {
       phoneNumber: phone_number,
       email: email,
     });
-
-    res.status(200).send({ user });
+    if (!user) {
+      res.status(StatusCodes.NOT_FOUND);
+    }
+    res.status(StatusCodes.OK).send({ user });
   } catch (error) {
-    res.status(404);
+    res.send(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 };
 
@@ -40,10 +43,12 @@ export const updateUserByIdInDB = async (req: Request, res: Response) => {
     const userInfo = await db('users')
       .where('uid', uid)
       .update(first_name, last_name, photourl, phone_number);
-
-    res.status(200).send({ userInfo });
+    if (!userInfo) {
+      res.status(StatusCodes.NOT_FOUND);
+    }
+    res.status(StatusCodes.OK).send({ userInfo });
   } catch (error) {
-    res.status(404);
+    res.send(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 };
 
@@ -60,8 +65,8 @@ export const registerUserToDb = async (req: Request, res: Response) => {
       phone_number,
     });
 
-    res.status(200).send({ newUser });
+    res.status(StatusCodes.OK).send({ newUser });
   } catch (error) {
-    res.status(500);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 };
