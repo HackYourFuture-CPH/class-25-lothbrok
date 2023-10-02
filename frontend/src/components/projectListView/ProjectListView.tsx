@@ -11,7 +11,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 
 const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
   const [allTasks, setAllTasks] = useState<Task[]>(tasks);
-  const [description, setDescription] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
   const [editing, setEditing] = useState<string>('');
   const categories = {
     Documentation: 'documentation',
@@ -36,12 +36,13 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
   }, []);
 
   const addNewTask = (status: string) => {
-    if (id && description.trim()) {
+    if (id && title.trim()) {
       setAllTasks([
-        ...tasks,
+        ...allTasks,
         {
           id: uuid(), // for mocked data
-          description,
+          title,
+          description: '',
           status,
           due_date: '',
           assignee: '',
@@ -78,31 +79,31 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
     }
   };
 
-  const editDescription = (status: string) => {
+  const editTitle = (status: string) => {
     setEditing(status);
-    setDescription('');
+    setTitle('');
   };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      {Object.entries(categories).map(([title, status]) => (
+      {Object.entries(categories).map(([sectionTitle, status]) => (
         <React.Fragment key={status}>
           <div className='section-title'>
-            <h4>{title}</h4>
+            <h4>{sectionTitle}</h4>
             {editing === status ? (
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
                   addNewTask(status);
                   setEditing('');
-                  setDescription('');
+                  setTitle('');
                 }}
               >
                 <TextField
                   placeholder='New Task Title'
                   variant='filled'
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                   inputProps={{
                     style: {
                       padding: 5,
@@ -112,10 +113,7 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
                 />
               </form>
             ) : (
-              <AddCircleOutline
-                sx={{ cursor: 'pointer' }}
-                onClick={() => editDescription(status)}
-              />
+              <AddCircleOutline sx={{ cursor: 'pointer' }} onClick={() => editTitle(status)} />
             )}
           </div>
           <ListTable listId={status} tasks={allTasks} setTasks={setAllTasks} />
