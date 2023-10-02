@@ -8,6 +8,8 @@ import {
   Checkbox,
   FormControlLabel,
   Typography,
+  Alert,
+  AlertTitle,
 } from '@mui/material';
 import logo from '../../assets/images/Logo for auth.jpg';
 import image from '../../assets/images/Stuck at Home Imagination.jpg';
@@ -31,12 +33,13 @@ type FormData = {
 
 const LoginPage: React.FC = () => {
   const [rememberMe, setRememberMe] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const navigate = useNavigate();
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
   } = useForm<FormData>();
 
   useEffect(() => {
@@ -53,8 +56,15 @@ const LoginPage: React.FC = () => {
       const auth = getAuth();
       await setPersistence(auth, rememberMe ? browserLocalPersistence : browserSessionPersistence);
       await signInWithEmailAndPassword(auth, data.email, data.password);
-    } catch (e) {
-      console.error(e);
+      setErrorMessage('');
+    } catch (e: any) {
+      if (e.code === 'auth/invalid-login-credentials') {
+        setErrorMessage('Invalid email or password');
+      } else if (e.message) {
+        setErrorMessage(e.message);
+      } else {
+        setErrorMessage('Something went wrong. Please try again');
+      }
     }
   };
 
@@ -65,7 +75,12 @@ const LoginPage: React.FC = () => {
         alt='Image'
         style={{ width: '140px', height: '30px', top: '40px', left: '76px' }}
       />
-
+      {errorMessage ? (
+        <Alert severity='error' onClose={() => setErrorMessage('')}>
+          <AlertTitle>Error</AlertTitle>
+          {errorMessage}
+        </Alert>
+      ) : null}
       <Grid container justifyContent='center' alignItems='center' style={{ height: '100vh' }}>
         <Grid item xs={12} sm={6}>
           <Typography
@@ -175,14 +190,14 @@ const LoginPage: React.FC = () => {
               color='primary'
               fullWidth
               type='submit'
-              disabled={Object.keys(errors).length > 0}
+              disabled={!isDirty || !isValid}
             >
               Login
             </Button>
           </form>
 
           <Typography variant='body2'>
-            Do not have an account?{' '}
+            Don&apos;t have an account?
             <Link to={'/sign-up'} className='sign'>
               Sign up
             </Link>
