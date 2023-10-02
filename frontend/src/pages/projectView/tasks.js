@@ -2,7 +2,8 @@ const allTasks = [
   {
     id: 1,
     title: 'Task 1',
-    description: 'This is a random description for Task 1',
+    description:
+      'This is a random description for Task 1 This is a random description for Task 1 This is a random description for Task 1',
     status: 'documentation',
     due_date: '2023-09-25',
     assignee: 'John Doe',

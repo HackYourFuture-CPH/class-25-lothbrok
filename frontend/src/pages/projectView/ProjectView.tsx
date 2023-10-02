@@ -8,13 +8,15 @@ import ProjectListView from '../../components/projectListView/ProjectListView';
 import { Task } from '../../types/Task';
 import { Project } from '../../types/Project';
 import ProjectKanbanView from '../../components/projectKanbanView/ProjectKanbanView';
+import { useMediaQuery } from '@mui/material';
 
 const ProjectView = () => {
   const { id } = useParams();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [project, setProject] = useState<Project>();
-  const [view, setView] = useState<string>('list');
+  const [view, setView] = useState<string>('kanban');
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
 
   useEffect(() => {
     if (id) {
@@ -57,7 +59,7 @@ const ProjectView = () => {
             </span>
           </div>
         </div>
-        <div className='manrope-font'>
+        <div className={`manrope-font  ${!isDesktop && view === 'kanban' ? 'kanban-view' : null}`}>
           {view === 'kanban' ? (
             <ProjectKanbanView tasks={tasks} />
           ) : view === 'list' ? (

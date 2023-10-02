@@ -1,15 +1,15 @@
 import { Task } from '../../types/Task';
 import React, { useState, useEffect } from 'react';
-import ListTable from '../listTable/ListTable';
 import { Add } from '@mui/icons-material';
 import { TextField } from '@mui/material';
-import './projectList.css';
 import { v4 as uuid } from 'uuid';
 import { useParams } from 'react-router-dom';
 import { User, getAuth, onAuthStateChanged } from '@firebase/auth';
 import { DragDropContext } from 'react-beautiful-dnd';
+import './projectKanbanView.css';
+import KanbanColumn from '../kanbanColumn/KanbanColumn';
 
-const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
+const ProjectKanbanView = ({ tasks }: { tasks: Task[] }) => {
   const [allTasks, setAllTasks] = useState<Task[]>(tasks);
   const [title, setTitle] = useState<string>('');
   const [editing, setEditing] = useState<string>('');
@@ -86,41 +86,46 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      {Object.entries(categories).map(([sectionTitle, status]) => (
-        <React.Fragment key={status}>
-          <div className='section-title'>
-            <h4>{sectionTitle}</h4>
-            {editing === status ? (
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  addNewTask(status);
-                  setEditing('');
-                  setTitle('');
-                }}
-              >
-                <TextField
-                  placeholder='New Task Title'
-                  variant='filled'
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  inputProps={{
-                    style: {
-                      padding: 5,
-                      background: 'white',
-                    },
+      <div className='kanban'>
+        {Object.entries(categories).map(([sectionTitle, status]) => (
+          <div className='column' key={status}>
+            <div className='section-title'>
+              <h4>{sectionTitle}</h4>
+              {editing === status ? (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    addNewTask(status);
+                    setEditing('');
+                    setTitle('');
                   }}
+                >
+                  <TextField
+                    placeholder='New Task Title'
+                    variant='filled'
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    inputProps={{
+                      style: {
+                        padding: 5,
+                        background: 'white',
+                      },
+                    }}
+                  />
+                </form>
+              ) : (
+                <Add
+                  sx={{ cursor: 'pointer', color: '#7D7A89' }}
+                  onClick={() => editTitle(status)}
                 />
-              </form>
-            ) : (
-              <Add sx={{ cursor: 'pointer', color: '#7D7A89' }} onClick={() => editTitle(status)} />
-            )}
+              )}
+            </div>
+            <KanbanColumn listId={status} tasks={allTasks} setTasks={setAllTasks} />
           </div>
-          <ListTable listId={status} tasks={allTasks} setTasks={setAllTasks} />
-        </React.Fragment>
-      ))}
+        ))}
+      </div>
     </DragDropContext>
   );
 };
 
-export default ProjectListView;
+export default ProjectKanbanView;
