@@ -65,7 +65,7 @@ const ProjectDetailsRest = () => {
           </p>
         </div>
         <div className='comment'>
-          <div className='comment-section'>
+          <div className='comment-section comment-part'>
             <Circle />
             <p>Superboard</p>
           </div>

@@ -85,7 +85,7 @@ h6 {
 }
 
 .status-box {
-  width: 82px;
+  max-width: fit-content;
   height: 29px;
   border-radius: 6px;
   padding: 4px 12px;

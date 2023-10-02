@@ -52,13 +52,21 @@ const ProjectDetailsBody = ({ task }: ProjectDetailsBodyType) => {
           <div className='status'>
             <div className='icon-and-name'>
               <p>Priority</p>
-              <FlagRounded />
+              <Flag
+                style={{
+                  color:
+                    task.priority === 'easy'
+                      ? '#1AC391'
+                      : task.priority === 'hard'
+                      ? '#F14D4D'
+                      : '#F18524',
+                }}
+              />
               <p>{task.priority}</p>
             </div>
           </div>
           <div className='status'>
             <div className='status-box'>
-              <p>Status</p>
               <p>{task.status}</p>
             </div>
           </div>
