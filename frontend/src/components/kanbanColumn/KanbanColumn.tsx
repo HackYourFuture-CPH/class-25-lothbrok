@@ -28,7 +28,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ tasks, listId }) => {
     <div className='border-radius'>
       <Droppable droppableId={listId} isDropDisabled={false}>
         {(provided) => (
-          <div {...provided.droppableProps} ref={provided.innerRef}>
+          <div className='droppable' {...provided.droppableProps} ref={provided.innerRef}>
             {tasks
               .filter((task) => task.status === listId)
               .map((task) => {

@@ -1,89 +1,23 @@
-import { Task } from '../../types/Task';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ListTable from '../listTable/ListTable';
 import { Add } from '@mui/icons-material';
 import { TextField } from '@mui/material';
 import './projectList.css';
-import { v4 as uuid } from 'uuid';
-import { useParams } from 'react-router-dom';
-import { User, getAuth, onAuthStateChanged } from '@firebase/auth';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { ViewProps } from '../../types/ViewProps';
 
-const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
-  const [allTasks, setAllTasks] = useState<Task[]>(tasks);
-  const [title, setTitle] = useState<string>('');
-  const [editing, setEditing] = useState<string>('');
-  const categories = {
-    Documentation: 'documentation',
-    Ongoing: 'ongoing',
-    Todo: 'to_do',
-    Done: 'done',
-  };
-
-  const { id } = useParams();
-  const [userId, setUserId] = useState<string>('');
-
-  useEffect(() => {
-    const setUser = () => {
-      const auth = getAuth();
-      onAuthStateChanged(auth, async (user: User | null) => {
-        if (user) {
-          setUserId(user.uid);
-        }
-      });
-    };
-    setUser();
-  }, []);
-
-  const addNewTask = (status: string) => {
-    if (id && title.trim()) {
-      setAllTasks([
-        ...allTasks,
-        {
-          id: uuid(), // for mocked data
-          title,
-          description: '',
-          status,
-          due_date: '',
-          assignee: '',
-          completed: false,
-          priority: '',
-          project_id: +id,
-          user_id: userId,
-        },
-      ]);
-    }
-  };
-
-  const onDragEnd = (result: any) => {
-    const { source, destination } = result;
-    if (!destination) return;
-    if (source.droppableId !== destination.droppableId) {
-      const tasks = [...allTasks];
-      const [removed] = tasks.splice(source.index, 1);
-      tasks.splice(destination.index, 0, removed);
-      setAllTasks(
-        tasks.map((task) =>
-          String(task.id) === result.draggableId
-            ? { ...task, status: destination.droppableId }
-            : task,
-        ),
-      );
-    } else {
-      setAllTasks((allTasks) => {
-        const tasks = [...allTasks];
-        const [removed] = tasks.splice(source.index, 1);
-        tasks.splice(destination.index, 0, removed);
-        return tasks;
-      });
-    }
-  };
-
-  const editTitle = (status: string) => {
-    setEditing(status);
-    setTitle('');
-  };
-
+const ProjectListView = ({
+  tasks,
+  setTasks,
+  title,
+  setTitle,
+  editing,
+  setEditing,
+  addNewTask,
+  onDragEnd,
+  editTitle,
+  categories,
+}: ViewProps) => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       {Object.entries(categories).map(([sectionTitle, status]) => (
@@ -116,7 +50,7 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
               <Add sx={{ cursor: 'pointer', color: '#7D7A89' }} onClick={() => editTitle(status)} />
             )}
           </div>
-          <ListTable listId={status} tasks={allTasks} setTasks={setAllTasks} />
+          <ListTable listId={status} tasks={tasks} setTasks={setTasks} />
         </React.Fragment>
       ))}
     </DragDropContext>

@@ -1,26 +1,47 @@
-import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import allTasks from './tasks';
-import projects from './projects';
-import thumbnail from '../../assets/images/Rectangle 3025.svg';
+import { useParams } from 'react-router-dom';
+import { v4 as uuid } from 'uuid';
+import { User, getAuth, onAuthStateChanged } from '@firebase/auth';
 import './projectView.css';
+import thumbnail from '../../assets/images/Rectangle 3025.svg';
 import ProjectListView from '../../components/projectListView/ProjectListView';
+import ProjectKanbanView from '../../components/projectKanbanView/ProjectKanbanView';
 import { Task } from '../../types/Task';
 import { Project } from '../../types/Project';
-import ProjectKanbanView from '../../components/projectKanbanView/ProjectKanbanView';
-import { useMediaQuery } from '@mui/material';
+import projects from './projects';
+import allTasks from './tasks';
+import { Categories } from '../../types/Categories';
+import { ViewProps } from '../../types/ViewProps';
 
 const ProjectView = () => {
   const { id } = useParams();
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[]>(allTasks);
   const [project, setProject] = useState<Project>();
-  const [view, setView] = useState<string>('kanban');
+  const [view, setView] = useState<string>('list');
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const isDesktop = useMediaQuery('(min-width: 1024px)');
+  const [title, setTitle] = useState<string>('');
+  const [editing, setEditing] = useState<string>('');
+  const [userId, setUserId] = useState<string>('');
+  const categories: Categories = {
+    Documentation: 'documentation',
+    Ongoing: 'ongoing',
+    Todo: 'to_do',
+    Done: 'done',
+  };
 
   useEffect(() => {
+    const setUser = () => {
+      const auth = getAuth();
+      onAuthStateChanged(auth, async (user: User | null) => {
+        if (user) {
+          setUserId(user.uid);
+        }
+      });
+    };
+    setUser();
+
     if (id) {
-      setTasks(allTasks.filter((task) => task.project_id === +id));
+      setTasks(tasks.filter((task) => task.project_id === +id));
       setProject(projects.filter((project) => project.id === +id)[0]);
       setIsLoading(false);
     }
@@ -28,6 +49,68 @@ const ProjectView = () => {
 
   const changeView = (view: string) => {
     setView(view);
+  };
+
+  const addNewTask = (status: string) => {
+    if (id && title.trim()) {
+      setTasks([
+        ...tasks,
+        {
+          id: uuid(),
+          title,
+          description: '',
+          status,
+          due_date: '',
+          assignee: '',
+          completed: false,
+          priority: '',
+          project_id: +id,
+          user_id: userId,
+        },
+      ]);
+    }
+  };
+
+  const onDragEnd = (result: any) => {
+    const { source, destination } = result;
+    if (!destination) return;
+    if (source.droppableId !== destination.droppableId) {
+      const allTasks = [...tasks];
+      const [removed] = allTasks.splice(source.index, 1);
+      allTasks.splice(destination.index, 0, removed);
+      setTasks(
+        tasks.map((task) =>
+          String(task.id) === result.draggableId
+            ? { ...task, status: destination.droppableId }
+            : task,
+        ),
+      );
+    } else {
+      setTasks((tasks) => {
+        const allTasks = [...tasks];
+        const [removed] = allTasks.splice(source.index, 1);
+        allTasks.splice(destination.index, 0, removed);
+        return allTasks;
+      });
+    }
+  };
+
+  const editTitle = (status: string) => {
+    setEditing(status);
+    setTitle('');
+  };
+
+  const viewProps: ViewProps = {
+    tasks,
+    setTasks,
+    title,
+    setTitle,
+    editing,
+    setEditing,
+    addNewTask,
+    onDragEnd,
+    editTitle,
+    categories,
   };
 
   return !isLoading ? (
@@ -59,11 +142,11 @@ const ProjectView = () => {
             </span>
           </div>
         </div>
-        <div className={`manrope-font  ${!isDesktop && view === 'kanban' ? 'kanban-view' : null}`}>
+        <div className='manrope-font'>
           {view === 'kanban' ? (
-            <ProjectKanbanView tasks={tasks} />
+            <ProjectKanbanView {...viewProps} />
           ) : view === 'list' ? (
-            <ProjectListView tasks={tasks} />
+            <ProjectListView {...viewProps} />
           ) : (
             <div>Calendar View</div>
           )}
