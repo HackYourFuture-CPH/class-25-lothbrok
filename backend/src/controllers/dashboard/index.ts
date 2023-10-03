@@ -7,7 +7,7 @@ export const getAllTasks = async (req: Request, res: Response) => {
     const tasks = await db('tasks').select('*').from('tasks');
     res.status(StatusCodes.OK).send(tasks);
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
 };
 
@@ -29,7 +29,7 @@ export const getTasksForProjectAndUser = async (req: Request, res: Response) => 
 
     res.status(StatusCodes.OK).send(tasks);
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
 };
 
@@ -51,6 +51,6 @@ export const addNewTask = async (req: Request, res: Response) => {
 
     res.status(StatusCodes.CREATED);
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
 };
