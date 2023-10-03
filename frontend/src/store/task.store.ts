@@ -1,9 +1,14 @@
 import { create } from 'zustand';
-import { Task } from '../pages/projectView/ProjectView';
+import { Task } from '../types/Task';
 
 type TaskStoreType = {
   task: Task;
   setTask: (task: Task) => void;
+};
+
+type CompletedStoreType = {
+  completed: boolean;
+  setCompleted: (completed: boolean) => void;
 };
 
 export const initialValue = {
@@ -17,9 +22,15 @@ export const initialValue = {
   project_id: 0,
   user_id: '',
 };
+
 export const useTaskStore = create<TaskStoreType>()((set) => ({
   task: initialValue,
   setTask: (task: Task) => set({ task }),
+}));
+
+export const useCompletedStore = create<CompletedStoreType>()((set) => ({
+  completed: false,
+  setCompleted: (completed: boolean) => set({ completed }),
 }));
 
 export default useTaskStore;

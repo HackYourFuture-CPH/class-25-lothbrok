@@ -8,7 +8,7 @@ import './Dashboard.css';
 import { signOut, User, getAuth, onAuthStateChanged } from '@firebase/auth';
 
 const Dashboard = () => {
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const handleSignOut = () => signOut(getAuth());
@@ -38,9 +38,9 @@ const Dashboard = () => {
     });
   };
 
-  useEffect(() => {
-    checkToken();
-  }, []);
+  // useEffect(() => {
+  //   checkToken();
+  // }, []);
 
   return (
     <>

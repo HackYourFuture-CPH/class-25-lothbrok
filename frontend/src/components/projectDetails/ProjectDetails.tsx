@@ -2,7 +2,7 @@ import './ProjectDetails.css';
 import ProjectDetailsHeader from '../projectDetailsHeader/ProjectDetailsHeader';
 import ProjectDetailsBody from '../projectDetailsBody/ProjectDetailsBody';
 import ProjectDetailsRest from '../projectDetailsRest/ProjectDetailsRest';
-import { Task } from '../../pages/projectView/ProjectView';
+import { Task } from '../../types/Task';
 
 type ProjectDetailsType = {
   task: Task;

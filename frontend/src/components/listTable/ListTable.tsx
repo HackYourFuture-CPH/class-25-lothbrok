@@ -3,7 +3,7 @@ import { Task } from '../../types/Task';
 import { Checkbox, useMediaQuery } from '@mui/material';
 import { CheckCircle, RadioButtonUnchecked, Flag } from '@mui/icons-material';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { useTaskStore } from '../../store/task.store';
+import { useTaskStore, useCompletedStore } from '../../store/task.store';
 import './listTable.css';
 
 type ListTableProps = {
@@ -13,8 +13,10 @@ type ListTableProps = {
 };
 
 const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }: ListTableProps) => {
-  const { task, setTask } = useTaskStore();
+  const { setTask } = useTaskStore();
   const isMobile = useMediaQuery('(max-width: 550px)');
+
+  const setCompleted = useCompletedStore((state) => state.setCompleted);
 
   const handleCheckbox = (task: Task) => {
     setTasks((tasks) => {

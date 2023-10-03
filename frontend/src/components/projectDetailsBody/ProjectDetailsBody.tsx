@@ -11,7 +11,7 @@ import {
   Flag,
 } from '@mui/icons-material/';
 
-import { Task } from '../../pages/projectView/ProjectView';
+import { Task } from '../../types/Task';
 
 type ProjectDetailsBodyType = {
   task: Task;
