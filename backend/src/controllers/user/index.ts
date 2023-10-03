@@ -10,7 +10,7 @@ export const getUserById = async (req: Request, res: Response) => {
     const user = await adminFireAuth.getUser(uid);
     res.status(StatusCodes.OK).send({ user });
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
 };
 
@@ -30,7 +30,7 @@ export const updateProfileInFirebase = async (req: Request, res: Response) => {
     }
     res.status(StatusCodes.OK).send({ user });
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
 };
 
@@ -48,7 +48,7 @@ export const updateUserByIdInDB = async (req: Request, res: Response) => {
     }
     res.status(StatusCodes.OK).send({ userInfo });
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
 };
 
@@ -67,6 +67,6 @@ export const registerUserToDb = async (req: Request, res: Response) => {
 
     res.status(StatusCodes.OK).send({ newUser });
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
 };

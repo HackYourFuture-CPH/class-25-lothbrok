@@ -7,7 +7,7 @@ export const getAllTasks = async (req: Request, res: Response) => {
     const tasks = await db('tasks').select('*').from('tasks');
     res.status(StatusCodes.OK).send(tasks);
   } catch (error) {
-    res.status(StatusCodes.UNAUTHORIZED);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 };
 
@@ -29,7 +29,7 @@ export const getTasksForProjectAndUser = async (req: Request, res: Response) => 
 
     res.status(StatusCodes.OK).send(tasks);
   } catch (error) {
-    res.status(StatusCodes.UNAUTHORIZED);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 };
 
