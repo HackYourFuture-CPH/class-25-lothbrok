@@ -1,0 +1,10 @@
+.section-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.section-title > h4 {
+  color: #2b283d;
+}
