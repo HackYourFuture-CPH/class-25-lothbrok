@@ -4,7 +4,8 @@ import api from '../api';
 const useTestHook = () => {
   useEffect(() => {
     (async () => {
-      await api.get('/auth/test');
+      const request = await api();
+      await request.get('/auth/test');
     })();
   }, []);
 };
