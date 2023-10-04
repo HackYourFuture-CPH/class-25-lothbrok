@@ -44,17 +44,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ tasks, listId }) => {
                         {...provided.dragHandleProps}
                       >
                         <div className='kanban-task-row'>
-                          <span
-                            className={`priority ${
-                              task.priority === 'easy'
-                                ? 'green'
-                                : task.priority === 'hard'
-                                ? 'red'
-                                : task.priority === 'medium'
-                                ? 'orange'
-                                : null
-                            }`}
-                          >
+                          <span className={`priority ${task.priority}`}>
                             {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
                           </span>
                           <MoreHoriz

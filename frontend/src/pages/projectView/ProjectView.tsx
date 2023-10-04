@@ -77,9 +77,13 @@ const ProjectView = () => {
     if (source.droppableId !== destination.droppableId) {
       const allTasks = [...tasks];
       const [removed] = allTasks.splice(source.index, 1);
-      allTasks.splice(destination.index, 0, removed);
+      let newIndex = destination.index;
+      if (destination.index > source.index) {
+        newIndex--;
+      }
+      allTasks.splice(newIndex, 0, removed);
       setTasks(
-        tasks.map((task) =>
+        allTasks.map((task) =>
           String(task.id) === result.draggableId
             ? { ...task, status: destination.droppableId }
             : task,

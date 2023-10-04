@@ -26,17 +26,17 @@
   padding: 0.5rem;
 }
 
-.green {
+.easy {
   color: #03b586;
   background-color: rgba(3, 181, 134, 0.1);
 }
 
-.red {
+.hard {
   color: #f14d4d;
   background-color: rgba(241, 77, 77, 0.1);
 }
 
-.orange {
+.medium {
   color: #fd8a24;
   background-color: rgba(253, 138, 36, 0.1);
 }
