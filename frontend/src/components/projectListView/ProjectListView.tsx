@@ -1,108 +1,43 @@
-import { Task } from '../../types/Task';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ListTable from '../listTable/ListTable';
-import { AddCircleOutline } from '@mui/icons-material';
+import { Add } from '@mui/icons-material';
 import { TextField } from '@mui/material';
 import './projectList.css';
-import { v4 as uuid } from 'uuid';
-import { useParams } from 'react-router-dom';
-import { User, getAuth, onAuthStateChanged } from '@firebase/auth';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { ViewProps } from '../../types/ViewProps';
 
-const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
-  const [allTasks, setAllTasks] = useState<Task[]>(tasks);
-  const [description, setDescription] = useState<string>('');
-  const [editing, setEditing] = useState<string>('');
-  const categories = {
-    Documentation: 'documentation',
-    Ongoing: 'ongoing',
-    Todo: 'to_do',
-    Done: 'done',
-  };
-
-  const { id } = useParams();
-  const [userId, setUserId] = useState<string>('');
-
-  useEffect(() => {
-    const setUser = () => {
-      const auth = getAuth();
-      onAuthStateChanged(auth, async (user: User | null) => {
-        if (user) {
-          setUserId(user.uid);
-        }
-      });
-    };
-    setUser();
-  }, []);
-
-  const addNewTask = (status: string) => {
-    if (id && description.trim()) {
-      setAllTasks([
-        ...tasks,
-        {
-          id: uuid(), // for mocked data
-          description,
-          status,
-          due_date: '',
-          assignee: '',
-          completed: false,
-          priority: '',
-          project_id: +id,
-          user_id: userId,
-        },
-      ]);
-    }
-  };
-
-  const onDragEnd = (result: any) => {
-    const { source, destination } = result;
-    if (!destination) return;
-    if (source.droppableId !== destination.droppableId) {
-      const tasks = [...allTasks];
-      const [removed] = tasks.splice(source.index, 1);
-      tasks.splice(destination.index, 0, removed);
-      setAllTasks(
-        tasks.map((task) =>
-          String(task.id) === result.draggableId
-            ? { ...task, status: destination.droppableId }
-            : task,
-        ),
-      );
-    } else {
-      setAllTasks((allTasks) => {
-        const tasks = [...allTasks];
-        const [removed] = tasks.splice(source.index, 1);
-        tasks.splice(destination.index, 0, removed);
-        return tasks;
-      });
-    }
-  };
-
-  const editDescription = (status: string) => {
-    setEditing(status);
-    setDescription('');
-  };
-
+const ProjectListView = ({
+  tasks,
+  setTasks,
+  title,
+  setTitle,
+  editing,
+  setEditing,
+  addNewTask,
+  onDragEnd,
+  editTitle,
+  categories,
+}: ViewProps) => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      {Object.entries(categories).map(([title, status]) => (
+      {Object.entries(categories).map(([sectionTitle, status]) => (
         <React.Fragment key={status}>
           <div className='section-title'>
-            <h4>{title}</h4>
+            <h4>{sectionTitle}</h4>
             {editing === status ? (
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
                   addNewTask(status);
                   setEditing('');
-                  setDescription('');
+                  setTitle('');
                 }}
               >
                 <TextField
                   placeholder='New Task Title'
                   variant='filled'
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                   inputProps={{
                     style: {
                       padding: 5,
@@ -112,13 +47,10 @@ const ProjectListView = ({ tasks }: { tasks: Task[] }) => {
                 />
               </form>
             ) : (
-              <AddCircleOutline
-                sx={{ cursor: 'pointer' }}
-                onClick={() => editDescription(status)}
-              />
+              <Add sx={{ cursor: 'pointer', color: '#7D7A89' }} onClick={() => editTitle(status)} />
             )}
           </div>
-          <ListTable listId={status} tasks={allTasks} setTasks={setAllTasks} />
+          <ListTable listId={status} tasks={tasks} setTasks={setTasks} />
         </React.Fragment>
       ))}
     </DragDropContext>

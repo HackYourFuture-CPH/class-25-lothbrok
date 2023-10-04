@@ -13,6 +13,7 @@ type CompletedStoreType = {
 
 export const initialValue = {
   id: '',
+  title: '',
   description: '',
   status: '',
   due_date: '',

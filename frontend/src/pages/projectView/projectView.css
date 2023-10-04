@@ -6,6 +6,10 @@
   padding: 2rem;
 }
 
+.kanban-view {
+  margin-right: -2rem;
+}
+
 .manrope-font {
   font-family: 'Manrope', sans-serif;
   display: flex;
