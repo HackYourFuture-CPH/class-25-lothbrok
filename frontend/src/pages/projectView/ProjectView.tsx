@@ -7,9 +7,8 @@ import { v4 as uuid } from 'uuid';
 import { User, getAuth, onAuthStateChanged } from '@firebase/auth';
 import './projectView.css';
 import ProjectListView from '../../components/projectListView/ProjectListView';
-import { ProjectDetails } from '../../IndexForImport';
 import { useTaskStore, initialValue } from '../../store/task.store';
-
+import { TaskDetails } from '../../IndexForImport';
 import ProjectKanbanView from '../../components/projectKanbanView/ProjectKanbanView';
 import { Task } from '../../types/Task';
 import { Project } from '../../types/Project';
@@ -159,6 +158,7 @@ const ProjectView = () => {
             ) : (
               <div>Calendar View</div>
             )}
+            {task !== initialValue && <TaskDetails task={task} />}
           </div>
         </div>
       </div>
