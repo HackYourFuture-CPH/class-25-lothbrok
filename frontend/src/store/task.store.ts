@@ -7,8 +7,8 @@ type TaskStoreType = {
 };
 
 type CompletedStoreType = {
-  completed: boolean;
-  setCompleted: (completed: boolean) => void;
+  completed: Record<number | string, boolean>; // Task ID to completion status mapping
+  setCompleted: (taskId: string, completed: boolean) => void;
 };
 
 export const initialValue = {
@@ -28,9 +28,16 @@ export const useTaskStore = create<TaskStoreType>()((set) => ({
   setTask: (task: Task) => set({ task }),
 }));
 
-export const useCompletedStore = create<CompletedStoreType>()((set) => ({
-  completed: false,
-  setCompleted: (completed: boolean) => set({ completed }),
+export const useCompletedStore = create<CompletedStoreType>((set) => ({
+  completed: {},
+  setCompleted: (taskId: number | string, completed: boolean) => {
+    set((state) => ({
+      completed: {
+        ...state.completed,
+        [taskId]: completed,
+      },
+    }));
+  },
 }));
 
 export default useTaskStore;

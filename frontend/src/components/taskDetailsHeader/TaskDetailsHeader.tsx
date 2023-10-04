@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import './ProjectDetailsHeader.css';
+import './TaskDetailsHeader.css';
 import { Button, Menu, MenuItem, IconButton } from '@mui/material/';
 import { MoreHoriz, CloseRounded } from '@mui/icons-material/';
 import { useTaskStore, initialValue } from '../../store/task.store';
 
-const ProjectDetailsHeader: any = () => {
+const TaskDetailsHeader: any = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -52,4 +52,4 @@ const ProjectDetailsHeader: any = () => {
   );
 };
 
-export default ProjectDetailsHeader;
+export default TaskDetailsHeader;

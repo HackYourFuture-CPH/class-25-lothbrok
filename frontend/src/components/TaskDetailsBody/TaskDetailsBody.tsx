@@ -1,5 +1,5 @@
 import React from 'react';
-import './ProjectDetailsBody.css';
+import './TaskDetailsBody.css';
 import { Checkbox } from '@mui/material';
 import {
   CheckCircleRounded,
@@ -10,20 +10,24 @@ import {
   RadioButtonUnchecked,
   Flag,
 } from '@mui/icons-material/';
+import { useCompletedStore } from '../../store/task.store';
 
 import { Task } from '../../types/Task';
 
-type ProjectDetailsBodyType = {
+type TaskDetailsBodyType = {
   task: Task;
 };
 
-const ProjectDetailsBody = ({ task }: ProjectDetailsBodyType) => {
+const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
+  const { completed } = useCompletedStore();
+
+  const completedStatus = completed[`${task.id}`] ?? false;
   return (
     <div className='details-title'>
       <div className='project-name'>
         <Checkbox
           readOnly
-          checked={task.completed}
+          checked={completedStatus}
           icon={<RadioButtonUnchecked style={{ color: '#7D7A89' }} />}
           checkedIcon={<CheckCircle style={{ color: '#5FB918' }} />}
         />
@@ -77,4 +81,4 @@ const ProjectDetailsBody = ({ task }: ProjectDetailsBodyType) => {
   );
 };
 
-export default ProjectDetailsBody;
+export default TaskDetailsBody;

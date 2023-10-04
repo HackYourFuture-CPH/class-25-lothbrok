@@ -15,7 +15,9 @@ type ListTableProps = {
 const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }: ListTableProps) => {
   const { setTask } = useTaskStore();
   const isMobile = useMediaQuery('(max-width: 550px)');
+  const [enabled, setEnabled] = useState(false);
 
+  const { completed } = useCompletedStore();
   const setCompleted = useCompletedStore((state) => state.setCompleted);
 
   const handleCheckbox = (task: Task) => {
@@ -24,9 +26,16 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }: ListTa
         item.id === task.id ? { ...item, completed: !item.completed } : item,
       );
     });
+    setCompleted(String(task.id), !task.completed);
   };
 
-  const [enabled, setEnabled] = useState(false);
+  const handleOpenDetails = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    id: string | number,
+  ) => {
+    e.stopPropagation();
+    setTask(tasks.filter((task) => task.id === id)[0]);
+  };
 
   useEffect(() => {
     const animation = requestAnimationFrame(() => setEnabled(true));
@@ -38,14 +47,6 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }: ListTa
   if (!enabled) {
     return null;
   }
-
-  const handleOpenDetails = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    id: string | number,
-  ) => {
-    e.stopPropagation();
-    setTask(tasks.filter((task) => task.id === id)[0]);
-  };
 
   return (
     <div className='listTable-and-details'>

@@ -1,5 +1,5 @@
 import React from 'react';
-import './ProjectDetailsRest.css';
+import './TaskDetailsRest.css';
 import {
   Add,
   CheckCircleRounded,
@@ -9,7 +9,7 @@ import {
 } from '@mui/icons-material/';
 import { Divider } from '@mui/material';
 
-const ProjectDetailsRest = () => {
+const TaskDetailsRest = () => {
   return (
     <div className='other-details'>
       <div className='single-detail'>
@@ -78,4 +78,4 @@ const ProjectDetailsRest = () => {
   );
 };
 
-export default ProjectDetailsRest;
+export default TaskDetailsRest;
