@@ -1,0 +1,82 @@
+table {
+  border-collapse: collapse;
+  border: 1px solid #ffffff;
+  background-color: #ffffff;
+  width: 900px;
+  height: 55px;
+  top: 130px;
+  left: 288px;
+  border-radius: 8px;
+  color: #4c4958;
+  font: 'Manrope';
+  font-size: 14px;
+  font-weight: 100;
+  line-height: 21px;
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+
+.table-header {
+  background-color: #fbfbfb;
+  color: #7d7a89;
+  font: 'Manrope';
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: 0.02em;
+  text-align: left;
+
+  width: 1122px;
+  height: 55px;
+  padding: 20px, 122px, 16px, 16px;
+  border-radius: 8px, 8px, 0px, 0px;
+}
+
+.table-row {
+  border-bottom: 2px solid #fbfbfb;
+}
+
+.grid-item {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  margin-top: 20px;
+}
+
+.title-right {
+  display: flex;
+  gap: 10px;
+  font: 'Manrope';
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.title-left {
+  font: 'Manrope';
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 22px;
+  letter-spacing: 0.02em;
+  text-align: left;
+  color: #2b283d;
+}
+
+@media only screen and (max-width: 550px) {
+  .task-item {
+    grid-template-columns: 1fr 5rem 5rem;
+  }
+}
