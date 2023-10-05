@@ -1,7 +1,7 @@
 import './TaskDetails.css';
-import TaskDetailsHeader from '../taskDetailsHeader/TaskDetailsHeader';
+import TaskDetailsHeader from '../TaskDetailsHeader/TaskDetailsHeader';
 import TaskDetailsBody from '../TaskDetailsBody/TaskDetailsBody';
-import TaskDetailsRest from '../taskDetailsRest/TaskDetailsRest';
+import TaskDetailsRest from '../TaskDetailsRest/TaskDetailsRest';
 import { Task } from '../../types/Task';
 
 type TaskDetailsType = {

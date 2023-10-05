@@ -20,7 +20,7 @@ const TaskDetailsHeader: any = () => {
   };
 
   return (
-    <div className='project-details-header'>
+    <div className='task-details-header'>
       <IconButton aria-label='close' onClick={handleCloseDetails}>
         <CloseRounded />
       </IconButton>
