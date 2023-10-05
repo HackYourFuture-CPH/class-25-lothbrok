@@ -1,5 +1,4 @@
-import firebase from 'firebase/app';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 import { Outlet } from 'react-router-dom';
 import { Header, MenuDesktop } from '../../IndexForImport';

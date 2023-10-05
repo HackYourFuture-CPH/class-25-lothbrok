@@ -10,10 +10,10 @@ h6 {
   gap: 1rem;
 }
 
-.project-name {
+.task-name {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   gap: 1rem;
 }
 
@@ -41,7 +41,7 @@ h6 {
   color: #2b283d;
 }
 
-.project-owner {
+.task-owner {
   display: flex;
   align-items: center;
   gap: 1.2rem;

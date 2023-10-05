@@ -10,7 +10,7 @@ type TaskDetailsType = {
 
 const TaskDetails = ({ task }: TaskDetailsType) => {
   return (
-    <div className='TaskDetails'>
+    <div className='taskDetails'>
       <TaskDetailsHeader />
       <TaskDetailsBody task={task} />
       <TaskDetailsRest />

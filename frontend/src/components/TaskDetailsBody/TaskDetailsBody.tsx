@@ -1,11 +1,8 @@
-import React from 'react';
 import './TaskDetailsBody.css';
 import { Checkbox } from '@mui/material';
 import {
-  CheckCircleRounded,
   AccountCircleRounded,
   CalendarMonthRounded,
-  FlagRounded,
   CheckCircle,
   RadioButtonUnchecked,
   Flag,
@@ -24,7 +21,7 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
   const completedStatus = completed[`${task.id}`] ?? false;
   return (
     <div className='details-title'>
-      <div className='project-name'>
+      <div className='task-name'>
         <Checkbox
           readOnly
           checked={completedStatus}
@@ -36,7 +33,7 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
           <h6>{task.description}</h6>
         </div>
       </div>
-      <div className='project-owner'>
+      <div className='task-owner'>
         <div className='details-topic'></div>
         <div className='details-status'>
           <div className='status'>
