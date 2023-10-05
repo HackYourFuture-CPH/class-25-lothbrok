@@ -1,7 +1,9 @@
 const allTasks = [
   {
     id: 1,
-    description: 'Task 1',
+    title: 'Task 1',
+    description:
+      'This is a random description for Task 1 This is a random description for Task 1 This is a random description for Task 1',
     status: 'documentation',
     due_date: '2023-09-25',
     assignee: 'John Doe',
@@ -12,7 +14,8 @@ const allTasks = [
   },
   {
     id: 2,
-    description: 'Task 2',
+    title: 'Task 2',
+    description: 'This is a random description for Task 2',
     status: 'to_do',
     due_date: '2023-09-26',
     assignee: 'Alice Smith',
@@ -23,7 +26,8 @@ const allTasks = [
   },
   {
     id: 3,
-    description: 'Task 3',
+    title: 'Task 3',
+    description: 'This is a random description for Task 3',
     status: 'ongoing',
     due_date: '2023-09-27',
     assignee: 'Bob Johnson',
@@ -34,7 +38,8 @@ const allTasks = [
   },
   {
     id: 4,
-    description: 'Task 4',
+    title: 'Task 4',
+    description: 'This is a random description for Task 4',
     status: 'done',
     due_date: '2023-09-28',
     assignee: 'Eva Brown',
@@ -45,7 +50,8 @@ const allTasks = [
   },
   {
     id: 5,
-    description: 'Task 5',
+    title: 'Task 5',
+    description: 'This is a random description for Task 5',
     status: 'documentation',
     due_date: '2023-09-29',
     assignee: 'Michael Lee',
@@ -56,7 +62,8 @@ const allTasks = [
   },
   {
     id: 6,
-    description: 'Task 6',
+    title: 'Task 6',
+    description: 'This is a random description for Task 6',
     status: 'to_do',
     due_date: '2023-09-30',
     assignee: 'John Doe',
@@ -67,7 +74,8 @@ const allTasks = [
   },
   {
     id: 7,
-    description: 'Task 7',
+    title: 'Task 7',
+    description: 'This is a random description for Task 7',
     status: 'ongoing',
     due_date: '2023-10-01',
     assignee: 'Alice Smith',
@@ -78,7 +86,8 @@ const allTasks = [
   },
   {
     id: 8,
-    description: 'Task 8',
+    title: 'Task 8',
+    description: 'This is a random description for Task 8',
     status: 'done',
     due_date: '2023-10-02',
     assignee: 'Bob Johnson',
@@ -89,7 +98,8 @@ const allTasks = [
   },
   {
     id: 9,
-    description: 'Task 9',
+    title: 'Task 9',
+    description: 'This is a random description for Task 9',
     status: 'documentation',
     due_date: '2023-10-03',
     assignee: 'Eva Brown',
@@ -100,7 +110,8 @@ const allTasks = [
   },
   {
     id: 10,
-    description: 'Task 10',
+    title: 'Task 10',
+    description: 'This is a random description for Task 10',
     status: 'to_do',
     due_date: '2023-10-04',
     assignee: 'Michael Lee',
@@ -111,7 +122,8 @@ const allTasks = [
   },
   {
     id: 11,
-    description: 'Task 11',
+    title: 'Task 11',
+    description: 'This is a random description for Task 11',
     status: 'ongoing',
     due_date: '2023-10-05',
     assignee: 'John Doe',
@@ -122,7 +134,8 @@ const allTasks = [
   },
   {
     id: 12,
-    description: 'Task 12',
+    title: 'Task 12',
+    description: 'This is a random description for Task 12',
     status: 'done',
     due_date: '2023-10-06',
     assignee: 'Alice Smith',
@@ -133,7 +146,8 @@ const allTasks = [
   },
   {
     id: 13,
-    description: 'Task 13',
+    title: 'Task 13',
+    description: 'This is a random description for Task 13',
     status: 'documentation',
     due_date: '2023-10-07',
     assignee: 'Bob Johnson',
@@ -144,7 +158,8 @@ const allTasks = [
   },
   {
     id: 14,
-    description: 'Task 14',
+    title: 'Task 14',
+    description: 'This is a random description for Task 14',
     status: 'to_do',
     due_date: '2023-10-08',
     assignee: 'Eva Brown',
@@ -155,7 +170,8 @@ const allTasks = [
   },
   {
     id: 15,
-    description: 'Task 15',
+    title: 'Task 15',
+    description: 'This is a random description for Task 15',
     status: 'ongoing',
     due_date: '2023-10-09',
     assignee: 'Michael Lee',
@@ -166,7 +182,8 @@ const allTasks = [
   },
   {
     id: 16,
-    description: 'Task 16',
+    title: 'Task 16',
+    description: 'This is a random description for Task 16',
     status: 'done',
     due_date: '2023-10-10',
     assignee: 'John Doe',
@@ -177,7 +194,8 @@ const allTasks = [
   },
   {
     id: 17,
-    description: 'Task 17',
+    title: 'Task 17',
+    description: 'This is a random description for Task 17',
     status: 'documentation',
     due_date: '2023-10-11',
     assignee: 'Alice Smith',
@@ -188,7 +206,8 @@ const allTasks = [
   },
   {
     id: 18,
-    description: 'Task 18',
+    title: 'Task 18',
+    description: 'This is a random description for Task 18',
     status: 'to_do',
     due_date: '2023-10-12',
     assignee: 'Bob Johnson',
@@ -199,7 +218,8 @@ const allTasks = [
   },
   {
     id: 19,
-    description: 'Task 19',
+    title: 'Task 19',
+    description: 'This is a random description for Task 19',
     status: 'ongoing',
     due_date: '2023-10-13',
     assignee: 'Eva Brown',
@@ -210,7 +230,8 @@ const allTasks = [
   },
   {
     id: 20,
-    description: 'Task 20',
+    title: 'Task 20',
+    description: 'This is a random description for Task 20',
     status: 'done',
     due_date: '2023-10-14',
     assignee: 'Michael Lee',
@@ -221,7 +242,8 @@ const allTasks = [
   },
   {
     id: 21,
-    description: 'Task 21',
+    title: 'Task 21',
+    description: 'This is a random description for Task 21',
     status: 'documentation',
     due_date: '2023-09-25',
     assignee: 'John Doe',
