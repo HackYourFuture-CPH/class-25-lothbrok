@@ -1,13 +1,6 @@
-import React from "react";
-import TaskItem from "./TaskItem";
-
-interface Project {
-  id: number;
-  title: string;
-  thumbnail_link: string;
-  date_of_creation: string;
-  amount_of_tasks: number;
-}
+import React from 'react';
+import TaskItem from './TaskItem';
+import { Project } from '../../types/Project';
 
 interface TaskListProps {
   projects: Project[];
@@ -15,7 +8,7 @@ interface TaskListProps {
 
 function TaskList({ projects }: TaskListProps) {
   return (
-    <div className="task-list">
+    <div className='task-list'>
       {projects.map((project) => (
         <TaskItem key={project.id} project={project} />
       ))}
