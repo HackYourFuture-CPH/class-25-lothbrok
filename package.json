@@ -31,6 +31,7 @@
     "prettier": "3.0.3"
   },
   "dependencies": {
+    "@syncfusion/ej2-react-schedule": "^23.1.39",
     "lint-staged": "^14.0.1"
   }
 }

@@ -6,6 +6,7 @@ import './projectView.css';
 import thumbnail from '../../assets/images/Rectangle 3025.svg';
 import ProjectListView from '../../components/projectListView/ProjectListView';
 import ProjectKanbanView from '../../components/projectKanbanView/ProjectKanbanView';
+import Calendar from '../../components/calendar/Calendar';
 import { Task } from '../../types/Task';
 import { Project } from '../../types/Project';
 import projects from './projects';
@@ -152,7 +153,7 @@ const ProjectView = () => {
           ) : view === 'list' ? (
             <ProjectListView {...viewProps} />
           ) : (
-            <div>Calendar View</div>
+            <Calendar />
           )}
         </div>
       </div>

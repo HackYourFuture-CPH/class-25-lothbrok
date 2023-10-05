@@ -30,15 +30,16 @@ const Dashboard = () => {
     });
   };
 
-  useEffect(() => {
-    checkToken();
-  }, []);
+  // useEffect(() => {
+  //   checkToken();
+  // }, []);
 
   return (
     <>
-      {loading ? (
-        <></>
-      ) : (
+      {
+        // loading ? (
+        //   <></>
+        // ) :
         <div className='pages'>
           <div className='menu-desktop'>
             <MenuDesktop />
@@ -49,7 +50,7 @@ const Dashboard = () => {
             <button onClick={handleSignOut}>Sign out</button>
           </div>
         </div>
-      )}
+      }
     </>
   );
 };
