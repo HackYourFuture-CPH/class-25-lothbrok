@@ -14,26 +14,6 @@ export const getUserById = async (req: Request, res: Response) => {
   }
 };
 
-export const updateProfileInFirebase = async (req: Request, res: Response) => {
-  try {
-    const uid = req.params.uid;
-
-    const { first_name, last_name, photourl, phone_number, email } = req.body;
-    const user = await adminFireAuth.updateUser(uid, {
-      displayName: `${first_name},${last_name}`,
-      photoURL: photourl,
-      phoneNumber: phone_number,
-      email: email,
-    });
-    if (!user) {
-      res.status(StatusCodes.NOT_FOUND);
-    }
-    res.status(StatusCodes.OK).send({ user });
-  } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
-  }
-};
-
 export const updateUserByIdInDB = async (req: Request, res: Response) => {
   try {
     const uid = req.params.uid;
