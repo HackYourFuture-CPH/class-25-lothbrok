@@ -56,7 +56,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ tasks, listId }) => {
                         <div className='kanban-task-row'>
                           <span>{task.assignee}</span>
                           <span className='date'>
-                            {task.due_date ? (
+                            {task.end ? (
                               <>
                                 <CalendarMonth
                                   sx={{
@@ -64,7 +64,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ tasks, listId }) => {
                                     paddingRight: '0.25rem',
                                   }}
                                 />
-                                {new Date(task.due_date).toLocaleString('en-GB', {
+                                {new Date(task.end).toLocaleString('en-GB', {
                                   month: 'short',
                                 })}
                               </>

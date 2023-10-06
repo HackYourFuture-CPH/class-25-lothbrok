@@ -73,8 +73,8 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
                             {task.title}
                           </div>
                           <div className='grid-item'>
-                            {task.due_date
-                              ? new Date(task.due_date).toLocaleString('en-GB', {
+                            {task.end
+                              ? new Date(task.end).toLocaleString('en-GB', {
                                   day: 'numeric',
                                   month: 'short',
                                 })

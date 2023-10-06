@@ -6,7 +6,7 @@ import './projectView.css';
 import thumbnail from '../../assets/images/Rectangle 3025.svg';
 import ProjectListView from '../../components/projectListView/ProjectListView';
 import ProjectKanbanView from '../../components/projectKanbanView/ProjectKanbanView';
-import Calendar from '../../components/calendar/Calendar';
+import CalendarView from '../../components/calendarView/CalendarView';
 import { Task } from '../../types/Task';
 import { Project } from '../../types/Project';
 import projects from './projects';
@@ -61,12 +61,13 @@ const ProjectView = () => {
           title,
           description: '',
           status,
-          due_date: '',
+          end: '',
           assignee: '',
           completed: false,
           priority: '',
           project_id: +id,
           user_id: userId,
+          start: '',
         },
       ]);
     }
@@ -153,7 +154,7 @@ const ProjectView = () => {
           ) : view === 'list' ? (
             <ProjectListView {...viewProps} />
           ) : (
-            <Calendar {...viewProps} />
+            <CalendarView {...viewProps} />
           )}
         </div>
       </div>
