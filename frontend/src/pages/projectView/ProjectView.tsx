@@ -15,15 +15,7 @@ import api from '../../api';
 const ProjectView = () => {
   const { id } = useParams();
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [project, setProject] = useState<Project>({
-    id: 1,
-    title: 'Project A',
-    description: 'Description for Project A',
-    thumbnail_link: 'thumbnail_a.jpg',
-    date_of_creation: '2023-09-20',
-    amount_of_tasks: 5,
-    user_uid: 1,
-  });
+  const [project, setProject] = useState<Project>();
   const [view, setView] = useState<string>('kanban');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [title, setTitle] = useState<string>('');
@@ -49,6 +41,17 @@ const ProjectView = () => {
     }
   };
 
+  const getProject = async () => {
+    try {
+      const req = await api();
+      const res = await req.get(`/dashboard/project/${id}`);
+      const project = await res.data;
+      setProject(project);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
     const setUser = () => {
       const auth = getAuth();
@@ -63,6 +66,7 @@ const ProjectView = () => {
 
   useEffect(() => {
     getTasks();
+    getProject();
     setIsLoading(false);
   }, [userId]);
 
@@ -160,7 +164,7 @@ const ProjectView = () => {
             <div>
               <span>Project / </span>
               <span className='bold'>Details</span>
-              <h2>{project.title}</h2>
+              <h2 className='project-title'>{project.title}</h2>
             </div>
           </div>
           <div className='views'>
