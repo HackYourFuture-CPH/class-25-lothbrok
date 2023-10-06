@@ -30,9 +30,9 @@ const Dashboard = () => {
     });
   };
 
-  // useEffect(() => {
-  //   checkToken();
-  // }, []);
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   return (
     <>
