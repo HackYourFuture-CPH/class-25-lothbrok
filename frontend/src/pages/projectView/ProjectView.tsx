@@ -111,6 +111,16 @@ const ProjectView = () => {
             : task,
         ),
       );
+      allTasks.map(async (task) => {
+        if (String(task.id) === result.draggableId) {
+          try {
+            const req = await api();
+            await req.put(`/dashboard/${task.id}`, { status: destination.droppableId });
+          } catch (e) {
+            console.error(e);
+          }
+        }
+      });
     } else {
       setTasks((tasks) => {
         const allTasks = [...tasks];

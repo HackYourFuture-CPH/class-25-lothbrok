@@ -58,3 +58,16 @@ export const addNewTask = async (req: Request, res: Response) => {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
 };
+
+export const updateTask = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const data = await db('tasks').where({ id });
+    if (data.length > 0) {
+      await db('tasks').where({ id }).update(req.body);
+    }
+    res.status(StatusCodes.OK).json({ message: 'Task updated successfully' });
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+  }
+};
