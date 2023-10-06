@@ -8,16 +8,23 @@ import ProjectListView from '../../components/projectListView/ProjectListView';
 import ProjectKanbanView from '../../components/projectKanbanView/ProjectKanbanView';
 import { Task } from '../../types/Task';
 import { Project } from '../../types/Project';
-import projects from './projects';
-import allTasks from './tasks';
 import { Categories } from '../../types/Categories';
 import { ViewProps } from '../../types/ViewProps';
+import api from '../../api';
 
 const ProjectView = () => {
   const { id } = useParams();
-  const [tasks, setTasks] = useState<Task[]>(allTasks);
-  const [project, setProject] = useState<Project>();
-  const [view, setView] = useState<string>('list');
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [project, setProject] = useState<Project>({
+    id: 1,
+    title: 'Project A',
+    description: 'Description for Project A',
+    thumbnail_link: 'thumbnail_a.jpg',
+    date_of_creation: '2023-09-20',
+    amount_of_tasks: 5,
+    user_uid: 1,
+  });
+  const [view, setView] = useState<string>('kanban');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [title, setTitle] = useState<string>('');
   const [editing, setEditing] = useState<string>('');
@@ -27,6 +34,19 @@ const ProjectView = () => {
     Ongoing: 'ongoing',
     Todo: 'to_do',
     Done: 'done',
+  };
+
+  const getTasks = async () => {
+    try {
+      if (userId) {
+        const req = await api();
+        const res = await req.get(`/dashboard/${id}/${userId}`);
+        const tasks = await res.data;
+        setTasks(tasks);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   useEffect(() => {
@@ -39,35 +59,37 @@ const ProjectView = () => {
       });
     };
     setUser();
-
-    if (id) {
-      setTasks(tasks.filter((task) => task.project_id === +id));
-      setProject(projects.filter((project) => project.id === +id)[0]);
-      setIsLoading(false);
-    }
   }, []);
+
+  useEffect(() => {
+    getTasks();
+    setIsLoading(false);
+  }, [userId]);
 
   const changeView = (view: string) => {
     setView(view);
   };
 
-  const addNewTask = (status: string) => {
+  const addNewTask = async (status: string) => {
     if (id && title.trim()) {
-      setTasks([
-        ...tasks,
-        {
-          id: uuid(),
-          title,
-          description: '',
-          status,
-          due_date: '',
-          assignee: '',
-          completed: false,
-          priority: '',
-          project_id: +id,
-          user_id: userId,
-        },
-      ]);
+      const task = {
+        title,
+        description: '',
+        status,
+        due_date: null,
+        user_uid: userId,
+        assignee: '',
+        completed: false,
+        priority: 'medium',
+        project_id: +id,
+      };
+      setTasks([...tasks, { ...task, id: uuid() }]);
+      try {
+        const req = await api();
+        await req.post(`/dashboard`, task);
+      } catch (e) {
+        console.error(e);
+      }
     }
   };
 
@@ -157,7 +179,7 @@ const ProjectView = () => {
         </div>
       </div>
     ) : (
-      <h2>Project Not Found</h2>
+      <h3>Project Not Found</h3>
     )
   ) : (
     <div>loading</div>

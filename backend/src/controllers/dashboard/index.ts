@@ -16,16 +16,11 @@ export const getTasksForProjectAndUser = async (req: Request, res: Response) => 
 
   try {
     const tasks = await db
-      .select(
-        'tasks.description',
-        'projects.title as project_title',
-        'users.first_name',
-        'users.last_name',
-      )
+      .select('tasks.*', 'projects.title as project_title', 'users.first_name', 'users.last_name')
       .from('tasks')
-      .where({ 'tasks.project_id': project_id, 'tasks.user_id': user_id })
+      .where({ 'tasks.project_id': project_id, 'tasks.user_uid': user_id })
       .leftJoin('projects', 'tasks.project_id', 'projects.id')
-      .leftJoin('users', 'tasks.user_id', 'users.id');
+      .leftJoin('users', 'tasks.user_uid', 'users.uid');
 
     res.status(StatusCodes.OK).send(tasks);
   } catch (error) {
@@ -35,21 +30,30 @@ export const getTasksForProjectAndUser = async (req: Request, res: Response) => 
 
 export const addNewTask = async (req: Request, res: Response) => {
   try {
-    const { description, status, due_date, user_id, assignee, completed, priority, project_id } =
-      req.body;
-
-    await db('tasks').insert({
+    const {
+      title,
       description,
       status,
       due_date,
-      user_id,
+      user_uid,
+      assignee,
+      completed,
+      priority,
+      project_id,
+    } = req.body;
+
+    await db('tasks').insert({
+      title,
+      description,
+      status,
+      due_date,
+      user_uid,
       assignee,
       completed,
       priority,
       project_id,
     });
-
-    res.status(StatusCodes.CREATED);
+    res.status(StatusCodes.CREATED).json({ message: 'Task added successfully' });
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
