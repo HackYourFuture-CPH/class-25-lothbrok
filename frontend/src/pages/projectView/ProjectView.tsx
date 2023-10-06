@@ -153,7 +153,7 @@ const ProjectView = () => {
           ) : view === 'list' ? (
             <ProjectListView {...viewProps} />
           ) : (
-            <Calendar />
+            <Calendar {...viewProps} />
           )}
         </div>
       </div>
