@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './TaskDetailsBody.css';
 import { Checkbox } from '@mui/material';
 import {
@@ -16,17 +17,31 @@ type TaskDetailsBodyType = {
 };
 
 const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
-  const { completed } = useCompletedStore();
-
+  const { completed, setCompleted } = useCompletedStore();
   const completedStatus = completed[`${task.id}`] ?? false;
+  const [description, setDescription] = useState(task.description);
+  const handleCheckbox = (task: Task) => {
+    const updatedCompletedStatus = !completedStatus;
+
+    setCompleted(`${task.id}`, updatedCompletedStatus);
+
+    const updatedTask = { ...task, completed: updatedCompletedStatus };
+    console.log(updatedTask);
+    return updatedTask;
+  };
+
+  const handleTextareaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(event.target.value);
+  };
+
   return (
     <div className='details-title'>
       <div className='task-name'>
         <Checkbox
-          readOnly
           checked={completedStatus}
           icon={<RadioButtonUnchecked style={{ color: '#7D7A89' }} />}
           checkedIcon={<CheckCircle style={{ color: '#5FB918' }} />}
+          onClick={() => handleCheckbox(task)}
         />
         <div className='label'>
           <p>Bookum App</p>
@@ -73,7 +88,11 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
           </div>
         </div>
       </div>
-      <textarea className='description' defaultValue='...Description'></textarea>
+      <textarea
+        className='description'
+        value={description}
+        onChange={handleTextareaChange}
+      ></textarea>
     </div>
   );
 };

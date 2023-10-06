@@ -17,8 +17,7 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }: ListTa
   const isMobile = useMediaQuery('(max-width: 550px)');
   const [enabled, setEnabled] = useState(false);
 
-  const setCompleted = useCompletedStore((state) => state.setCompleted);
-
+  const { setCompleted } = useCompletedStore();
   const handleCheckbox = (task: Task) => {
     setTasks((tasks) => {
       return tasks.map((item) =>

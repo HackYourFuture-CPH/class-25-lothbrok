@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Menu, MenuItem, IconButton } from '@mui/material/';
+import { Button, Menu, MenuItem, IconButton, Divider } from '@mui/material/';
 import {
   MoreHoriz,
   CloseRounded,
@@ -9,7 +9,6 @@ import {
   AccountCircle,
   Circle,
 } from '@mui/icons-material/';
-import { Divider } from '@mui/material';
 import TaskDetailsBody from '../TaskDetailsBody/TaskDetailsBody';
 import { Task } from '../../types/Task';
 import { useTaskStore, initialValue } from '../../store/task.store';
@@ -21,6 +20,7 @@ type TaskDetailsType = {
 
 const TaskDetails = ({ task }: TaskDetailsType) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [attachments, setAttachments] = useState<string[]>([]);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -32,6 +32,13 @@ const TaskDetails = ({ task }: TaskDetailsType) => {
 
   const handleCloseDetails = () => {
     setTask(initialValue);
+  };
+  const handleAttachment = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      const newAttachments = Array.from(files).map((file) => URL.createObjectURL(file));
+      setAttachments((prevAttachments) => [...prevAttachments, ...newAttachments]);
+    }
   };
   return (
     <div className='taskDetails'>
@@ -71,17 +78,25 @@ const TaskDetails = ({ task }: TaskDetailsType) => {
         <div className='single-detail'>
           <div className='single-header'>
             <p className='single-title'>Attachment</p>
-            <Add className='details-icon' />
+            {/* Hidden file input */}
+            <input
+              type='file'
+              accept='image/*'
+              onChange={handleAttachment}
+              style={{ display: 'none' }}
+              id='attachment-input'
+            />
+            {/* IconButton to trigger file input */}
+            <label htmlFor='attachment-input'>
+              <IconButton component='span'>
+                <Add />
+              </IconButton>
+            </label>
           </div>
           <div className='attachment-files'>
-            <img
-              src='https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW9iaWxlJTIwYXBwfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60'
-              alt='attachment'
-            />
-            <img
-              src='https://images.unsplash.com/photo-1612442058361-178007e5e498?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTJ8fG1vYmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60'
-              alt='attachment'
-            />
+            {attachments.map((attachment, index) => (
+              <img key={index} src={attachment} alt={`attachment-${index}`} />
+            ))}
           </div>
         </div>
         <div className='single-detail'>
