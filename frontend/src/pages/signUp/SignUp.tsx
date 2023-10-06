@@ -9,10 +9,11 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase_config';
 import { passwordPattern } from '../../passwordPattern';
 import { AuthErrorCodes } from 'firebase/auth';
+import api from '../../api';
 
 interface FormData {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
 }
@@ -30,8 +31,17 @@ const SignUp = () => {
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
       await createUserWithEmailAndPassword(auth, data.email, data.password);
+      const response = await api();
+
+      if (auth.currentUser) {
+        await response.post('/user/register', {
+          uid: auth.currentUser.uid,
+          first_name: data.first_name,
+          last_name: data.last_name,
+          email: data.email,
+        });
+      }
       setErrorMessage('');
-      navigate('/login');
     } catch (e: any) {
       if (e.code === AuthErrorCodes.EMAIL_EXISTS) {
         setErrorMessage(`Email address '${data.email}' is already in use `);
@@ -64,7 +74,7 @@ const SignUp = () => {
                 </InputLabel>
                 <TextField
                   className='input-styles'
-                  {...register('firstName', {
+                  {...register('first_name', {
                     required: 'First name is required',
                   })}
                   placeholder='First Name'
@@ -75,7 +85,7 @@ const SignUp = () => {
                   Last Name
                 </InputLabel>
                 <TextField
-                  {...register('lastName', {
+                  {...register('last_name', {
                     required: 'Last name is required',
                   })}
                   placeholder='Last Name'
