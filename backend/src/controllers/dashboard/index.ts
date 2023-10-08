@@ -42,18 +42,20 @@ export const addNewTask = async (req: Request, res: Response) => {
       project_id,
     } = req.body;
 
-    await db('tasks').insert({
-      title,
-      description,
-      status,
-      due_date,
-      user_uid,
-      assignee,
-      completed,
-      priority,
-      project_id,
-    });
-    res.status(StatusCodes.CREATED).json({ message: 'Task added successfully' });
+    const task = await db('tasks')
+      .insert({
+        title,
+        description,
+        status,
+        due_date,
+        user_uid,
+        assignee,
+        completed,
+        priority,
+        project_id,
+      })
+      .returning('*');
+    res.status(StatusCodes.CREATED).json(task);
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }

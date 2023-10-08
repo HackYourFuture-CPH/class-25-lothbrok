@@ -11,9 +11,10 @@ import { Project } from '../../types/Project';
 import { Categories } from '../../types/Categories';
 import { ViewProps } from '../../types/ViewProps';
 import api from '../../api';
+import { Task as TaskConstructor } from '../../classes/Task';
 
 const ProjectView = () => {
-  const { id } = useParams();
+  const { id: project_id } = useParams();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [project, setProject] = useState<Project>();
   const [view, setView] = useState<string>('kanban');
@@ -32,7 +33,7 @@ const ProjectView = () => {
     try {
       if (userId) {
         const req = await api();
-        const res = await req.get(`/dashboard/${id}/${userId}`);
+        const res = await req.get(`/dashboard/${project_id}/${userId}`);
         const tasks = await res.data;
         setTasks(tasks);
       }
@@ -44,7 +45,7 @@ const ProjectView = () => {
   const getProject = async () => {
     try {
       const req = await api();
-      const res = await req.get(`/dashboard/project/${id}`);
+      const res = await req.get(`/dashboard/project/${project_id}`);
       const project = await res.data;
       setProject(project);
     } catch (e) {
@@ -75,22 +76,17 @@ const ProjectView = () => {
   };
 
   const addNewTask = async (status: string) => {
-    if (id && title.trim()) {
-      const task = {
-        title,
-        description: '',
-        status,
-        due_date: null,
-        user_uid: userId,
-        assignee: '',
-        completed: false,
-        priority: 'medium',
-        project_id: +id,
-      };
-      setTasks([...tasks, { ...task, id: uuid() }]);
+    if (project_id && title.trim()) {
+      const task = new TaskConstructor();
+      task.title = title;
+      task.status = status;
+      task.user_uid = userId;
+      task.project_id = +project_id;
       try {
         const req = await api();
-        await req.post(`/dashboard`, task);
+        const res = await req.post(`/dashboard`, task);
+        const newTask = res.data[0];
+        setTasks([...tasks, newTask]);
       } catch (e) {
         console.error(e);
       }
