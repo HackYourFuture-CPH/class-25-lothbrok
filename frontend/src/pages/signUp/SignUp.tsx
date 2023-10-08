@@ -28,18 +28,30 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  const onSubmit: SubmitHandler<FormData> = async (data, e) => {
+    e?.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, data.email, data.password);
       const response = await api();
+      try {
+        if (auth.currentUser) {
+          await response.post('/user/register', {
+            uid: auth.currentUser.uid,
+            first_name: data.first_name,
+            last_name: data.last_name,
+            email: data.email,
+          });
 
-      if (auth.currentUser) {
-        await response.post('/user/register', {
-          uid: auth.currentUser.uid,
-          first_name: data.first_name,
-          last_name: data.last_name,
-          email: data.email,
-        });
+          /*if (auth.currentUser) {
+  ...
+} else {
+  throw 'ошибка'
+}*/
+        } else {
+          throw 'User registration failed, server error';
+        }
+      } catch (error) {
+        setErrorMessage('Server error');
       }
       setErrorMessage('');
     } catch (e: any) {
