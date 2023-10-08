@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import './Dashboard.css';
 import { useNavigate } from 'react-router-dom';
 import { signOut, User, getAuth, onAuthStateChanged } from '@firebase/auth';
+import api from '../../api';
 
 const Dashboard = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -17,16 +18,8 @@ const Dashboard = () => {
     onAuthStateChanged(auth, async (user: User | null) => {
       if (user) {
         try {
-          const accessToken = await user.getIdTokenResult();
-          const res = await fetch('api/main-page', {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${accessToken.token}`,
-            },
-          });
-          if (!res.ok) {
-            navigate('/login');
-          }
+          const request = await api();
+          await request.get('/dashboard');
           setLoading(false);
         } catch (e) {
           console.error(e);

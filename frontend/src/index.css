@@ -172,7 +172,7 @@ code {
   height: 100vh;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .menu-desktop {
     display: block;
     display: block;

@@ -70,7 +70,7 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
                               checkedIcon={<CheckCircle style={{ color: '#5FB918' }} />}
                               onClick={() => handleCheckbox(task)}
                             />
-                            {task.description}
+                            {task.title}
                           </div>
                           <div className='grid-item'>
                             {task.due_date

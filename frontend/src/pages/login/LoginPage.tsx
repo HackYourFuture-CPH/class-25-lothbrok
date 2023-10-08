@@ -123,7 +123,7 @@ const LoginPage: React.FC = () => {
               rules={{
                 required: 'Email is required',
                 pattern: {
-                  value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i,
+                  value: /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/i,
                   message: 'Invalid email address',
                 },
               }}

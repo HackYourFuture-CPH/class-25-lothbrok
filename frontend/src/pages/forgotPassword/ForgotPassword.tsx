@@ -44,7 +44,7 @@ function ForgotPassword() {
               className='button-style'
               type='submit'
               variant='contained'
-              disabled={!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)}
+              disabled={!/^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/.test(email)}
             >
               Reset Password
             </Button>
