@@ -1,4 +1,4 @@
-.task-item {
+.task_item {
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -15,13 +15,13 @@
   grid-template-columns: repeat(1, 1fr);
 }
 
-.task-item p {
+.task_item p {
   margin: 5px 0;
   font-size: 10px;
   font-weight: 600;
 }
 
-.icon-container {
+.icon_container {
   display: flex;
   width: Hug (180px);
   height: Hug (20px);
@@ -29,7 +29,7 @@
   margin-top: -20px;
 }
 
-.thumbnail-image {
+.thumbnail_image {
   width: 322px;
   height: 162px;
   top: 104px;
@@ -37,7 +37,7 @@
   border-radius: 10px;
 }
 
-.task-info {
+.task_info {
   flex-direction: column;
   align-items: flex-start;
   width: Fixed (319px);
@@ -67,7 +67,7 @@ h3 {
   text-align: left;
 }
 
-.progress-bar {
+.progress_bar {
   border: 2px solid #dddddd;
   border-radius: 5px;
   width: 267px;
@@ -81,12 +81,12 @@ h3 {
   margin-bottom: -20px;
 }
 
-.progress-bar div {
+.progress_bar div {
   display: flex;
   background: #5fb918;
 }
 
-.percentage-number {
+.percentage_number {
   color: #2b283d;
   font: 'Manrope';
   font-size: 12px;
@@ -97,7 +97,7 @@ h3 {
 }
 
 @media (max-width: 768px) {
-  .task-info {
+  .task_info {
     display: flex;
     grid-template-columns: repeat(3, 1fr);
   }

@@ -1,11 +1,11 @@
-.project-list-container {
+.project_list_container {
   font: 'Manrope';
   text-align: right;
   padding-right: 20px;
   display: flex;
 }
 
-.task-list {
+.task_list {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -13,7 +13,7 @@
   padding-top: 30px;
 }
 
-.create-project {
+.create_project {
   border: none;
   cursor: pointer;
   display: fixed;

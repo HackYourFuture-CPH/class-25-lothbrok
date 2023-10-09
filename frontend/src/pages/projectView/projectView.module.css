@@ -1,36 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500&display=swap');
 
-.project-view {
+.project_view {
   background-color: #f1f2f4;
   height: 100%;
   padding: 2rem;
 }
 
-.kanban-view {
+.kanban_view {
   margin-right: -2rem;
 }
 
-.manrope-font {
+.manrope_font {
   font-family: 'Manrope', sans-serif;
 }
 
-.project-box {
+.project_box {
   background-color: #fff;
   font-family: 'Manrope', sans-serif;
   border-radius: 8px;
 }
 
-.project-box > * {
+.project_box > * {
   padding: 1rem;
   display: flex;
   gap: 1rem;
 }
 
-.project-box > *:first-child {
+.project_box > *:first-child {
   border-bottom: 1px solid #f1f2f4;
 }
 
-.image-wrap {
+.image_wrap {
   width: 60px;
   height: 60px;
   border-radius: 5px;
@@ -43,7 +43,7 @@
   height: 100%;
 }
 
-.project-title {
+.project_title {
   margin: 0;
   display: block;
 }

@@ -4,7 +4,7 @@
   height: 100vh;
 }
 
-.link-container {
+.link_container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,7 +12,7 @@
   margin-top: 5rem;
 }
 
-.link-container > * {
+.link_container > * {
   text-decoration: none;
 }
 
