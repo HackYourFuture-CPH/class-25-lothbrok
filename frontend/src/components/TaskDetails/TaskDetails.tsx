@@ -104,18 +104,18 @@ const TaskDetails = ({ task }: TaskDetailsType) => {
             <p className='single-title'>Objective</p>
             <Add className='details-icon' />
           </div>
-          <div className='objects'>
-            <div className='object'>
+          <div className='task-objectives'>
+            <div className='task-objective'>
               <CheckCircleRounded id='small-check' />
               <p>Project Kanban/Cards*Trello</p>
             </div>
             <Divider />
-            <div className='object'>
+            <div className='task-objective'>
               <CheckCircleRounded id='small-check' />
               <p>Activity/Inbox*with advance filter</p>
             </div>
             <Divider />
-            <div className='object'>
+            <div className='task-objective'>
               <RadioButtonUnchecked id='small-circle' />
               <p>Project List *Asana</p>
             </div>

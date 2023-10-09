@@ -72,20 +72,20 @@
   color: #b3b1bb;
 }
 
-.objects {
+.task-objectives {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.object,
+.task-objective,
 .comment-section {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.object p,
+.task-objective p,
 .comment-section p {
   font-family: 'Manrope', sans-serif;
   font-size: 14px;
