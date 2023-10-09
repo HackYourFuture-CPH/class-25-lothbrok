@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import allTasks from './tasks';
-import projects from './projects';
+
 import thumbnail from '../../assets/images/Rectangle 3025.svg';
 import { v4 as uuid } from 'uuid';
 import { User, getAuth, onAuthStateChanged } from '@firebase/auth';
@@ -14,10 +13,12 @@ import { Task } from '../../types/Task';
 import { Project } from '../../types/Project';
 import { Categories } from '../../types/Categories';
 import { ViewProps } from '../../types/ViewProps';
+import api from '../../api';
+import { Task as TaskConstructor } from '../../classes/Task';
 
 const ProjectView = () => {
-  const { id } = useParams();
-  const [tasks, setTasks] = useState<Task[]>(allTasks);
+  const { id: project_id } = useParams();
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [project, setProject] = useState<Project>();
   const [view, setView] = useState<string>('list');
   const { task } = useTaskStore();
@@ -32,6 +33,30 @@ const ProjectView = () => {
     Done: 'done',
   };
 
+  const getTasks = async () => {
+    try {
+      if (userId) {
+        const req = await api();
+        const res = await req.get(`/dashboard/${project_id}/${userId}`);
+        const tasks = await res.data;
+        setTasks(tasks);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const getProject = async () => {
+    try {
+      const req = await api();
+      const res = await req.get(`/dashboard/project/${project_id}`);
+      const project = await res.data;
+      setProject(project);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
     const setUser = () => {
       const auth = getAuth();
@@ -42,35 +67,33 @@ const ProjectView = () => {
       });
     };
     setUser();
-
-    if (id) {
-      setTasks(tasks.filter((task) => task.project_id === +id));
-      setProject(projects.filter((project) => project.id === +id)[0]);
-      setIsLoading(false);
-    }
   }, []);
+
+  useEffect(() => {
+    getTasks();
+    getProject();
+    setIsLoading(false);
+  }, [userId]);
 
   const changeView = (view: string) => {
     setView(view);
   };
 
-  const addNewTask = (status: string) => {
-    if (id && title.trim()) {
-      setTasks([
-        ...tasks,
-        {
-          id: uuid(),
-          title,
-          description: '',
-          status,
-          due_date: '',
-          assignee: '',
-          completed: false,
-          priority: '',
-          project_id: +id,
-          user_id: userId,
-        },
-      ]);
+  const addNewTask = async (status: string) => {
+    if (project_id && title.trim()) {
+      const task = new TaskConstructor();
+      task.title = title;
+      task.status = status;
+      task.user_uid = userId;
+      task.project_id = +project_id;
+      try {
+        const req = await api();
+        const res = await req.post(`/dashboard`, task);
+        const newTask = res.data[0];
+        setTasks([...tasks, newTask]);
+      } catch (e) {
+        console.error(e);
+      }
     }
   };
 
@@ -92,6 +115,16 @@ const ProjectView = () => {
             : task,
         ),
       );
+      allTasks.map(async (task) => {
+        if (String(task.id) === result.draggableId) {
+          try {
+            const req = await api();
+            await req.put(`/dashboard/${task.id}`, { status: destination.droppableId });
+          } catch (e) {
+            console.error(e);
+          }
+        }
+      });
     } else {
       setTasks((tasks) => {
         const allTasks = [...tasks];
@@ -131,7 +164,7 @@ const ProjectView = () => {
             <div>
               <span>Project / </span>
               <span className='bold'>Details</span>
-              <h2>{project.title}</h2>
+              <h2 className='project-title'>{project.title}</h2>
             </div>
           </div>
           <div className='views'>
@@ -163,7 +196,7 @@ const ProjectView = () => {
         </div>
       </div>
     ) : (
-      <h2>Project Not Found</h2>
+      <h3>Project Not Found</h3>
     )
   ) : (
     <div>loading</div>

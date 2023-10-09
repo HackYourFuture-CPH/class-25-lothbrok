@@ -57,8 +57,9 @@
   height: 100%;
 }
 
-h2 {
+.project-title {
   margin: 0;
+  display: block;
 }
 
 .views > * {

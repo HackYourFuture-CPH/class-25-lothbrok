@@ -8,7 +8,7 @@ import { signOut, User, getAuth, onAuthStateChanged } from '@firebase/auth';
 import api from '../../api';
 
 const Dashboard = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const navigate = useNavigate();
   const handleSignOut = () => signOut(getAuth());
@@ -19,7 +19,7 @@ const Dashboard = () => {
       if (user) {
         try {
           const request = await api();
-          await request.get('/main-page');
+          await request.get('/dashboard');
           setLoading(false);
         } catch (e) {
           console.error(e);
@@ -30,9 +30,9 @@ const Dashboard = () => {
     });
   };
 
-  // useEffect(() => {
-  //   checkToken();
-  // }, []);
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   return (
     <>

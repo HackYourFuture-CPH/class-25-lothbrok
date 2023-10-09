@@ -15,6 +15,7 @@
 
 .kanban-title {
   display: block;
+  position: inherit;
 }
 
 .droppable {
