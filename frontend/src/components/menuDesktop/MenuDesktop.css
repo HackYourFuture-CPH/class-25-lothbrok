@@ -1,5 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
 .desktop-left-bar {
   background-color: var(--purple--80);
   height: 100vh;
   position: fixed;
+  width: 16rem;
+  padding: 1rem;
+}
+
+h4 {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+}
+
+.logo-menu {
+  width: 1.25rem;
+}
+
+.logo-div {
+  display: flex;
+  padding-left: 1rem;
+  padding-bottom: 2rem;
+  gap: 1rem;
+}
+
+.current_path {
+  background-color: #fff;
+}
+
+.current_path .list-name {
+  color: var(--purple--80);
+  font-weight: 900;
+}
+
+.list-item {
+  border-radius: 8px;
+  padding: 0.25rem 0;
+}
+
+.list-top > * {
+  margin-bottom: 1rem;
+}
+
+#list-bottom {
+  position: absolute;
+  bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
