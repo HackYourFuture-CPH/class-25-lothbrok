@@ -12,6 +12,20 @@
 
 .manrope-font {
   font-family: 'Manrope', sans-serif;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.manrope-font > *:nth-child(1) {
+  align-self: flex-start;
+  flex: 1 1 65%;
+  min-width: 30ch;
+}
+
+.manrope-font > *:nth-child(2) {
+  flex: 1 1 33%;
+  align-self: flex-start;
 }
 
 .project-box {

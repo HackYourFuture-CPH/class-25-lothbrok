@@ -18,11 +18,11 @@ export const updateUserByIdInDB = async (req: Request, res: Response) => {
   try {
     const uid = req.params.uid;
 
-    const { first_name, last_name, photourl, phone_number } = req.body;
+    const { first_name, last_name, photo_url, phone_number } = req.body;
 
     const userInfo = await db('users')
       .where('uid', uid)
-      .update(first_name, last_name, photourl, phone_number);
+      .update(first_name, last_name, photo_url, phone_number);
     if (!userInfo) {
       res.status(StatusCodes.NOT_FOUND);
     }
@@ -34,14 +34,14 @@ export const updateUserByIdInDB = async (req: Request, res: Response) => {
 
 export const registerUserToDb = async (req: Request, res: Response) => {
   try {
-    const { uid, first_name, last_name, email, photourl, phone_number }: user = req.body;
+    const { uid, first_name, last_name, email, photo_url, phone_number }: user = req.body;
 
     const newUser = await db('users').insert({
       uid,
       first_name,
       last_name,
       email,
-      photourl,
+      photo_url,
       phone_number,
     });
 

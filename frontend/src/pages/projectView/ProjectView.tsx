@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
+import thumbnail from '../../assets/images/Rectangle 3025.svg';
 import { v4 as uuid } from 'uuid';
 import { User, getAuth, onAuthStateChanged } from '@firebase/auth';
 import './projectView.css';
-import thumbnail from '../../assets/images/Rectangle 3025.svg';
 import ProjectListView from '../../components/projectListView/ProjectListView';
+import { useTaskStore, initialValue } from '../../store/task.store';
+import { TaskDetails } from '../../IndexForImport';
 import ProjectKanbanView from '../../components/projectKanbanView/ProjectKanbanView';
 import { Task } from '../../types/Task';
 import { Project } from '../../types/Project';
@@ -17,7 +20,8 @@ const ProjectView = () => {
   const { id: project_id } = useParams();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [project, setProject] = useState<Project>();
-  const [view, setView] = useState<string>('kanban');
+  const [view, setView] = useState<string>('list');
+  const { task } = useTaskStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [title, setTitle] = useState<string>('');
   const [editing, setEditing] = useState<string>('');
@@ -179,13 +183,16 @@ const ProjectView = () => {
           </div>
         </div>
         <div className='manrope-font'>
-          {view === 'kanban' ? (
-            <ProjectKanbanView {...viewProps} />
-          ) : view === 'list' ? (
-            <ProjectListView {...viewProps} />
-          ) : (
-            <div>Calendar View</div>
-          )}
+          <div>
+            {view === 'kanban' ? (
+              <ProjectKanbanView {...viewProps} />
+            ) : view === 'list' ? (
+              <ProjectListView {...viewProps} />
+            ) : (
+              <div>Calendar View</div>
+            )}
+          </div>
+          {task !== initialValue && <TaskDetails task={task} />}
         </div>
       </div>
     ) : (
