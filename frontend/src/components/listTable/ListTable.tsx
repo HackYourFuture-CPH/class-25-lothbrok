@@ -1,5 +1,5 @@
 import { Task } from '../../types/Task';
-import './listTable.css';
+import styles from './listTable.module.css';
 import React from 'react';
 import { Checkbox, useMediaQuery } from '@mui/material';
 import { CheckCircle, RadioButtonUnchecked, Flag } from '@mui/icons-material';
@@ -36,13 +36,13 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
   }
 
   return (
-    <div className='border-radius'>
+    <div className={styles.border_radius}>
       {!isMobile ? (
-        <div className='grid-container'>
-          <div className='grid-item first-row title'>Task</div>
-          <div className='grid-item first-row'>DueDate</div>
-          <div className='grid-item first-row'>Priority</div>
-          <div className='grid-item first-row'>Assigne</div>
+        <div className={styles.grid_container}>
+          <div className={`${styles.grid_item} ${styles.first_row} ${styles.title}`}>Task</div>
+          <div className={`${styles.grid_item} ${styles.first_row}`}>DueDate</div>
+          <div className={`${styles.grid_item} ${styles.first_row}`}>Priority</div>
+          <div className={`${styles.grid_item} ${styles.first_row}`}>Assigne</div>
         </div>
       ) : null}
       <Droppable droppableId={listId} isDropDisabled={false}>
@@ -60,9 +60,14 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                       >
-                        <div className='grid-container task-row' key={task.id}>
+                        <div
+                          className={`${styles.grid_container} ${styles.task_row}`}
+                          key={task.id}
+                        >
                           <div
-                            className={`grid-item title ${task.completed ? 'completed-task' : ''}`}
+                            className={`${styles.grid_item} ${styles.title} ${
+                              task.completed ? styles.completed_task : ''
+                            }`}
                           >
                             <Checkbox
                               checked={task.completed}
@@ -72,7 +77,7 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
                             />
                             {task.title}
                           </div>
-                          <div className='grid-item'>
+                          <div className={styles.grid_item}>
                             {task.due_date
                               ? new Date(task.due_date).toLocaleString('en-GB', {
                                   day: 'numeric',
@@ -81,7 +86,7 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
                               : '—'}
                           </div>
                           {!isMobile ? (
-                            <div className='grid-item'>
+                            <div className={styles.grid_item}>
                               <Flag
                                 style={{
                                   color:
@@ -96,7 +101,7 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
                             </div>
                           ) : null}
 
-                          <div className='grid-item'>{task.assignee}</div>
+                          <div className={styles.grid_item}>{task.assignee}</div>
                         </div>
                       </div>
                     )}
