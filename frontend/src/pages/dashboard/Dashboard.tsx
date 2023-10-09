@@ -19,7 +19,7 @@ const Dashboard = () => {
       if (user) {
         try {
           const request = await api();
-          await request.get('/main-page');
+          await request.get('/dashboard');
           setLoading(false);
         } catch (e) {
           console.error(e);
