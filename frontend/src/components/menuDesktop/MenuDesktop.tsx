@@ -18,7 +18,6 @@ const icons = [
 export const Menu = () => {
   const location = useLocation();
   const getPath = (input: string) => input.split(' ').join('').toLowerCase();
-  console.log(location.pathname);
   return (
     <>
       <div className={styles.logo_div}>
