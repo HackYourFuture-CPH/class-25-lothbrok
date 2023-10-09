@@ -1,37 +1,70 @@
-import React from 'react';
-import SearchBar from '../searchBar/SearchBar';
+import React, { useEffect, useState } from 'react';
 import PageTitle from '../pageTitle/PageTitle';
-import MenuLeftBar from '../menuMobile/MenuLeftBar';
-import CustomDropdown from '../dropdown/CustomDropDown';
-import { getAuth, signOut } from 'firebase/auth';
+import { User, getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
+import api from '../../api';
+import { Avatar, useMediaQuery } from '@mui/material';
+import MenuLeftBar from '../menuMobile/MenuLeftBar';
+import logo from '../../assets/images/Logo.svg';
 
 const handleSignOut = () => signOut(getAuth());
 const Header = () => {
-  const combinedClasses = `${styles.header} ${styles.container}`;
-  return (
-    <div className={combinedClasses}>
-      <PageTitle />
-      <div className={styles.burger_icon_btn}>
-        <MenuLeftBar />
-      </div>
-      <div className={styles.logo}>
-        <div className={styles.logo_icon_div}>
-          <img src='/assets/icons/tablet-logo.svg' />
-        </div>
-        <h3>Dashhhboard</h3>
-      </div>
-      <div className={styles.header_right}>
-        <SearchBar />
-        <div className={styles.notification_icon_div}>
-          <img src='/assets/icons/notification.svg' />
-        </div>
+  const [userName, setUserName] = useState<string>('');
+  const [uid, setUid] = useState<string>('');
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
 
-        <div className={styles.img_account_div}>
-          <img src='/assets/images/avatar.svg' alt='' />
-          <CustomDropdown />
+  const getUserId = () => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, async (user: User | null) => {
+      if (user) {
+        setUid(user.uid);
+      }
+    });
+  };
+
+  const getUserName = async () => {
+    try {
+      if (uid) {
+        const req = await api();
+        const res = await req.get(`/user/current/${uid}`);
+        const name = await res.data;
+        setUserName(`${name.user[0].first_name} ${name.user[0].last_name}`);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    getUserId();
+  }, []);
+
+  useEffect(() => {
+    getUserName();
+  }, [uid]);
+
+  return (
+    <div className={styles.header}>
+      {!isDesktop ? (
+        <div className='burger-icon-btn'>
+          <MenuLeftBar />
         </div>
+      ) : null}
+      <PageTitle />
+      {!isDesktop ? <img src={logo} /> : null}
+      <div className={styles.header_right}>
+        {userName && isDesktop ? (
+          <>
+            <Avatar>
+              {userName
+                .split(' ')
+                .map((word) => word[0].toUpperCase())
+                .join('')}
+            </Avatar>
+            <div className='username'>{userName}</div>
+          </>
+        ) : null}
 
         <Link className={styles.signOut} to='/login' onClick={handleSignOut}>
           Log out

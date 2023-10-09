@@ -7,7 +7,7 @@ import { StatusCodes } from 'http-status-codes';
 export const getUserById = async (req: Request, res: Response) => {
   try {
     const uid = req.params.uid;
-    const user = await adminFireAuth.getUser(uid);
+    const user = await db('users').where({ uid });
     res.status(StatusCodes.OK).send({ user });
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);

@@ -3,7 +3,7 @@ import express, { Router } from 'express';
 
 const userRoute: Router = express.Router();
 
-userRoute.get('/current', getUserById);
+userRoute.get('/current/:uid', getUserById);
 userRoute.put('/update', updateUserByIdInDB);
 userRoute.post('/register', registerUserToDb);
 

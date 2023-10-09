@@ -11,6 +11,8 @@
 h4 {
   font-family: 'Poppins', sans-serif;
   margin: 0;
+  color: #fff;
+  font-weight: 600;
 }
 
 .logo_menu {
@@ -54,18 +56,6 @@ h4 {
   width: 1.25rem;
 }
 
-.logo_div {
-  display: flex;
-  padding-left: 0.75rem;
-  padding-bottom: 1rem;
-  gap: 1rem;
-}
-
-h4 {
-  color: var(--text--10);
-  font-size: 1.2rem;
-}
-
 .list_name {
   color: var(--text--10);
   font-family: Manrope;
@@ -96,11 +86,6 @@ h4 {
 #list_bottom {
   position: absolute;
   bottom: 2rem;
-}
-
-h4 {
-  color: var(--text--10);
-  font-size: 1.2rem;
 }
 
 .list_top {
