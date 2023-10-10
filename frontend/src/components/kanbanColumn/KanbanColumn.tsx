@@ -3,7 +3,7 @@ import React from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useEffect, useState } from 'react';
 import { MoreHoriz, CalendarMonth } from '@mui/icons-material';
-import './kanbanColumn.css';
+import styles from './kanbanColumn.module.css';
 
 type KanbanColumnProps = {
   tasks: Task[];
@@ -25,10 +25,10 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ tasks, listId }) => {
   }
 
   return (
-    <div className='border-radius'>
+    <div>
       <Droppable droppableId={listId} isDropDisabled={false}>
         {(provided) => (
-          <div className='droppable' {...provided.droppableProps} ref={provided.innerRef}>
+          <div className={styles.droppable} {...provided.droppableProps} ref={provided.innerRef}>
             {tasks
               .filter((task) => task.status === listId)
               .map((task) => {
@@ -37,25 +37,27 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ tasks, listId }) => {
                   <Draggable key={task.id} draggableId={String(task.id)} index={globalIndex}>
                     {(provided) => (
                       <div
-                        className='kanban-task'
+                        className={styles.kanban_task}
                         key={task.id}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                       >
-                        <div className='kanban-task-row'>
-                          <span className={`priority ${task.priority}`}>
+                        <div className={styles.kanban_task_row}>
+                          <span
+                            className={`${styles.priority} ${styles[task.priority.toLowerCase()]}`}
+                          >
                             {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
                           </span>
                           <MoreHoriz
                             sx={{ color: '#7D7A89' }} /* on click open task detail component */
                           />
                         </div>
-                        <h2 className='kanban-title'>{task.title}</h2>
-                        <div className='description'>{task.description}</div>
-                        <div className='kanban-task-row'>
+                        <h2 className={styles.kanban_title}>{task.title}</h2>
+                        <div className={styles.description}>{task.description}</div>
+                        <div className={styles.kanban_task_row}>
                           <span>{task.assignee}</span>
-                          <span className='date'>
+                          <span className={styles.date}>
                             {task.due_date ? (
                               <>
                                 <CalendarMonth

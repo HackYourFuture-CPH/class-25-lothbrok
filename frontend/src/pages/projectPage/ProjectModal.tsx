@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import './ProjectModal.css';
-import Rectangle from '../../assets/icons/Rectangle.png';
+import styles from './ProjectModal.module.css';
 import Close from '../../assets/icons/x.png';
 
 interface ProjectModalProps {
@@ -14,26 +13,25 @@ function ProjectModal({ closeModal }: ProjectModalProps) {
   const [projectTask, setProjectTask] = useState('');
 
   const handleCreateProject = () => {
-    const newProject = {
-      title: projectName,
-      thumbnail_link: projectThumbnail,
-      date_of_creation: projectDate,
-      amount_of_tasks: projectTask,
-    };
     closeModal();
   };
 
   return (
-    <div className='modal'>
-      <div className='modal-content'>
+    <div className={styles.modal}>
+      <div className={styles.modal_content}>
         <h2>New Project</h2>
-        <button className='close-button' onClick={closeModal}>
-          <img src={Close} alt='Close' className='close-icon' />
+        <button className={styles.close_button} onClick={closeModal}>
+          <img src={Close} alt='Close' className={styles.close_icon} />
         </button>
 
-        <div className='left-content'>
+        <div className={styles.left_content}>
           <label>Thumbnail</label>
-          <img src={Rectangle} alt='Thumbnail' className='modal-thumbnail-image' />
+          <img
+            src={projectThumbnail}
+            alt='Thumbnail'
+            className={styles.modal_thumbnail_image}
+            onChange={() => setProjectThumbnail('')}
+          />
         </div>
         <label>Project name</label>
         <input
@@ -47,16 +45,16 @@ function ProjectModal({ closeModal }: ProjectModalProps) {
           type='text'
           value={projectDate}
           placeholder='Superboard'
-          onChange={(e) => setProjectName(e.target.value)}
+          onChange={(e) => setProjectDate(e.target.value)}
         />
         <label>Privacy</label>
         <input
           type='text'
           value={projectTask}
           placeholder='Public to team'
-          onChange={(e) => setProjectName(e.target.value)}
+          onChange={(e) => setProjectTask(e.target.value)}
         />
-        <button className='create-button' onClick={handleCreateProject}>
+        <button className={styles.create_button} onClick={handleCreateProject}>
           Create Project
         </button>
       </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Add } from '@mui/icons-material';
 import { TextField } from '@mui/material';
 import { DragDropContext } from 'react-beautiful-dnd';
-import './projectKanbanView.css';
+import styles from './projectKanbanView.module.css';
 import KanbanColumn from '../kanbanColumn/KanbanColumn';
 import { ViewProps } from '../../types/ViewProps';
 
@@ -20,9 +20,9 @@ const ProjectKanbanView = ({
 }: ViewProps) => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className='kanban'>
+      <div className={styles.kanban}>
         {Object.entries(categories).map(([sectionTitle, status]) => (
-          <div className='column' key={status}>
+          <div className={styles.column} key={status}>
             <div className='section-title'>
               <h4>{sectionTitle}</h4>
               {editing === status ? (
