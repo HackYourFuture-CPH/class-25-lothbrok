@@ -1,10 +1,12 @@
+import React, { useState, useEffect } from 'react';
 import { Task } from '../../types/Task';
 import styles from './listTable.module.css';
 import React from 'react';
 import { Checkbox, useMediaQuery } from '@mui/material';
 import { CheckCircle, RadioButtonUnchecked, Flag } from '@mui/icons-material';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { useEffect, useState } from 'react';
+import { useTaskStore, useCompletedStore } from '../../store/task.store';
+import './listTable.css';
 
 type ListTableProps = {
   tasks: Task[];
@@ -12,18 +14,29 @@ type ListTableProps = {
   listId: string;
 };
 
-const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
+const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }: ListTableProps) => {
+  const { setTask } = useTaskStore();
   const isMobile = useMediaQuery('(max-width: 550px)');
+  const [enabled, setEnabled] = useState(false);
 
+  const { setCompleted } = useCompletedStore();
   const handleCheckbox = (task: Task) => {
     setTasks((tasks) => {
       return tasks.map((item) =>
         item.id === task.id ? { ...item, completed: !item.completed } : item,
       );
     });
+    setCompleted(String(task.id), !task.completed);
   };
 
-  const [enabled, setEnabled] = useState(false);
+  const handleOpenDetails = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    id: string | number,
+  ) => {
+    e.stopPropagation();
+    setTask(tasks.filter((task) => task.id === id)[0]);
+  };
+
   useEffect(() => {
     const animation = requestAnimationFrame(() => setEnabled(true));
     return () => {
