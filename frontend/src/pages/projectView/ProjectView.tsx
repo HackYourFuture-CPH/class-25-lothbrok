@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
-import thumbnail from '../../assets/images/Rectangle 3025.svg';
 import { v4 as uuid } from 'uuid';
 import { User, getAuth, onAuthStateChanged } from '@firebase/auth';
-import './projectView.css';
+import styles from './projectView.module.css';
+import thumbnail from '../../assets/images/Rectangle 3025.svg';
 import ProjectListView from '../../components/projectListView/ProjectListView';
 import { useTaskStore, initialValue } from '../../store/task.store';
 import { TaskDetails } from '../../IndexForImport';
@@ -155,34 +154,40 @@ const ProjectView = () => {
 
   return !isLoading ? (
     project ? (
-      <div className='project-view'>
-        <div className='project-box'>
+      <div className={styles.project_view}>
+        <div className={styles.project_box}>
           <div>
-            <div className='image-wrap'>
-              <img className='thumbnail' src={thumbnail} alt='project thumbnail' />
+            <div className={styles.image_wrap}>
+              <img className={styles.thumbnail} src={thumbnail} alt='project thumbnail' />
             </div>
             <div>
               <span>Project / </span>
-              <span className='bold'>Details</span>
-              <h2 className='project-title'>{project.title}</h2>
+              <span className={styles.bold}>Details</span>
+              <h2 className={styles.project_title}>{project.title}</h2>
             </div>
           </div>
-          <div className='views'>
-            <span onClick={() => changeView('kanban')} className={view === 'kanban' ? 'bold' : ''}>
+          <div className={styles.views}>
+            <span
+              onClick={() => changeView('kanban')}
+              className={`${styles.bold} ${view === 'kanban' ? styles.bold : ''}`}
+            >
               Kanban
             </span>{' '}
-            <span onClick={() => changeView('list')} className={view === 'list' ? 'bold' : ''}>
+            <span
+              onClick={() => changeView('list')}
+              className={`${styles.bold} ${view === 'list' ? styles.bold : ''}`}
+            >
               List
             </span>
             <span
               onClick={() => changeView('calendar')}
-              className={view === 'calendar' ? 'bold' : ''}
+              className={`${styles.bold} ${view === 'calendar' ? styles.bold : ''}`}
             >
               Calendar
             </span>
           </div>
         </div>
-        <div className='manrope-font'>
+        <div className={styles.manrope_font}>
           <div>
             {view === 'kanban' ? (
               <ProjectKanbanView {...viewProps} />
