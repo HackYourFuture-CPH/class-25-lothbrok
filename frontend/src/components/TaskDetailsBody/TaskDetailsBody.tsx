@@ -26,7 +26,7 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
     setCompleted(`${task.id}`, updatedCompletedStatus);
 
     const updatedTask = { ...task, completed: updatedCompletedStatus };
-    console.log(updatedTask);
+
     return updatedTask;
   };
 
