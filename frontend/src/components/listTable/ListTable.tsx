@@ -27,10 +27,7 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }: ListTa
     setCompleted(String(task.id), !task.completed);
   };
 
-  const handleOpenDetails = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    id: string | number,
-  ) => {
+  (e: React.MouseEvent<HTMLDivElement, MouseEvent>, id: string | number) => {
     e.stopPropagation();
     setTask(tasks.filter((task) => task.id === id)[0]);
   };
