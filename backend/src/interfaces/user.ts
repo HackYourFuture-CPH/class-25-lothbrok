@@ -3,6 +3,6 @@ export interface user {
   first_name: string;
   last_name: string;
   email: string;
-  photourl: string | null;
+  photo_url: string | null;
   phone_number: string | null;
 }
