@@ -13,6 +13,7 @@
   flex-direction: column;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
+  cursor: pointer;
 }
 
 .task-item p {

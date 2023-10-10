@@ -95,3 +95,24 @@ export const getAllProjects = async (req: Request, res: Response) => {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
 };
+
+export const addNewProject = async (req: Request, res: Response) => {
+  try {
+    const { title, description, thumbnail_link, date_of_creation, amount_of_tasks, user_uid } =
+      req.body;
+
+    const project = await db('projects')
+      .insert({
+        title,
+        description,
+        thumbnail_link,
+        date_of_creation,
+        amount_of_tasks,
+        user_uid,
+      })
+      .returning('*');
+    res.status(StatusCodes.CREATED).json(project);
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+  }
+};

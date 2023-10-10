@@ -2,24 +2,38 @@ import React, { useState } from 'react';
 import './ProjectModal.css';
 import Rectangle from '../../assets/icons/Rectangle.png';
 import Close from '../../assets/icons/x.png';
+import api from '../../api';
+import { Project } from '../../types/Project';
 
 interface ProjectModalProps {
   closeModal: () => void;
+  userId: string;
+  projects: Project[];
+  setProjects: React.Dispatch<React.SetStateAction<Project[] | undefined>>;
 }
 
-function ProjectModal({ closeModal }: ProjectModalProps) {
+function ProjectModal({ closeModal, userId, projects, setProjects }: ProjectModalProps) {
   const [projectName, setProjectName] = useState('');
   const [projectThumbnail, setProjectThumbnail] = useState('');
   const [projectDate, setProjectDate] = useState('');
   const [projectTask, setProjectTask] = useState('');
 
-  const handleCreateProject = () => {
-    const newProject = {
-      title: projectName,
-      thumbnail_link: projectThumbnail,
-      date_of_creation: projectDate,
-      amount_of_tasks: projectTask,
-    };
+  const handleCreateProject = async () => {
+    if (projectName.trim()) {
+      const project = {
+        title: projectName,
+        date_of_creation: new Date().toISOString().split('T')[0],
+        user_uid: userId,
+      };
+      try {
+        const req = await api();
+        const res = await req.post(`/dashboard/project`, project);
+        const newProject = res.data[0];
+        setProjects([...projects, newProject]);
+      } catch (e) {
+        console.error(e);
+      }
+    }
     closeModal();
   };
 
@@ -43,19 +57,9 @@ function ProjectModal({ closeModal }: ProjectModalProps) {
           onChange={(e) => setProjectName(e.target.value)}
         />
         <label>Team</label>
-        <input
-          type='text'
-          value={projectDate}
-          placeholder='Superboard'
-          onChange={(e) => setProjectName(e.target.value)}
-        />
+        <input type='text' placeholder='Superboard' />
         <label>Privacy</label>
-        <input
-          type='text'
-          value={projectTask}
-          placeholder='Public to team'
-          onChange={(e) => setProjectName(e.target.value)}
-        />
+        <input type='text' placeholder='Public to team' />
         <button className='create-button' onClick={handleCreateProject}>
           Create Project
         </button>

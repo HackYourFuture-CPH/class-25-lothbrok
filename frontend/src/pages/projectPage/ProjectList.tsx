@@ -61,8 +61,19 @@ function ProjectList() {
         <button className='create-project' onClick={openModal}>
           Create Project
         </button>
-        {projects ? <TaskList projects={projects} /> : null}
-        {isModalOpen && <ProjectModal closeModal={closeModal} />}
+        {projects ? (
+          <>
+            <TaskList projects={projects} />
+            {isModalOpen && (
+              <ProjectModal
+                closeModal={closeModal}
+                userId={userId}
+                projects={projects}
+                setProjects={setProjects}
+              />
+            )}
+          </>
+        ) : null}
       </div>
     </div>
   );
