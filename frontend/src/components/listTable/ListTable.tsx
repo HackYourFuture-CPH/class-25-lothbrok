@@ -5,7 +5,6 @@ import { Checkbox, useMediaQuery } from '@mui/material';
 import { CheckCircle, RadioButtonUnchecked, Flag } from '@mui/icons-material';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useTaskStore, useCompletedStore } from '../../store/task.store';
-import './listTable.css';
 
 type ListTableProps = {
   tasks: Task[];
