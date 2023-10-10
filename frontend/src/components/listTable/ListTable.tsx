@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Task } from '../../types/Task';
 import styles from './listTable.module.css';
-import React from 'react';
 import { Checkbox, useMediaQuery } from '@mui/material';
 import { CheckCircle, RadioButtonUnchecked, Flag } from '@mui/icons-material';
 import { Draggable, Droppable } from 'react-beautiful-dnd';

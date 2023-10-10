@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
-import thumbnail from '../../assets/images/Rectangle 3025.svg';
 import { v4 as uuid } from 'uuid';
 import { User, getAuth, onAuthStateChanged } from '@firebase/auth';
 import styles from './projectView.module.css';
