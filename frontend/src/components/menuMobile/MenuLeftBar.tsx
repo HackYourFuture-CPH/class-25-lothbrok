@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './MenuLeftBar.css';
+import styles from './MenuLeftBar.module.css';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { Box, Button } from '@mui/material/';
 import { Menu } from '../menuDesktop/MenuDesktop';
@@ -34,7 +34,7 @@ const MenuLeftBar = () => {
       role='presentation'
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
-      className='swipeableDrawer'
+      className={styles.swipeableDrawer}
     >
       <Menu />
     </Box>
@@ -45,7 +45,7 @@ const MenuLeftBar = () => {
   return (
     <div>
       <Button onClick={toggleDrawer(anchor, true)}>
-        <img className='burger-btn' src='/assets/icons/burger.svg' />
+        <img className={styles.burger_btn} src='/assets/icons/burger.svg' />
       </Button>
       <SwipeableDrawer
         anchor={anchor}

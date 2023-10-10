@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ProjectModal.css';
+import styles from './ProjectModal.module.css';
 import Rectangle from '../../assets/icons/Rectangle.png';
 import Close from '../../assets/icons/x.png';
 
@@ -24,16 +24,16 @@ function ProjectModal({ closeModal }: ProjectModalProps) {
   };
 
   return (
-    <div className='modal'>
-      <div className='modal-content'>
+    <div className={styles.modal}>
+      <div className={styles.modal_content}>
         <h2>New Project</h2>
-        <button className='close-button' onClick={closeModal}>
-          <img src={Close} alt='Close' className='close-icon' />
+        <button className={styles.close_button} onClick={closeModal}>
+          <img src={Close} alt='Close' className={styles.close_icon} />
         </button>
 
-        <div className='left-content'>
+        <div className={styles.left_content}>
           <label>Thumbnail</label>
-          <img src={Rectangle} alt='Thumbnail' className='modal-thumbnail-image' />
+          <img src={Rectangle} alt='Thumbnail' className={styles.modal_thumbnail_image} />
         </div>
         <label>Project name</label>
         <input
@@ -56,7 +56,7 @@ function ProjectModal({ closeModal }: ProjectModalProps) {
           placeholder='Public to team'
           onChange={(e) => setProjectName(e.target.value)}
         />
-        <button className='create-button' onClick={handleCreateProject}>
+        <button className={styles.create_button} onClick={handleCreateProject}>
           Create Project
         </button>
       </div>

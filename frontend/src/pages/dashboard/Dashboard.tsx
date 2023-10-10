@@ -38,11 +38,11 @@ const Dashboard = () => {
       {loading ? (
         <></>
       ) : (
-        <div className='pages'>
-          <div className='menu-desktop'>
+        <div className={styles.pages}>
+          <div className={styles.menu_desktop}>
             <MenuDesktop />
           </div>
-          <div className='main'>
+          <div className={styles.main}>
             <Header />
             <Outlet />
           </div>

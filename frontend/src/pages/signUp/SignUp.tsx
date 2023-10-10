@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import './signUp.css';
+import styles from './signUp.module.css';
 import { Button, TextField, InputLabel, Checkbox, Alert, AlertTitle } from '@mui/material';
 import logo from '../../assets/images/authLogo.svg';
 import image from '../../assets/images/Hands Show.svg';
@@ -66,26 +66,26 @@ const SignUp = () => {
   };
 
   return (
-    <div className='sign-up'>
-      <img src={logo} className='icon' alt='logo' />
+    <div className={styles.sign_up}>
+      <img src={logo} className={styles.icon} alt='logo' />
       {errorMessage ? (
         <Alert severity='error' onClose={() => setErrorMessage('')}>
           <AlertTitle>Error</AlertTitle>
           {errorMessage}
         </Alert>
       ) : null}
-      <div className='flex-container'>
-        <img className='image' src={image} alt='hand holding globe' />
-        <div className='form'>
+      <div className={styles.flex_container}>
+        <img className={styles.image} src={image} alt='hand holding globe' />
+        <div className={styles.form}>
           <h1>Sign up</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className='row'>
+            <div className={styles.row}>
               <div>
                 <InputLabel htmlFor='first-name' style={{ color: '#55555F' }}>
                   First Name
                 </InputLabel>
                 <TextField
-                  className='input-styles'
+                  className={styles.input_styles}
                   {...register('first_name', {
                     required: 'First name is required',
                   })}
@@ -149,7 +149,7 @@ const SignUp = () => {
               <Checkbox /> Remeber me
             </div>
             <Button
-              className='button-style'
+              className={styles.button_style}
               type='submit'
               variant='contained'
               disabled={!isDirty || !isValid}
@@ -157,7 +157,7 @@ const SignUp = () => {
               Sign Up
             </Button>
           </form>
-          <div className='small'>
+          <div className={styles.small}>
             Already have an account? <a onClick={() => navigate('/login')}>Sign In</a>
           </div>
         </div>
