@@ -96,3 +96,9 @@ h4 {
   margin-bottom: 1rem;
   color: var(--text--10);
 }
+
+@media (max-width: 1024px) {
+  .desktop_left_bar {
+    display: none;
+  }
+}

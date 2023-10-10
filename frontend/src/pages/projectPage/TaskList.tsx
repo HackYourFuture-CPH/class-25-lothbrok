@@ -1,5 +1,6 @@
 import React from 'react';
 import TaskItem from './TaskItem';
+import styles from './ProjectList.module.css';
 import { Project } from '../../types/Project';
 
 interface TaskListProps {
@@ -8,7 +9,7 @@ interface TaskListProps {
 
 function TaskList({ projects }: TaskListProps) {
   return (
-    <div className='task-list'>
+    <div className={styles.task_list}>
       {projects.map((project) => (
         <TaskItem key={project.id} project={project} />
       ))}
