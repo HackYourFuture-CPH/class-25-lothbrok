@@ -42,11 +42,7 @@ const SignUp = () => {
             email: data.email,
           });
 
-          /*if (auth.currentUser) {
-  ...
-} else {
-  throw 'ошибка'
-}*/
+         
         } else {
           throw 'User registration failed, server error';
         }
