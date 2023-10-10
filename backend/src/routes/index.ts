@@ -10,6 +10,6 @@ const router: Router = express.Router();
 router.use('/auth', auth);
 router.use('/dashboard', validateAuth, dashboard);
 router.use('/user', userRoute);
-router.use('projects', validateAuth, projects);
+router.use('/project', validateAuth, projects);
 
 export default router;

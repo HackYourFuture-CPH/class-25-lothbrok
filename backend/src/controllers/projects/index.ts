@@ -15,8 +15,13 @@ export const getAmountOfTasks = async (req: Request, res: Response) => {
   const { project_id } = req.params;
   try {
     const projects = await db('tasks').count('* as tasks_count').where('project_id', project_id);
-    const taskCount = projects[0].tasks_count;
-    res.status(StatusCodes.OK).send(taskCount);
+
+    if (projects.length > 0 && 'tasks_count' in projects[0]) {
+      const taskCount = projects[0].tasks_count;
+      res.status(StatusCodes.OK).send(taskCount);
+    } else {
+      res.status(StatusCodes.NOT_FOUND).json({ message: `No tasks found` });
+    }
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }

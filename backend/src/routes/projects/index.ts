@@ -4,6 +4,6 @@ import { getAllProjects, getAmountOfTasks } from '../../controllers/projects';
 const projects: Router = express.Router();
 
 projects.get('/', getAllProjects);
-projects.get('/amount_of_tasks/:project_id', getAmountOfTasks);
+projects.get('/:project_id/tasks/count', getAmountOfTasks);
 
 export default projects;
