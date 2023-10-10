@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from './ProjectModal.module.css';
-import Rectangle from '../../assets/icons/Rectangle.png';
 import Close from '../../assets/icons/x.png';
 
 interface ProjectModalProps {
@@ -14,12 +13,6 @@ function ProjectModal({ closeModal }: ProjectModalProps) {
   const [projectTask, setProjectTask] = useState('');
 
   const handleCreateProject = () => {
-    const newProject = {
-      title: projectName,
-      thumbnail_link: projectThumbnail,
-      date_of_creation: projectDate,
-      amount_of_tasks: projectTask,
-    };
     closeModal();
   };
 
@@ -33,7 +26,12 @@ function ProjectModal({ closeModal }: ProjectModalProps) {
 
         <div className={styles.left_content}>
           <label>Thumbnail</label>
-          <img src={Rectangle} alt='Thumbnail' className={styles.modal_thumbnail_image} />
+          <img
+            src={projectThumbnail}
+            alt='Thumbnail'
+            className={styles.modal_thumbnail_image}
+            onChange={() => setProjectThumbnail('')}
+          />
         </div>
         <label>Project name</label>
         <input
@@ -47,14 +45,14 @@ function ProjectModal({ closeModal }: ProjectModalProps) {
           type='text'
           value={projectDate}
           placeholder='Superboard'
-          onChange={(e) => setProjectName(e.target.value)}
+          onChange={(e) => setProjectDate(e.target.value)}
         />
         <label>Privacy</label>
         <input
           type='text'
           value={projectTask}
           placeholder='Public to team'
-          onChange={(e) => setProjectName(e.target.value)}
+          onChange={(e) => setProjectTask(e.target.value)}
         />
         <button className={styles.create_button} onClick={handleCreateProject}>
           Create Project
