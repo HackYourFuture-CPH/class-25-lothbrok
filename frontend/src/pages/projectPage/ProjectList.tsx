@@ -14,6 +14,7 @@ function ProjectList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userId, setUserId] = useState('');
   const [projects, setProjects] = useState<Project[]>();
+  const thumbnails = [image1, image2, image3, image4];
 
   const getProjects = async () => {
     try {
@@ -21,7 +22,7 @@ function ProjectList() {
         const req = await api();
         const res = await req.get(`/dashboard/projects/${userId}`);
         const projects: Project[] = await res.data.map((project: Project, index: number) => {
-          project.thumbnail_link = [image1, image2, image3, image4][index % 4];
+          project.thumbnail_link = thumbnails[index % thumbnails.length];
           return project;
         });
         setProjects(projects);
@@ -55,6 +56,30 @@ function ProjectList() {
     setIsModalOpen(false);
   };
 
+  const handleCreateProject = async (projectName: string) => {
+    if (projectName.trim()) {
+      const project = {
+        title: projectName,
+        date_of_creation: new Date().toISOString().split('T')[0],
+        user_uid: userId,
+        thumbnail_link: thumbnails[projects ? projects.length % thumbnails.length : 0],
+      };
+      try {
+        const req = await api();
+        const res = await req.post(`/dashboard/project`, project);
+        const newProject = res.data[0];
+        if (projects) {
+          setProjects([...projects, newProject]);
+        } else {
+          setProjects(newProject);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    closeModal();
+  };
+
   return (
     <div className='project-list-container'>
       <div>
@@ -66,10 +91,9 @@ function ProjectList() {
             <TaskList projects={projects} />
             {isModalOpen && (
               <ProjectModal
+                handleCreateProject={handleCreateProject}
                 closeModal={closeModal}
-                userId={userId}
-                projects={projects}
-                setProjects={setProjects}
+                thumbnail={thumbnails[projects ? projects.length % thumbnails.length : 0]}
               />
             )}
           </>
