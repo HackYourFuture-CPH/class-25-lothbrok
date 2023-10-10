@@ -1,6 +1,7 @@
 import { List, ListItem, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
 import { Link } from 'react-router-dom';
-import './MenuDesktop.css';
+import stylesDesktop from './MenuDesktop.module.css';
+import styles from '../menuMobile/MenuLeftBar.module.css';
 
 const icons = [
   'dashboard',
@@ -17,47 +18,47 @@ const icons = [
 export const Menu = () => {
   return (
     <>
-      <div className='logo-div'>
-        <img className='logo-menu' src='/assets/icons/logo-menu.svg' alt='Logo' />
+      <div className={styles.logo_div}>
+        <img className={styles.logo_menu} src='/assets/icons/logo-menu.svg' alt='Logo' />
         <h4>Dashhhboard</h4>
-        <img className='logo-menu' src='/assets/icons/plus.svg' alt='Plus Icon' />
+        <img className={styles.logo_menu} src='/assets/icons/plus.svg' alt='Plus Icon' />
       </div>
-      <List className='list-top'>
+      <List className={styles.list_top}>
         {['Dashboard', 'Project', 'My Task', 'Activity', 'Team', 'Message', 'Setting'].map(
           (text, index) => (
-            <ListItem key={text} disablePadding className='list-item'>
+            <ListItem key={text} disablePadding className={styles.list_item}>
               <ListItemButton>
                 <Link
-                  className='list-item-link'
+                  className={styles.list_item_link}
                   to={index === 0 ? '/' : `/${text.split(' ').join('').toLowerCase()}`}
                 >
                   <ListItemIcon>
                     <img
-                      className='icons'
+                      className={styles.icons}
                       src={`/assets/icons/${icons[index]}.svg`}
                       alt={`${text}-icon`}
                     />
                   </ListItemIcon>
-                  <ListItemText className='list-name' primary={text} />
+                  <ListItemText className={styles.list_name} primary={text} />
                 </Link>
               </ListItemButton>
             </ListItem>
           ),
         )}
       </List>
-      <List id='list-bottom'>
+      <List id={styles.list_bottom}>
         {['Workspace', 'Superboard'].map((text, index) => (
           <ListItem key={text} disablePadding className={index >= 7 ? 'last-two-items' : ''}>
             <ListItemButton>
-              <Link className='list-item-link' to={`/${text.toLowerCase()}`}>
+              <Link className={styles.list_item_link} to={`/${text.toLowerCase()}`}>
                 <ListItemIcon>
                   <img
-                    className='icons'
+                    className={styles.icons}
                     src={`/assets/icons/${icons.slice(-2)[index]}.svg`}
                     alt={`${text}-icon`}
                   />
                 </ListItemIcon>
-                <ListItemText className='list-name' primary={text} />
+                <ListItemText className={styles.list_name} primary={text} />
               </Link>
             </ListItemButton>
           </ListItem>
@@ -69,7 +70,7 @@ export const Menu = () => {
 
 const MenuDesktop = () => {
   return (
-    <div className='desktop-left-bar'>
+    <div className={stylesDesktop.desktop_left_bar}>
       <Menu />
     </div>
   );
