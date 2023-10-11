@@ -187,7 +187,7 @@ const ProjectView = () => {
           </div>
         </div>
         <div className={styles.manrope_font}>
-          <div>
+          <div className={styles.list_wrapper}>
             {view === 'kanban' ? (
               <ProjectKanbanView {...viewProps} />
             ) : view === 'list' ? (
@@ -196,7 +196,7 @@ const ProjectView = () => {
               <div>Calendar View</div>
             )}
           </div>
-          {task !== initialValue && <TaskDetails task={task} />}
+          {view === 'list' && task !== initialValue && <TaskDetails task={task} />}
         </div>
       </div>
     ) : (

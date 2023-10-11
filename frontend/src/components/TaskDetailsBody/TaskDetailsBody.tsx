@@ -45,7 +45,7 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
         />
         <div className='label'>
           <p>Bookum App</p>
-          <h6>{task.description}</h6>
+          <h6>{task.title}</h6>
         </div>
       </div>
       <div className='task-owner'>

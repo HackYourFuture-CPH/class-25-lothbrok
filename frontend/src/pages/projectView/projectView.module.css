@@ -13,8 +13,11 @@
 .manrope_font {
   font-family: 'Manrope', sans-serif;
   display: flex;
-  flex-wrap: wrap;
   gap: 1rem;
+  margin-top: 5rem;
+}
+.list_wrapper {
+  width: 100%;
 }
 
 .manrope-font > *:nth-child(1) {
