@@ -35,7 +35,7 @@ const SignUp = () => {
       const response = await api();
       try {
         if (auth.currentUser) {
-          await response.post('/user/register', {
+          await response.post('/user', {
             uid: auth.currentUser.uid,
             first_name: data.first_name,
             last_name: data.last_name,

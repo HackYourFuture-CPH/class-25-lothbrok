@@ -3,8 +3,8 @@ import express, { Router } from 'express';
 
 const userRoute: Router = express.Router();
 
-userRoute.get('/current/:uid', getUserById);
-userRoute.put('/update', updateUserByIdInDB);
-userRoute.post('/register', registerUserToDb);
+userRoute.get('/:uid', getUserById);
+userRoute.put('/', updateUserByIdInDB);
+userRoute.post('/', registerUserToDb);
 
 export default userRoute;
