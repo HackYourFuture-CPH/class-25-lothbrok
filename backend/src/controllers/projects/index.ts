@@ -26,3 +26,37 @@ export const getAmountOfTasks = async (req: Request, res: Response) => {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
 };
+
+export const inviteUsersToProject = async (req: Request, res: Response) => {
+  const { project_id } = req.params;
+  const { uids } = req.body;
+  if (!uids?.length) {
+    res.status(StatusCodes.BAD_REQUEST).send({ error: 'No uids were provided' });
+    return;
+  }
+  try {
+    const result = await db.transaction(async (trx) => {
+      for (const uid of uids) {
+        await trx('project_user_relation').insert({
+          project_id,
+          user_uid: uid,
+        });
+      }
+    });
+    res.status(StatusCodes.OK).send(result);
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+  }
+};
+
+export const getUsersOfProject = async (req: Request, res: Response) => {
+  const { project_id } = req.params;
+  try {
+    const projectUsers = await db('project_user_relation')
+      .select('*')
+      .where('project_id', project_id);
+    res.status(StatusCodes.OK).send(projectUsers);
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+  }
+};
