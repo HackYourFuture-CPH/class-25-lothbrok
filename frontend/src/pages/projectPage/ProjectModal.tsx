@@ -4,6 +4,7 @@ import Rectangle from '../../assets/icons/Rectangle.png';
 import Close from '../../assets/icons/x.png';
 import api from '../../api';
 import { Project } from '../../types/Project';
+import { InputLabel, MenuItem, NativeSelect, Select, TextField } from '@mui/material';
 
 interface ProjectModalProps {
   closeModal: () => void;
@@ -29,17 +30,30 @@ function ProjectModal({ closeModal, handleCreateProject, thumbnail }: ProjectMod
             <img src={thumbnail} alt='Thumbnail' className='modal-thumbnail-image' />
           </div>
         </div>
-        <label>Project name</label>
-        <input
-          type='text'
-          value={projectName}
-          placeholder='Input Text Here'
-          onChange={(e) => setProjectName(e.target.value)}
-        />
-        <label>Team</label>
-        <input type='text' placeholder='Superboard' />
-        <label>Privacy</label>
-        <input type='text' placeholder='Public to team' />
+        <div>
+          <label>Project name</label>
+          <TextField
+            variant='outlined'
+            value={projectName}
+            placeholder='Input Text Here'
+            onChange={(e) => setProjectName(e.target.value)}
+            className='mui'
+            sx={{
+              '& .MuiInputBase-root.MuiOutlinedInput-root ::placeholder': {
+                color: '#2B283D',
+                opacity: 1,
+              },
+            }}
+          />
+          <label>Team</label>
+          <Select value='Superboard' className='mui'>
+            <MenuItem value='Superboard'>Superboard</MenuItem>
+          </Select>
+          <label>Privacy</label>
+          <Select value='Public to team' className='mui last_input'>
+            <MenuItem value='Public to team'>Public to team</MenuItem>
+          </Select>
+        </div>
         <button className='create-button' onClick={() => handleCreateProject(projectName)}>
           Create Project
         </button>
