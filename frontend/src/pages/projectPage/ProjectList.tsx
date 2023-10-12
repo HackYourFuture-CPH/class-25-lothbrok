@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProjectModal from './ProjectModal';
 import TaskList from './TaskList';
-import './ProjectList.css';
+import styles from './ProjectList.module.css';
 import image1 from '../../assets/images/Rectangle 2996.jpg';
 import image2 from '../../assets/images/Rectangle 2997.jpg';
 import image3 from '../../assets/images/Rectangle 2998.jpg';
@@ -81,9 +81,9 @@ function ProjectList() {
   };
 
   return (
-    <div className='project-list-container'>
+    <div className={styles.project_list_container}>
       <div>
-        <button className='create-project' onClick={openModal}>
+        <button className={styles.create_project} onClick={openModal}>
           Create Project
         </button>
         {projects ? (

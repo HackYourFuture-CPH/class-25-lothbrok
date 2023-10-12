@@ -11,7 +11,7 @@
   background-color: rgba(43, 40, 61, 0.8);
 }
 
-.modal-content {
+.modal_content {
   background-color: white;
   padding: 1.5rem;
   border-radius: 8px;
@@ -24,7 +24,7 @@
   margin: 0 2rem;
 }
 
-.left-content {
+.left_content {
   text-align: left;
 }
 
@@ -44,7 +44,7 @@ label {
   margin-top: 5px;
 }
 
-.thumbnail-container {
+.thumbnail_container {
   width: 6.5rem;
   height: 6.5rem;
   display: flex;
@@ -54,7 +54,7 @@ label {
   border-radius: 5px;
 }
 
-.modal-thumbnail-image {
+.modal_thumbnail_image {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -75,7 +75,7 @@ h2 {
   align-items: center;
 }
 
-.close-button {
+.close_button {
   position: flex;
   top: 10px;
   left: 983px;
@@ -86,7 +86,7 @@ h2 {
   height: 24px;
 }
 
-.create-button {
+.create_button {
   display: flex;
   gap: 10px;
   background-color: #110d59;
@@ -112,7 +112,7 @@ h2 {
 }
 
 @media only screen and (max-width: 500px) {
-  .modal-content {
+  .modal_content {
     height: 100%;
     margin: 0;
   }

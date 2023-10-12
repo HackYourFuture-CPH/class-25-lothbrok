@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import './ProjectModal.css';
-import Rectangle from '../../assets/icons/Rectangle.png';
+import styles from './ProjectModal.module.css';
 import Close from '../../assets/icons/x.png';
 import api from '../../api';
 import { Project } from '../../types/Project';
@@ -16,18 +15,18 @@ function ProjectModal({ closeModal, handleCreateProject, thumbnail }: ProjectMod
   const [projectName, setProjectName] = useState('');
 
   return (
-    <div className='modal'>
-      <div className='modal-content'>
-        <div className='flex_row'>
+    <div className={styles.modal}>
+      <div className={styles.modal_content}>
+        <div className={styles.flex_row}>
           <h2>New Project</h2>
-          <button className='close-button' onClick={closeModal}>
-            <img src={Close} alt='Close' className='close-icon' />
+          <button className={styles.close_button} onClick={closeModal}>
+            <img src={Close} alt='Close' className={styles.close_icon} />
           </button>
         </div>
-        <div className='left-content'>
+        <div className={styles.left_content}>
           <label>Thumbnail</label>
-          <div className='thumbnail-container'>
-            <img src={thumbnail} alt='Thumbnail' className='modal-thumbnail-image' />
+          <div className={styles.thumbnail_container}>
+            <img src={thumbnail} alt='Thumbnail' className={styles.modal_thumbnail_image} />
           </div>
         </div>
         <div>
@@ -37,7 +36,7 @@ function ProjectModal({ closeModal, handleCreateProject, thumbnail }: ProjectMod
             value={projectName}
             placeholder='Input Text Here'
             onChange={(e) => setProjectName(e.target.value)}
-            className='mui'
+            className={styles.mui}
             sx={{
               '& .MuiInputBase-root.MuiOutlinedInput-root ::placeholder': {
                 color: '#2B283D',
@@ -46,15 +45,15 @@ function ProjectModal({ closeModal, handleCreateProject, thumbnail }: ProjectMod
             }}
           />
           <label>Team</label>
-          <Select value='Superboard' className='mui'>
+          <Select value='Superboard' className={styles.mui}>
             <MenuItem value='Superboard'>Superboard</MenuItem>
           </Select>
           <label>Privacy</label>
-          <Select value='Public to team' className='mui last_input'>
+          <Select value='Public to team' className={`${styles.mui} ${styles.last_input}`}>
             <MenuItem value='Public to team'>Public to team</MenuItem>
           </Select>
         </div>
-        <button className='create-button' onClick={() => handleCreateProject(projectName)}>
+        <button className={styles.create_button} onClick={() => handleCreateProject(projectName)}>
           Create Project
         </button>
       </div>
