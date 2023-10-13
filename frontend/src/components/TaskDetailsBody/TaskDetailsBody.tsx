@@ -60,7 +60,6 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     const updatedTask = { ...task };
-    console.log('Input changed:', event.target.value);
     switch (fieldName) {
       case 'title':
         setTitle(event.target.value);
