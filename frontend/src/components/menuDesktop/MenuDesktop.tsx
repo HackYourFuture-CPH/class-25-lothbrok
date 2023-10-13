@@ -1,7 +1,6 @@
-import { List, ListItem, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
+import { List, ListItem, ListItemIcon, ListItemButton } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './MenuDesktop.module.css';
-import { useState } from 'react';
 
 const icons = [
   'dashboard',
