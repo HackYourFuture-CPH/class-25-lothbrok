@@ -1,4 +1,4 @@
-.kanban-task {
+.kanban_task {
   background-color: #fff;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -6,15 +6,16 @@
   cursor: pointer;
 }
 
-.kanban-task-row {
+.kanban_task_row {
   display: flex;
   justify-content: space-between;
   padding-bottom: 0.5rem;
   align-items: center;
 }
 
-.kanban-title {
+.kanban_title {
   display: block;
+  position: inherit;
 }
 
 .droppable {

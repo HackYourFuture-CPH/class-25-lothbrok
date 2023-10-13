@@ -1,17 +1,15 @@
-import './Dashboard.css';
+import styles from './Dashboard.module.css';
 import { Outlet } from 'react-router-dom';
 import { Header, MenuDesktop } from '../../IndexForImport';
 import React, { useEffect, useState } from 'react';
-import './Dashboard.css';
 import { useNavigate } from 'react-router-dom';
-import { signOut, User, getAuth, onAuthStateChanged } from '@firebase/auth';
+import { User, getAuth, onAuthStateChanged } from '@firebase/auth';
 import api from '../../api';
 
 const Dashboard = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const navigate = useNavigate();
-  const handleSignOut = () => signOut(getAuth());
 
   const checkToken = () => {
     const auth = getAuth();
@@ -39,14 +37,13 @@ const Dashboard = () => {
       {loading ? (
         <></>
       ) : (
-        <div className='pages'>
-          <div className='menu-desktop'>
+        <div className={styles.pages}>
+          <div className={styles.menu_desktop}>
             <MenuDesktop />
           </div>
-          <div className='main'>
+          <div className={styles.main}>
             <Header />
             <Outlet />
-            <button onClick={handleSignOut}>Sign out</button>
           </div>
         </div>
       )}

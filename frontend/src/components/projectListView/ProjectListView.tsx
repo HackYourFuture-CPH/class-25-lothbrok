@@ -2,7 +2,7 @@ import React from 'react';
 import ListTable from '../listTable/ListTable';
 import { Add } from '@mui/icons-material';
 import { TextField } from '@mui/material';
-import './projectList.css';
+import styles from './projectList.module.css';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { ViewProps } from '../../types/ViewProps';
 
@@ -22,7 +22,7 @@ const ProjectListView = ({
     <DragDropContext onDragEnd={onDragEnd}>
       {Object.entries(categories).map(([sectionTitle, status]) => (
         <React.Fragment key={status}>
-          <div className='section-title'>
+          <div className={styles.section_title}>
             <h4>{sectionTitle}</h4>
             {editing === status ? (
               <form

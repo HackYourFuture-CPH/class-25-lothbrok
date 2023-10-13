@@ -4,7 +4,7 @@
   text-align: left;
 }
 
-.style-label {
+.style_label {
   font: 'Manrope';
   font-size: 12px;
   font-weight: 600;
@@ -16,7 +16,7 @@
   height: 18px;
 }
 
-.style2-label {
+.style2_label {
   width: 57px;
   height: 18px;
   font: 'Manrope';

@@ -11,22 +11,21 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modal-content {
+.modal_content {
   background-color: white;
   padding: 15px;
   border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-.left-content {
+.left_content {
   text-align: left;
 }
 
 .modal input {
   border-radius: 8px;
   gap: 10px;
-  background: linear-gradient(0deg, #d8e0e8, #d8e0e8),
-    linear-gradient(0deg, #f8f9fd, #f8f9fd);
+  background: linear-gradient(0deg, #d8e0e8, #d8e0e8), linear-gradient(0deg, #f8f9fd, #f8f9fd);
   border: 1px solid #d8e0e8;
   width: 100%;
   padding: 5px;
@@ -34,7 +33,7 @@
 }
 
 label {
-  font: "Manrope";
+  font: 'Manrope';
   font-size: 12px;
   line-height: 18px;
   letter-spacing: 2%;
@@ -55,13 +54,13 @@ h2 {
   height: 31px;
   top: 65px;
   display: flex;
-  font: "Manrope";
+  font: 'Manrope';
   line-height: 31px;
   letter-spacing: 2%;
   color: #2b283d;
 }
 
-.close-button {
+.close_button {
   position: flex;
   top: 10px;
   left: 983px;
@@ -72,7 +71,7 @@ h2 {
   height: 24px;
 }
 
-.create-button {
+.create_button {
   display: flex;
   gap: 10px;
   background-color: #110d59;

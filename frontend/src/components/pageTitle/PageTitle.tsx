@@ -1,5 +1,5 @@
 import React from 'react';
-import './PageTitle.css';
+import style from './PageTitle.module.css';
 import { useLocation } from 'react-router-dom';
 
 type pagetitleMapType = {
@@ -21,7 +21,7 @@ const PageTitle = () => {
   const path = location.pathname;
   const pageTitle = pagetitleMap[path];
 
-  return <h2>{pageTitle}</h2>;
+  return <div className={style.header_title}>{pageTitle}</div>;
 };
 
 export default PageTitle;
