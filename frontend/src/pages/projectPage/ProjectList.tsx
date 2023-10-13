@@ -21,10 +21,16 @@ function ProjectList() {
       if (userId) {
         const req = await api();
         const res = await req.get(`/dashboard/projects/${userId}`);
-        const projects: Project[] = await res.data.map((project: Project, index: number) => {
-          project.thumbnail_link = thumbnails[index % thumbnails.length];
-          return project;
-        });
+        const projects = await Promise.all(
+          res.data.map(async (project: Project, index: number) => {
+            const res = await req.get(`/project/${project.id}/tasks/count`);
+            const amountOfTasks = await res.data;
+            project.thumbnail_link = thumbnails[index % thumbnails.length];
+            project.amount_of_tasks = amountOfTasks.total;
+            project.amount_of_completed_tasks = amountOfTasks.completed;
+            return project;
+          }),
+        );
         setProjects(projects);
       }
     } catch (e) {
