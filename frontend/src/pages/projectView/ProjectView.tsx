@@ -19,7 +19,7 @@ const ProjectView = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [project, setProject] = useState<Project>();
   const [view, setView] = useState<string>('list');
-  const { task } = useTaskStore();
+  const { storeTask } = useTaskStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [title, setTitle] = useState<string>('');
   const [editing, setEditing] = useState<string>('');
@@ -196,7 +196,9 @@ const ProjectView = () => {
               <div>Calendar View</div>
             )}
           </div>
-          {view === 'list' && task !== initialValue && <TaskDetails task={task} tasks={tasks} />}
+          {view === 'list' && storeTask !== initialValue && (
+            <TaskDetails task={storeTask} tasks={tasks} />
+          )}
         </div>
       </div>
     ) : (

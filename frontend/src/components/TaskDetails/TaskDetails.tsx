@@ -73,7 +73,7 @@ const TaskDetails = ({ task, tasks }: TaskDetailsType) => {
         </div>
       </div>
 
-      <TaskDetailsBody task={task} tasks={tasks} />
+      <TaskDetailsBody task={task} />
 
       <div className='other-details'>
         <div className='single-detail'>

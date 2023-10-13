@@ -2,8 +2,8 @@ import { create } from 'zustand';
 import { Task } from '../types/Task';
 
 type TaskStoreType = {
-  task: Task;
-  setTask: (task: Task) => void;
+  storeTask: Task;
+  setTask: (storeTask: Task) => void;
 };
 
 type CompletedStoreType = {
@@ -25,8 +25,8 @@ export const initialValue: Task = {
 };
 
 export const useTaskStore = create<TaskStoreType>()((set) => ({
-  task: initialValue,
-  setTask: (task: Task) => set({ task }),
+  storeTask: initialValue,
+  setTask: (storeTask: Task) => set({ storeTask }),
 }));
 
 export const useCompletedStore = create<CompletedStoreType>((set) => ({

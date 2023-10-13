@@ -11,23 +11,28 @@ import {
 } from '@mui/icons-material/';
 import api from '../../api';
 import { useCompletedStore, useTaskStore } from '../../store/task.store';
-// import { Dropdown } from '../dropdown/CustomDropDown';
 import { Task } from '../../types/Task';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
+
 type TaskDetailsBodyType = {
   task: Task;
-  tasks: Task[];
 };
 
-const TaskDetailsBody = ({ tasks }: TaskDetailsBodyType) => {
+type DropdownType = {
+  options: string[];
+  selectedValue: string;
+  fieldName: string;
+};
+
+const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
   const { completed, setCompleted } = useCompletedStore();
-  const { setTask, task } = useTaskStore();
+  const { setTask } = useTaskStore();
   const completedStatus = completed[`${task.id}`] ?? false;
+  const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
-  const [assignee, setAssignee] = useState(task.assignee);
   const defaultDueDate = task.due_date
     ? new Date(task.due_date).toLocaleString('en-GB', {
         day: 'numeric',
@@ -35,9 +40,6 @@ const TaskDetailsBody = ({ tasks }: TaskDetailsBodyType) => {
       })
     : '—';
   const [dueDate, setDueDate] = useState(defaultDueDate);
-  const [priority, setPriority] = useState(task.priority);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
 
   const handleCheckbox = (task: Task) => {
     const updatedCompletedStatus = !completedStatus;
@@ -58,20 +60,22 @@ const TaskDetailsBody = ({ tasks }: TaskDetailsBodyType) => {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     const updatedTask = { ...task };
-
+    console.log('Input changed:', event.target.value);
     switch (fieldName) {
       case 'title':
-        updatedTask.title = event.target.value;
-        saveFieldToDatabase(task.id, 'title', updatedTask.title);
+        setTitle(event.target.value);
         break;
       case 'assignee':
-        setAssignee(event.target.value);
+        updatedTask.assignee = event.target.value;
+        saveFieldToDatabase(task.id, 'assignee', updatedTask.assignee);
         break;
       case 'due_date':
         updatedTask.due_date = event.target.value;
         break;
       case 'priority':
         updatedTask.priority = event.target.value;
+        saveFieldToDatabase(task.id, 'priority', updatedTask.priority);
+
         break;
       default:
         break;
@@ -89,19 +93,35 @@ const TaskDetailsBody = ({ tasks }: TaskDetailsBodyType) => {
       console.log(error);
     }
   };
+  const saveDescriptionToDatabase = async (taskId: string | number, updatedDescription: string) => {
+    try {
+      const req = await api();
+      const res = await req.put(`/dashboard/${taskId}`, {
+        description: updatedDescription,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const titles = tasks.map((item) => item.title);
+  useEffect(() => {
+    setTitle(task.title);
+    setDescription(task.description);
+  }, [task.title, task.description]);
 
-  const Dropdown = () => {
+  const priorityArray = ['easy', 'medium', 'hard'];
+  const usersArray = ['Arash', 'Mike']; // This array will be replaced by users data from database
+
+  const Dropdown = ({ options, selectedValue, fieldName }: DropdownType) => {
     return (
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
           <InputLabel variant='standard' htmlFor='uncontrolled-native'></InputLabel>
-          <NativeSelect value={task.title} onChange={(e) => handleInputChange('title', e)}>
-            {titles.map((title: string, index: number) => {
+          <NativeSelect value={selectedValue} onChange={(e) => handleInputChange(fieldName, e)}>
+            {options.map((option: string, index: number) => {
               return (
-                <option key={index} value={title}>
-                  {title}
+                <option key={index} value={option}>
+                  {option}
                 </option>
               );
             })}
@@ -122,7 +142,12 @@ const TaskDetailsBody = ({ tasks }: TaskDetailsBodyType) => {
         />
         <div className='label'>
           <p>Bookum App</p>
-          <Dropdown />
+          <input
+            style={{ border: 'none' }}
+            value={title}
+            onChange={(e) => handleInputChange('title', e)}
+            onBlur={() => saveFieldToDatabase(task.id, 'title', title)}
+          />
         </div>
       </div>
       <div className='task-owner'>
@@ -132,12 +157,7 @@ const TaskDetailsBody = ({ tasks }: TaskDetailsBodyType) => {
             <div className='icon-and-name'>
               <p>Assignee</p>
               <AccountCircleRounded />
-              <input
-                style={{ border: 'none' }}
-                value={assignee}
-                onChange={(e) => handleInputChange('assignee', e)}
-                onBlur={() => saveFieldToDatabase(task.id, 'assignee', assignee)}
-              />
+              <Dropdown options={usersArray} selectedValue={task.assignee} fieldName='assignee' />
             </div>
           </div>
           <div className='status'>
@@ -146,7 +166,7 @@ const TaskDetailsBody = ({ tasks }: TaskDetailsBodyType) => {
               <CalendarMonthRounded />
 
               <input
-                type='text'
+                type='datetime-local'
                 style={{ border: 'none' }}
                 value={defaultDueDate}
                 onChange={(e) => handleInputChange('due_date', e)}
@@ -167,11 +187,10 @@ const TaskDetailsBody = ({ tasks }: TaskDetailsBodyType) => {
                       : '#F18524',
                 }}
               />
-              <input
-                style={{ border: 'none' }}
-                value={task.priority}
-                onChange={(e) => handleInputChange('priority', e)}
-                onBlur={() => saveFieldToDatabase(task.id, 'priority', task.priority)}
+              <Dropdown
+                options={priorityArray}
+                selectedValue={task.priority}
+                fieldName='priority'
               />
             </div>
           </div>
@@ -186,6 +205,7 @@ const TaskDetailsBody = ({ tasks }: TaskDetailsBodyType) => {
         className='description'
         value={description}
         onChange={handleTextareaChange}
+        onBlur={() => saveDescriptionToDatabase(task.id, description)}
       ></textarea>
     </div>
   );
