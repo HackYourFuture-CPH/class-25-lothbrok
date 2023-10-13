@@ -196,7 +196,7 @@ const ProjectView = () => {
               <div>Calendar View</div>
             )}
           </div>
-          {view === 'list' && task !== initialValue && <TaskDetails task={task} />}
+          {view === 'list' && task !== initialValue && <TaskDetails task={task} tasks={tasks} />}
         </div>
       </div>
     ) : (

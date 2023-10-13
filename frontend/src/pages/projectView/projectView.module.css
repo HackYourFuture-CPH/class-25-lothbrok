@@ -18,6 +18,7 @@
 }
 .list_wrapper {
   width: 100%;
+  min-width: 500px;
 }
 
 .manrope-font > *:nth-child(1) {

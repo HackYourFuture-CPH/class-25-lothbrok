@@ -31,7 +31,6 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }: ListTa
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     id: string | number,
   ) => {
-    console.log(id);
     e.stopPropagation();
     setTask(tasks.filter((task) => task.id === id)[0]);
   };
