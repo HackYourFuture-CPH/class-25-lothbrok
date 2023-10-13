@@ -2,9 +2,10 @@ import db from '../../config/db-config';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
-export const getAllTasks = async (req: Request, res: Response) => {
+export const getAllTasksForProject = async (req: Request, res: Response) => {
+  const { project_id } = req.params;
   try {
-    const tasks = await db('tasks').select('*').from('tasks');
+    const tasks = await db('tasks').select('*').from('tasks').where('tasks.project_id', project_id);
     res.status(StatusCodes.OK).send(tasks);
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
@@ -74,13 +75,43 @@ export const updateTask = async (req: Request, res: Response) => {
   }
 };
 
-export const getProject = async (req: Request, res: Response) => {
+export const assignTaskToUser = async (req: Request, res: Response) => {
   const { project_id } = req.params;
+  const { assignee, title, description, status, completed, priority, due_date } = req.body; // Assuming the task details are in the request body
+
   try {
-    const project = await db.select('*').from('projects').where({ id: project_id }).first();
-    project
-      ? res.status(StatusCodes.OK).json(project)
-      : res.status(StatusCodes.NOT_FOUND).json({ error: 'Project not found' });
+    const projectUsers = await db('project_user_relation')
+      .select('user_uid')
+      .where('project_id', project_id);
+
+    const isUserMember = projectUsers.some((user) => user.user_uid === assignee);
+
+    if (isUserMember) {
+      const assigneeData = await db('users')
+        .select('first_name', 'last_name')
+        .where('uid', assignee)
+        .first();
+
+      if (assigneeData) {
+        await db('tasks').insert({
+          assignee: `${assigneeData.first_name} ${assigneeData.last_name}`,
+          title,
+          description,
+          status,
+          completed,
+          priority,
+          due_date,
+
+          project_id,
+        });
+
+        res.status(StatusCodes.OK).send('Task assigned successfully.');
+      } else {
+        res.status(StatusCodes.NOT_FOUND).send('Assignee not found in the users table.');
+      }
+    } else {
+      res.status(StatusCodes.FORBIDDEN).send('User is not a member of the project.');
+    }
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
