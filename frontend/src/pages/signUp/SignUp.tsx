@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import './signUp.css';
+import styles from './signUp.module.css';
 import { Button, TextField, InputLabel, Checkbox, Alert, AlertTitle } from '@mui/material';
 import logo from '../../assets/images/authLogo.svg';
 import image from '../../assets/images/Hands Show.svg';
@@ -9,10 +9,11 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase_config';
 import { passwordPattern } from '../../passwordPattern';
 import { AuthErrorCodes } from 'firebase/auth';
+import api from '../../api';
 
 interface FormData {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
 }
@@ -27,11 +28,32 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  const onSubmit: SubmitHandler<FormData> = async (data, e) => {
+    e?.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, data.email, data.password);
+      const response = await api();
+      try {
+        if (auth.currentUser) {
+          await response.post('/user', {
+            uid: auth.currentUser.uid,
+            first_name: data.first_name,
+            last_name: data.last_name,
+            email: data.email,
+          });
+
+          /*if (auth.currentUser) {
+  ...
+} else {
+  throw 'ошибка'
+}*/
+        } else {
+          throw 'User registration failed, server error';
+        }
+      } catch (error) {
+        setErrorMessage('Server error');
+      }
       setErrorMessage('');
-      navigate('/login');
     } catch (e: any) {
       if (e.code === AuthErrorCodes.EMAIL_EXISTS) {
         setErrorMessage(`Email address '${data.email}' is already in use `);
@@ -44,27 +66,27 @@ const SignUp = () => {
   };
 
   return (
-    <div className='sign-up'>
-      <img src={logo} className='icon' alt='logo' />
+    <div className={styles.sign_up}>
+      <img src={logo} className={styles.icon} alt='logo' />
       {errorMessage ? (
         <Alert severity='error' onClose={() => setErrorMessage('')}>
           <AlertTitle>Error</AlertTitle>
           {errorMessage}
         </Alert>
       ) : null}
-      <div className='flex-container'>
-        <img className='image' src={image} alt='hand holding globe' />
-        <div className='form'>
+      <div className={styles.flex_container}>
+        <img className={styles.image} src={image} alt='hand holding globe' />
+        <div className={styles.form}>
           <h1>Sign up</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className='row'>
+            <div className={styles.row}>
               <div>
                 <InputLabel htmlFor='first-name' style={{ color: '#55555F' }}>
                   First Name
                 </InputLabel>
                 <TextField
-                  className='input-styles'
-                  {...register('firstName', {
+                  className={styles.input_styles}
+                  {...register('first_name', {
                     required: 'First name is required',
                   })}
                   placeholder='First Name'
@@ -75,7 +97,7 @@ const SignUp = () => {
                   Last Name
                 </InputLabel>
                 <TextField
-                  {...register('lastName', {
+                  {...register('last_name', {
                     required: 'Last name is required',
                   })}
                   placeholder='Last Name'
@@ -127,7 +149,7 @@ const SignUp = () => {
               <Checkbox /> Remeber me
             </div>
             <Button
-              className='button-style'
+              className={styles.button_style}
               type='submit'
               variant='contained'
               disabled={!isDirty || !isValid}
@@ -135,7 +157,7 @@ const SignUp = () => {
               Sign Up
             </Button>
           </form>
-          <div className='small'>
+          <div className={styles.small}>
             Already have an account? <a onClick={() => navigate('/login')}>Sign In</a>
           </div>
         </div>

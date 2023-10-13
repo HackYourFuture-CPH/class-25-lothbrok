@@ -1,21 +1,13 @@
 import React from 'react';
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import {
-  Dashboard,
-  Project,
-  MyTask,
-  Activity,
-  Team,
-  Message,
-  Setting,
-  ErrorPage,
-} from './IndexForImport';
+import { Dashboard, MyTask, Activity, Team, Message, Setting, ErrorPage } from './IndexForImport';
 import LoginPage from './pages/login/LoginPage';
 import ForgotPassword from './pages/forgotPassword/ForgotPassword';
 import ResetPassword from './pages/resetPassword/ResetPassword';
 import SignUp from './pages/signUp/SignUp';
 import ProjectView from './pages/projectView/ProjectView';
+import ProjectList from './pages/projectPage/ProjectList';
 
 const router = createBrowserRouter([
   {
@@ -25,7 +17,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/project',
-        element: <Project />,
+        element: <ProjectList />,
       },
       { path: '/project/:id', element: <ProjectView /> },
       {

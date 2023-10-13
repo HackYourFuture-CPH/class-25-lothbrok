@@ -4,7 +4,7 @@ import { Button, TextField, InputLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase_config';
 import { confirmPasswordReset } from 'firebase/auth';
-import './resetPassword.css';
+import styles from './resetPassword.module.css';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { passwordPattern } from '../../passwordPattern';
 
@@ -59,7 +59,7 @@ const ResetPassword = () => {
           New Password
         </InputLabel>
         <TextField
-          className='input-styles'
+          className={styles.input_styles}
           type='password'
           {...register('password', {
             required: 'Password is required',
@@ -72,7 +72,7 @@ const ResetPassword = () => {
           Confirm New Password
         </InputLabel>
         <TextField
-          className='input-styles'
+          className={styles.input_styles}
           type='password'
           {...register('confirmPassword', {
             required: 'Please confirm your password',

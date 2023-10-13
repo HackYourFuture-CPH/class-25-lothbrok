@@ -1,10 +1,10 @@
+import React, { useState, useEffect } from 'react';
 import { Task } from '../../types/Task';
-import './listTable.css';
-import React from 'react';
+import styles from './listTable.module.css';
 import { Checkbox, useMediaQuery } from '@mui/material';
 import { CheckCircle, RadioButtonUnchecked, Flag } from '@mui/icons-material';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { useEffect, useState } from 'react';
+import { useTaskStore, useCompletedStore } from '../../store/task.store';
 
 type ListTableProps = {
   tasks: Task[];
@@ -12,18 +12,26 @@ type ListTableProps = {
   listId: string;
 };
 
-const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
+const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }: ListTableProps) => {
+  const { setTask } = useTaskStore();
   const isMobile = useMediaQuery('(max-width: 550px)');
+  const [enabled, setEnabled] = useState(false);
 
+  const { setCompleted } = useCompletedStore();
   const handleCheckbox = (task: Task) => {
     setTasks((tasks) => {
       return tasks.map((item) =>
         item.id === task.id ? { ...item, completed: !item.completed } : item,
       );
     });
+    setCompleted(String(task.id), !task.completed);
   };
 
-  const [enabled, setEnabled] = useState(false);
+  (e: React.MouseEvent<HTMLDivElement, MouseEvent>, id: string | number) => {
+    e.stopPropagation();
+    setTask(tasks.filter((task) => task.id === id)[0]);
+  };
+
   useEffect(() => {
     const animation = requestAnimationFrame(() => setEnabled(true));
     return () => {
@@ -36,13 +44,13 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
   }
 
   return (
-    <div className='border-radius'>
+    <div className={styles.border_radius}>
       {!isMobile ? (
-        <div className='grid-container'>
-          <div className='grid-item first-row title'>Task</div>
-          <div className='grid-item first-row'>DueDate</div>
-          <div className='grid-item first-row'>Priority</div>
-          <div className='grid-item first-row'>Assigne</div>
+        <div className={styles.grid_container}>
+          <div className={`${styles.grid_item} ${styles.first_row} ${styles.title}`}>Task</div>
+          <div className={`${styles.grid_item} ${styles.first_row}`}>DueDate</div>
+          <div className={`${styles.grid_item} ${styles.first_row}`}>Priority</div>
+          <div className={`${styles.grid_item} ${styles.first_row}`}>Assigne</div>
         </div>
       ) : null}
       <Droppable droppableId={listId} isDropDisabled={false}>
@@ -60,9 +68,14 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                       >
-                        <div className='grid-container task-row' key={task.id}>
+                        <div
+                          className={`${styles.grid_container} ${styles.task_row}`}
+                          key={task.id}
+                        >
                           <div
-                            className={`grid-item title ${task.completed ? 'completed-task' : ''}`}
+                            className={`${styles.grid_item} ${styles.title} ${
+                              task.completed ? styles.completed_task : ''
+                            }`}
                           >
                             <Checkbox
                               checked={task.completed}
@@ -70,9 +83,9 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
                               checkedIcon={<CheckCircle style={{ color: '#5FB918' }} />}
                               onClick={() => handleCheckbox(task)}
                             />
-                            {task.description}
+                            {task.title}
                           </div>
-                          <div className='grid-item'>
+                          <div className={styles.grid_item}>
                             {task.due_date
                               ? new Date(task.due_date).toLocaleString('en-GB', {
                                   day: 'numeric',
@@ -81,7 +94,7 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
                               : '—'}
                           </div>
                           {!isMobile ? (
-                            <div className='grid-item'>
+                            <div className={styles.grid_item}>
                               <Flag
                                 style={{
                                   color:
@@ -96,7 +109,7 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }) => {
                             </div>
                           ) : null}
 
-                          <div className='grid-item'>{task.assignee}</div>
+                          <div className={styles.grid_item}>{task.assignee}</div>
                         </div>
                       </div>
                     )}

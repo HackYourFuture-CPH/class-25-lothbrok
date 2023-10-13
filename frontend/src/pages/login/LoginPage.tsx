@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import logo from '../../assets/images/Logo for auth.jpg';
 import image from '../../assets/images/Stuck at Home Imagination.jpg';
-import './LoginPage.css';
+import styles from './LoginPage.module.css';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -123,13 +123,13 @@ const LoginPage: React.FC = () => {
               rules={{
                 required: 'Email is required',
                 pattern: {
-                  value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i,
+                  value: /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/i,
                   message: 'Invalid email address',
                 },
               }}
               render={({ field }) => (
                 <>
-                  <label className='style-label'>Email</label>
+                  <label className={styles.style_label}>Email</label>
                   <TextField
                     fullWidth
                     {...field}
@@ -148,7 +148,7 @@ const LoginPage: React.FC = () => {
               rules={{ required: 'Password is required' }}
               render={({ field }) => (
                 <>
-                  <label className='style2-label'>Password</label>
+                  <label className={styles.style2_label}>Password</label>
                   <TextField
                     fullWidth
                     type='password'
@@ -181,7 +181,7 @@ const LoginPage: React.FC = () => {
               label='Remember me'
             />
 
-            <Link to={'/forgot-password'} className='forgot'>
+            <Link to={'/forgot-password'} className={styles.forgot}>
               Forgot password
             </Link>
 
@@ -198,7 +198,7 @@ const LoginPage: React.FC = () => {
 
           <Typography variant='body2'>
             Don&apos;t have an account?
-            <Link to={'/sign-up'} className='sign'>
+            <Link to={'/sign-up'} className={styles.sign}>
               Sign up
             </Link>
           </Typography>
