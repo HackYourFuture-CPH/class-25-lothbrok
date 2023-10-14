@@ -7,16 +7,12 @@ import {
   CheckCircle,
   RadioButtonUnchecked,
   Flag,
-  MoreHoriz,
 } from '@mui/icons-material/';
 import api from '../../api';
 import { useCompletedStore, useTaskStore } from '../../store/task.store';
 import { Task } from '../../types/Task';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import NativeSelect from '@mui/material/NativeSelect';
-
+import { format } from 'date-fns';
+import { Dropdown } from '../dropdown/CustomDropDown';
 type TaskDetailsBodyType = {
   task: Task;
 };
@@ -33,13 +29,10 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
   const completedStatus = completed[`${task.id}`] ?? false;
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
-  const defaultDueDate = task.due_date
-    ? new Date(task.due_date).toLocaleString('en-GB', {
-        day: 'numeric',
-        month: 'short',
-      })
-    : '—';
+  const defaultDueDate = task.due_date ? format(new Date(task.due_date), "yyyy-MM-dd'T'HH:mm") : '';
   const [dueDate, setDueDate] = useState(defaultDueDate);
+  const priorityArray = ['easy', 'medium', 'hard'];
+  const usersArray = ['Arash', 'Mike']; // This array will be replaced by users data from database
 
   const handleCheckbox = (task: Task) => {
     const updatedCompletedStatus = !completedStatus;
@@ -69,7 +62,7 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
         saveFieldToDatabase(task.id, 'assignee', updatedTask.assignee);
         break;
       case 'due_date':
-        updatedTask.due_date = event.target.value;
+        setDueDate(event.target.value);
         break;
       case 'priority':
         updatedTask.priority = event.target.value;
@@ -82,25 +75,22 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
     setTask(updatedTask);
   };
 
-  const saveFieldToDatabase = async (taskId: string | number, fieldName: string, value: any) => {
+  const saveToDatabase = async (taskId: string | number, fieldName: string, value: any) => {
     try {
       const req = await api();
-      const res = await req.put(`/dashboard/${taskId}`, {
-        [fieldName]: value,
-      });
+      const data = { [fieldName]: value };
+      await req.put(`/dashboard/${taskId}`, data);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const saveFieldToDatabase = async (taskId: string | number, fieldName: string, value: any) => {
+    await saveToDatabase(taskId, fieldName, value);
+  };
+
   const saveDescriptionToDatabase = async (taskId: string | number, updatedDescription: string) => {
-    try {
-      const req = await api();
-      const res = await req.put(`/dashboard/${taskId}`, {
-        description: updatedDescription,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    await saveToDatabase(taskId, 'description', updatedDescription);
   };
 
   useEffect(() => {
@@ -108,27 +98,13 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
     setDescription(task.description);
   }, [task.title, task.description]);
 
-  const priorityArray = ['easy', 'medium', 'hard'];
-  const usersArray = ['Arash', 'Mike']; // This array will be replaced by users data from database
-
-  const Dropdown = ({ options, selectedValue, fieldName }: DropdownType) => {
-    return (
-      <Box sx={{ minWidth: 120 }}>
-        <FormControl fullWidth>
-          <InputLabel variant='standard' htmlFor='uncontrolled-native'></InputLabel>
-          <NativeSelect value={selectedValue} onChange={(e) => handleInputChange(fieldName, e)}>
-            {options.map((option: string, index: number) => {
-              return (
-                <option key={index} value={option}>
-                  {option}
-                </option>
-              );
-            })}
-          </NativeSelect>
-        </FormControl>
-      </Box>
-    );
-  };
+  useEffect(() => {
+    // Update dueDate whenever a new task is selected
+    const defaultDueDate = task.due_date
+      ? format(new Date(task.due_date), "yyyy-MM-dd'T'HH:mm")
+      : '';
+    setDueDate(defaultDueDate);
+  }, [task.due_date]);
 
   return (
     <div className='details-title'>
@@ -156,7 +132,12 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
             <div className='icon-and-name'>
               <p>Assignee</p>
               <AccountCircleRounded />
-              <Dropdown options={usersArray} selectedValue={task.assignee} fieldName='assignee' />
+              <Dropdown
+                options={usersArray}
+                selectedValue={task.assignee}
+                fieldName='assignee'
+                handleInputChange={handleInputChange}
+              />
             </div>
           </div>
           <div className='status'>
@@ -167,7 +148,7 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
               <input
                 type='datetime-local'
                 style={{ border: 'none' }}
-                value={defaultDueDate}
+                value={dueDate}
                 onChange={(e) => handleInputChange('due_date', e)}
                 onBlur={() => saveFieldToDatabase(task.id, 'due_date', dueDate)}
               />
@@ -190,6 +171,7 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
                 options={priorityArray}
                 selectedValue={task.priority}
                 fieldName='priority'
+                handleInputChange={handleInputChange}
               />
             </div>
           </div>

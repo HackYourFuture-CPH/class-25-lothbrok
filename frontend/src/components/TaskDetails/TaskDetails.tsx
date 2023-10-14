@@ -19,7 +19,7 @@ type TaskDetailsType = {
   tasks: Task[];
 };
 
-const TaskDetails = ({ task, tasks }: TaskDetailsType) => {
+const TaskDetails = ({ task }: TaskDetailsType) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [attachments, setAttachments] = useState<string[]>([]);
   const open = Boolean(anchorEl);

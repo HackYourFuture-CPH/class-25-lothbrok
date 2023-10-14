@@ -6,20 +6,22 @@ import NativeSelect from '@mui/material/NativeSelect';
 
 type DropdownType = {
   options: string[];
-  defaultValue: string;
+  selectedValue: string;
+  fieldName: string;
+  handleInputChange: (fieldName: string, e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
-export const Dropdown = ({ options, defaultValue }: DropdownType) => {
-  const [selectedValue, setSelectedValue] = useState(defaultValue);
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSelectedValue(event.target.value as string);
-  };
-  console.log(selectedValue);
+export const Dropdown = ({
+  options,
+  selectedValue,
+  fieldName,
+  handleInputChange,
+}: DropdownType) => {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
         <InputLabel variant='standard' htmlFor='uncontrolled-native'></InputLabel>
-        <NativeSelect value={selectedValue} onChange={handleChange}>
+        <NativeSelect value={selectedValue} onChange={(e) => handleInputChange(fieldName, e)}>
           {options.map((option: string, index: number) => {
             return (
               <option key={index} value={option}>
