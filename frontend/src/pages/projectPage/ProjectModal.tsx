@@ -19,7 +19,7 @@ function ProjectModal({ closeModal }: ProjectModalProps) {
   return (
     <div className={styles.modal}>
       <div className={styles.modal_content}>
-        <h2>New Project</h2>
+        <h2 className={styles.header}>New Project</h2>
         <button className={styles.close_button} onClick={closeModal}>
           <img src={Close} alt='Close' className={styles.close_icon} />
         </button>
