@@ -22,7 +22,8 @@ export const config: Record<string, any> = {
       database: process.env.PROD_DB,
       user: process.env.PROD_DB_USER,
       password: process.env.PROD_DB_PASSWORD,
-      port: process.env.DB_PORT,
+      port: process.env.PROD_DB_PORT,
+      ssl: true,
     },
     pool: {
       min: 2,

@@ -1,9 +1,7 @@
+import UnderConstruction from '../../components/underConstruction/UnderConstruction';
+
 const Message = () => {
-  return (
-    <div>
-      <p>message page</p>
-    </div>
-  );
+  return <UnderConstruction />;
 };
 
 export default Message;

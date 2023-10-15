@@ -33,6 +33,7 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }: ListTa
   ) => {
     e.stopPropagation();
     setTask(tasks.filter((task) => task.id === id)[0]);
+    console.log('first');
   };
 
   useEffect(() => {
@@ -58,7 +59,7 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }: ListTa
       ) : null}
       <Droppable droppableId={listId} isDropDisabled={false}>
         {(provided) => (
-          <div {...provided.droppableProps} ref={provided.innerRef}>
+          <div {...provided.droppableProps} ref={provided.innerRef} className={styles.droppable}>
             {tasks
               .filter((task) => task.status === listId)
               .map((task) => {

@@ -18,8 +18,8 @@ const ProjectView = () => {
   const { id: project_id } = useParams();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [project, setProject] = useState<Project>();
-  const [view, setView] = useState<string>('list');
   const { storeTask } = useTaskStore();
+  const [view, setView] = useState<string>('kanban');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [title, setTitle] = useState<string>('');
   const [editing, setEditing] = useState<string>('');
@@ -152,6 +152,7 @@ const ProjectView = () => {
     editTitle,
     categories,
   };
+  console.log(storeTask);
 
   return !isLoading ? (
     project ? (
@@ -170,25 +171,19 @@ const ProjectView = () => {
           <div className={styles.views}>
             <span
               onClick={() => changeView('kanban')}
-              className={`${styles.bold} ${view === 'kanban' ? styles.bold : ''}`}
+              className={`${view === 'kanban' ? styles.bold : ''}`}
             >
               Kanban
             </span>{' '}
             <span
               onClick={() => changeView('list')}
-              className={`${styles.bold} ${view === 'list' ? styles.bold : ''}`}
+              className={`${view === 'list' ? styles.bold : ''}`}
             >
               List
             </span>
-            <span
-              onClick={() => changeView('calendar')}
-              className={`${styles.bold} ${view === 'calendar' ? styles.bold : ''}`}
-            >
-              Calendar
-            </span>
           </div>
         </div>
-        <div className={styles.manrope_font}>
+        <div className={styles.project_views}>
           <div className={styles.list_wrapper}>
             {view === 'kanban' ? (
               <ProjectKanbanView {...viewProps} />

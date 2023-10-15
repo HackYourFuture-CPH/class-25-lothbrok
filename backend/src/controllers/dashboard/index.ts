@@ -85,3 +85,32 @@ export const getProject = async (req: Request, res: Response) => {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
 };
+
+export const getAllProjects = async (req: Request, res: Response) => {
+  const { user_uid } = req.params;
+  try {
+    const projects = await db.select('*').from('projects').where({ user_uid });
+    res.status(StatusCodes.OK).send(projects);
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+  }
+};
+
+export const addNewProject = async (req: Request, res: Response) => {
+  try {
+    const { title, description, thumbnail_link, date_of_creation, user_uid } = req.body;
+
+    const project = await db('projects')
+      .insert({
+        title,
+        description,
+        thumbnail_link,
+        date_of_creation,
+        user_uid,
+      })
+      .returning('*');
+    res.status(StatusCodes.CREATED).json(project);
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+  }
+};
