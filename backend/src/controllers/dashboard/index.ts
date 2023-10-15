@@ -98,8 +98,7 @@ export const getAllProjects = async (req: Request, res: Response) => {
 
 export const addNewProject = async (req: Request, res: Response) => {
   try {
-    const { title, description, thumbnail_link, date_of_creation, amount_of_tasks, user_uid } =
-      req.body;
+    const { title, description, thumbnail_link, date_of_creation, user_uid } = req.body;
 
     const project = await db('projects')
       .insert({
@@ -107,7 +106,6 @@ export const addNewProject = async (req: Request, res: Response) => {
         description,
         thumbnail_link,
         date_of_creation,
-        amount_of_tasks,
         user_uid,
       })
       .returning('*');
