@@ -1,9 +1,7 @@
+import UnderConstruction from '../../components/underConstruction/UnderConstruction';
+
 const Team = () => {
-  return (
-    <div>
-      <p>Team page</p>
-    </div>
-  );
+  return <UnderConstruction />;
 };
 
 export default Team;
