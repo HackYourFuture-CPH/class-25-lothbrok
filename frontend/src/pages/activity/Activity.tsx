@@ -1,9 +1,7 @@
+import UnderConstruction from '../../components/underConstruction/UnderConstruction';
+
 const Activity = () => {
-  return (
-    <div>
-      <p>Here is Activity page</p>
-    </div>
-  );
+  return <UnderConstruction />;
 };
 
 export default Activity;

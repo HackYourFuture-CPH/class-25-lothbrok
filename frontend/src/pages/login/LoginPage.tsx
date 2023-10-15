@@ -46,7 +46,7 @@ const LoginPage: React.FC = () => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        navigate('/');
+        navigate('/project');
       }
     });
   }, []);

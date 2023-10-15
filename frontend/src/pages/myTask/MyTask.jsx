@@ -1,5 +1,7 @@
+import UnderConstruction from '../../components/underConstruction/UnderConstruction';
+
 const MyTask = () => {
-  return <div>Here is My task</div>;
+  return <UnderConstruction />;
 };
 
 export default MyTask;
