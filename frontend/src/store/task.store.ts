@@ -11,6 +11,11 @@ type CompletedStoreType = {
   setCompleted: (taskId: string, completed: boolean) => void;
 };
 
+type ProjectStoreType = {
+  projectTitle: string;
+  setProjectTitle: (projectTitle: string) => void;
+};
+
 export const initialValue: Task = {
   id: '',
   title: '',
@@ -41,4 +46,7 @@ export const useCompletedStore = create<CompletedStoreType>((set) => ({
   },
 }));
 
-export default useTaskStore;
+export const useProjectStore = create<ProjectStoreType>()((set) => ({
+  projectTitle: '',
+  setProjectTitle: (projectTitle) => set({ projectTitle }),
+}));

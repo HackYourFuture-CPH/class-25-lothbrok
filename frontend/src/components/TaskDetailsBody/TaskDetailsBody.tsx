@@ -9,18 +9,13 @@ import {
   Flag,
 } from '@mui/icons-material/';
 import api from '../../api';
-import { useCompletedStore, useTaskStore } from '../../store/task.store';
+import { useCompletedStore, useTaskStore, useProjectStore } from '../../store/task.store';
 import { Task } from '../../types/Task';
 import { format } from 'date-fns';
 import { Dropdown } from '../dropdown/CustomDropDown';
+
 type TaskDetailsBodyType = {
   task: Task;
-};
-
-type DropdownType = {
-  options: string[];
-  selectedValue: string;
-  fieldName: string;
 };
 
 const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
@@ -31,6 +26,7 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
   const [description, setDescription] = useState(task.description);
   const defaultDueDate = task.due_date ? format(new Date(task.due_date), "yyyy-MM-dd'T'HH:mm") : '';
   const [dueDate, setDueDate] = useState(defaultDueDate);
+  const { projectTitle } = useProjectStore();
   const priorityArray = ['easy', 'medium', 'hard'];
   const usersArray = ['Arash', 'Mike']; // This array will be replaced by users data from database
 
@@ -85,11 +81,18 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
     }
   };
 
-  const saveFieldToDatabase = async (taskId: string | number, fieldName: string, value: any) => {
+  const saveFieldToDatabase = async (
+    taskId: string | number,
+    fieldName: string,
+    value: any,
+  ): Promise<void> => {
     await saveToDatabase(taskId, fieldName, value);
   };
 
-  const saveDescriptionToDatabase = async (taskId: string | number, updatedDescription: string) => {
+  const saveDescriptionToDatabase = async (
+    taskId: string | number,
+    updatedDescription: string,
+  ): Promise<void> => {
     await saveToDatabase(taskId, 'description', updatedDescription);
   };
 
@@ -116,7 +119,7 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
           onClick={() => handleCheckbox(task)}
         />
         <div className='label'>
-          <p>Bookum App</p>
+          <p>{projectTitle}</p>
           <input
             style={{ border: 'none' }}
             value={title}

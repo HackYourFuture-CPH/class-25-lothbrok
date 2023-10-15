@@ -47,6 +47,10 @@
   justify-content: space-between;
 }
 
+.attachment-main {
+  padding: 0;
+}
+
 .attachment-files {
   display: flex;
   align-items: center;
