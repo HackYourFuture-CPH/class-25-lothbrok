@@ -17,12 +17,11 @@ function ProjectModal({ closeModal, handleCreateProject, thumbnail }: ProjectMod
   return (
     <div className={styles.modal}>
       <div className={styles.modal_content}>
-        <div className={styles.flex_row}>
-          <h2>New Project</h2>
-          <button className={styles.close_button} onClick={closeModal}>
-            <img src={Close} alt='Close' className={styles.close_icon} />
-          </button>
-        </div>
+        <h2 className={styles.header}>New Project</h2>
+        <button className={styles.close_button} onClick={closeModal}>
+          <img src={Close} alt='Close' className={styles.close_icon} />
+        </button>
+
         <div className={styles.left_content}>
           <label>Thumbnail</label>
           <div className={styles.thumbnail_container}>

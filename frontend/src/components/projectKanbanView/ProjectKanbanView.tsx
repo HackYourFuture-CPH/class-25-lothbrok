@@ -23,7 +23,7 @@ const ProjectKanbanView = ({
       <div className={styles.kanban}>
         {Object.entries(categories).map(([sectionTitle, status]) => (
           <div className={styles.column} key={status}>
-            <div className='section-title'>
+            <div className={styles.section_title}>
               <h4>{sectionTitle}</h4>
               {editing === status ? (
                 <form

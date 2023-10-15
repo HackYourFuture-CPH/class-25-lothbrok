@@ -17,7 +17,7 @@
 }
 
 .main {
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 
 .pages {
