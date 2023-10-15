@@ -41,6 +41,7 @@ const SignUp = () => {
             last_name: data.last_name,
             email: data.email,
           });
+          navigate('/project');
         } else {
           throw 'User registration failed, server error';
         }
