@@ -9,7 +9,7 @@
   height: 20px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   #paper {
     display: flex;
     box-shadow: none;

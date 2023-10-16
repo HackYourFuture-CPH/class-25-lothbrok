@@ -1,7 +1,7 @@
-import React from 'react';
+import UnderConstruction from '../../components/underConstruction/UnderConstruction';
 
 const Setting = () => {
-  return <div>Here is Setting</div>;
+  return <UnderConstruction />;
 };
 
 export default Setting;

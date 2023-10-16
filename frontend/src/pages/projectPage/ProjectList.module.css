@@ -1,0 +1,26 @@
+.project_list_container {
+  font: 'Manrope';
+  text-align: right;
+  padding-right: 20px;
+  display: flex;
+}
+
+.task_list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  text-align: center;
+  padding-top: 30px;
+}
+
+.create_project {
+  border: none;
+  cursor: pointer;
+  display: fixed;
+  background-color: #d8e0e8;
+  border-radius: 8px;
+  border: none;
+  color: #110d59;
+  padding: 10px 25px 10px 25px;
+  margin-top: 5px;
+}

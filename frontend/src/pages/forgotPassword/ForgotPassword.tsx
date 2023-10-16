@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './forgotPassword.css';
+import styles from './forgotPassword.module.css';
 import '../../App.css';
 import { Button, TextField, InputLabel } from '@mui/material';
 import ForgotPasswordLayout from '../../components/ForgotPasswordLayout';
@@ -30,7 +30,7 @@ function ForgotPassword() {
               Email
             </InputLabel>
             <TextField
-              className='input-styles'
+              className={styles.input_styles}
               id='email'
               value={email}
               placeholder='Input text here'
@@ -41,10 +41,10 @@ function ForgotPassword() {
               required
             />
             <Button
-              className='button-style'
+              className={styles.button_style}
               type='submit'
               variant='contained'
-              disabled={!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)}
+              disabled={!/^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/.test(email)}
             >
               Reset Password
             </Button>
