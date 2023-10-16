@@ -13,6 +13,6 @@ tasks.get('/:project_id/', getAllTasksForProject);
 tasks.get('/:project_id/:user_id', getTasksForProjectAndUser);
 tasks.post('/', addNewTask);
 tasks.put('/:id', updateTask);
-tasks.post('/:project_id/assign-task', assignTaskToUser);
+tasks.put('/:project_id/assign/:task_id', assignTaskToUser);
 
 export default tasks;
