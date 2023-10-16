@@ -35,7 +35,7 @@ const ProjectView = () => {
     try {
       if (userId) {
         const req = await api();
-        const res = await req.get(`/dashboard/${project_id}/${userId}`);
+        const res = await req.get(`/project/tasks/${project_id}/${userId}`);
         const tasks = await res.data;
         setTasks(tasks);
       }
@@ -47,7 +47,7 @@ const ProjectView = () => {
   const getProject = async () => {
     try {
       const req = await api();
-      const res = await req.get(`/dashboard/project/${project_id}`);
+      const res = await req.get(`/project/${project_id}`);
       const project = await res.data;
       setProject(project);
     } catch (e) {
@@ -86,7 +86,7 @@ const ProjectView = () => {
       task.project_id = +project_id;
       try {
         const req = await api();
-        const res = await req.post(`/dashboard`, task);
+        const res = await req.post(`/project/tasks`, task);
         const newTask = res.data[0];
         setTasks([...tasks, newTask]);
       } catch (e) {
@@ -117,7 +117,7 @@ const ProjectView = () => {
         if (String(task.id) === result.draggableId) {
           try {
             const req = await api();
-            await req.put(`/dashboard/${task.id}`, { status: destination.droppableId });
+            await req.put(`/project/tasks/${task.id}`, { status: destination.droppableId });
           } catch (e) {
             console.error(e);
           }
