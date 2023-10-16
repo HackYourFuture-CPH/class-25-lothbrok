@@ -1,19 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import {
-  Container,
-  Grid,
-  TextField,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Typography,
-  Alert,
-  AlertTitle,
-} from '@mui/material';
-import logo from '../../assets/images/Logo for auth.jpg';
+import { TextField, Button, Checkbox, Typography, Alert, AlertTitle } from '@mui/material';
+import logo from '../../assets/images/authLogo.svg';
 import image from '../../assets/images/Stuck at Home Imagination.jpg';
 import styles from './LoginPage.module.css';
+
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -32,7 +23,7 @@ type FormData = {
 };
 
 const LoginPage: React.FC = () => {
-  const [rememberMe, setRememberMe] = useState(false);
+  const [rememberMe] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const navigate = useNavigate();
@@ -69,47 +60,46 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <Container>
-      <img
-        src={logo}
-        alt='Image'
-        style={{ width: '140px', height: '30px', top: '40px', left: '76px' }}
-      />
+    <div className={styles.main}>
+      <div className={styles.logo_div}>
+        <img
+          src={logo}
+          alt='Image'
+          style={{
+            width: '176px',
+            height: '30px',
+            top: '40px',
+            left: '40px',
+            position: 'absolute',
+          }}
+        />
+      </div>
       {errorMessage ? (
         <Alert severity='error' onClose={() => setErrorMessage('')}>
           <AlertTitle>Error</AlertTitle>
           {errorMessage}
         </Alert>
       ) : null}
-      <Grid container justifyContent='center' alignItems='center' style={{ height: '100vh' }}>
-        <Grid item xs={12} sm={6}>
+      <div className={styles.login_main}>
+        <div className={styles.login_content}>
           <Typography
             style={{
               font: 'Poppins',
-              fontSize: '38px',
-              fontWeight: '700',
-              lineHeight: '45.6px',
-              letterSpacing: '-0.4099999964237213px',
+              fontSize: '40px',
+              fontWeight: '800',
               textAlign: 'left',
               color: '#111111',
-              width: '113px',
-              height: '46px',
-              top: '129px',
-              left: '100px',
             }}
           >
-            Login
+            Log in
           </Typography>
 
           <Typography
             style={{
               fontFamily: 'Poppins',
-              fontSize: '17px',
-              fontWeight: '400',
-              lineHeight: '22px',
-              letterSpacing: '-0.42px',
               textAlign: 'left',
               color: '#89899C',
+              marginTop: '10px',
             }}
           >
             Easy steps to enter the platform
@@ -160,55 +150,44 @@ const LoginPage: React.FC = () => {
                 </>
               )}
             />
+            <div className={styles.rememberMe}>
+              <div>
+                <Checkbox /> Remeber me
+              </div>
 
-            <FormControlLabel
-              control={
-                <Controller
-                  name='rememberMe'
-                  control={control}
-                  defaultValue={false}
-                  render={({ field }) => (
-                    <Checkbox
-                      {...field}
-                      checked={rememberMe}
-                      onChange={(e) => setRememberMe(e.target.checked)}
-                      name='rememberMe'
-                      color='primary'
-                    />
-                  )}
-                />
-              }
-              label='Remember me'
-            />
-
-            <Link to={'/forgot-password'} className={styles.forgot}>
-              Forgot password
-            </Link>
-
+              <Link to={'/forgot-password'} className={styles.forgot}>
+                Forgot password
+              </Link>
+            </div>
             <Button
+              className={styles.button_style}
               variant='contained'
-              color='primary'
-              fullWidth
               type='submit'
+              fullWidth
               disabled={!isDirty || !isValid}
             >
               Login
             </Button>
           </form>
 
-          <Typography variant='body2'>
+          <div className={styles.sign_up}>
             Don&apos;t have an account?
-            <Link to={'/sign-up'} className={styles.sign}>
-              Sign up
+            <Link
+              to={'/sign-up'}
+              style={{
+                font: 'Inter',
+                paddingLeft: '20px',
+                fontSize: '15px',
+                textDecoration: 'none',
+              }}
+            >
+              Sign Up
             </Link>
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <img src={image} alt='Image' style={{ width: '100%', height: 'auto' }} />
-        </Grid>
-      </Grid>
-    </Container>
+          </div>
+        </div>
+        <img className={styles.image} src={image} alt='Image' />
+      </div>
+    </div>
   );
 };
-
 export default LoginPage;
