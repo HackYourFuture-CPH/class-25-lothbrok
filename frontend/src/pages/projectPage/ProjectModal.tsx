@@ -1,27 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './ProjectModal.module.css';
 import Close from '../../assets/icons/x.png';
 import api from '../../api';
 import { Project } from '../../types/Project';
-import { InputLabel, MenuItem, NativeSelect, Select, TextField } from '@mui/material';
+import { Autocomplete, InputLabel, MenuItem, NativeSelect, Select, TextField } from '@mui/material';
+import { User } from '../../types/User';
 
 interface ProjectModalProps {
   closeModal: () => void;
   handleCreateProject: any;
   thumbnail: string;
+  uid: string;
 }
 
-function ProjectModal({ closeModal, handleCreateProject, thumbnail }: ProjectModalProps) {
+function ProjectModal({ closeModal, handleCreateProject, thumbnail, uid }: ProjectModalProps) {
+  const [users, setUsers] = useState<User[]>();
   const [projectName, setProjectName] = useState('');
+  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    const fetchAndSetUsers = async () => {
+      try {
+        const req = await api();
+        const res = await req.get('/user');
+        const users = await res.data;
+        setUsers(users);
+        setSelectedUsers([users.find((user: User) => user.uid === uid)]);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchAndSetUsers();
+  }, []);
 
   return (
     <div className={styles.modal}>
       <div className={styles.modal_content}>
-        <h2 className={styles.header}>New Project</h2>
-        <button className={styles.close_button} onClick={closeModal}>
-          <img src={Close} alt='Close' className={styles.close_icon} />
-        </button>
-
+        <div className={styles.flex_row}>
+          <h2>New Project</h2>
+          <button className={styles.close_button} onClick={closeModal}>
+            <img src={Close} alt='Close' className={styles.close_icon} />
+          </button>
+        </div>
         <div className={styles.left_content}>
           <label>Thumbnail</label>
           <div className={styles.thumbnail_container}>
@@ -43,16 +63,31 @@ function ProjectModal({ closeModal, handleCreateProject, thumbnail }: ProjectMod
               },
             }}
           />
-          <label>Team</label>
-          <Select value='Superboard' className={styles.mui}>
-            <MenuItem value='Superboard'>Superboard</MenuItem>
-          </Select>
-          <label>Privacy</label>
-          <Select value='Public to team' className={`${styles.mui} ${styles.last_input}`}>
-            <MenuItem value='Public to team'>Public to team</MenuItem>
-          </Select>
+          {users ? (
+            <>
+              <label>Team</label>
+              <Autocomplete
+                className={styles.mui}
+                multiple
+                options={users}
+                value={selectedUsers}
+                defaultValue={selectedUsers}
+                getOptionLabel={(option) =>
+                  option ? `${option.first_name} ${option.last_name}` : ''
+                }
+                onChange={(e, addedUser) => {
+                  setSelectedUsers(addedUser);
+                }}
+                filterSelectedOptions
+                renderInput={(params) => <TextField className={styles.mui} {...params} />}
+              />
+            </>
+          ) : null}
         </div>
-        <button className={styles.create_button} onClick={() => handleCreateProject(projectName)}>
+        <button
+          className={styles.create_button}
+          onClick={() => handleCreateProject(projectName, selectedUsers)}
+        >
           Create Project
         </button>
       </div>

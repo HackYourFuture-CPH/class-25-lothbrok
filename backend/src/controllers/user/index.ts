@@ -50,3 +50,12 @@ export const registerUserToDb = async (req: Request, res: Response) => {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
 };
+
+export const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await db('users').select('first_name', 'last_name', 'uid');
+    res.status(StatusCodes.OK).send(users);
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+  }
+};

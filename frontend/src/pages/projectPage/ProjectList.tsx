@@ -8,6 +8,7 @@ import image3 from '../../assets/images/Rectangle 2998.jpg';
 import image4 from '../../assets/images/Rectangle 2999.jpg';
 import { Project } from '../../types/Project';
 import { User, getAuth, onAuthStateChanged } from 'firebase/auth';
+import { User as UserType } from '../../types/User';
 import api from '../../api';
 
 function ProjectList() {
@@ -62,7 +63,8 @@ function ProjectList() {
     setIsModalOpen(false);
   };
 
-  const handleCreateProject = async (projectName: string) => {
+  const handleCreateProject = async (projectName: string, team: UserType[]) => {
+    let projectId;
     if (projectName.trim()) {
       const project = {
         title: projectName,
@@ -74,11 +76,23 @@ function ProjectList() {
         const req = await api();
         const res = await req.post(`/dashboard/project`, project);
         const newProject = res.data[0];
+        projectId = newProject.id;
         if (projects) {
           setProjects([...projects, newProject]);
         } else {
           setProjects(newProject);
         }
+      } catch (e) {
+        console.error(e);
+      }
+      try {
+        const uids = team.map((user) => user.uid);
+        const data = {
+          uids: uids,
+        };
+        const req = await api();
+        const res = await req.post(`project/${projectId}/invite-users`, data);
+        console.log(res);
       } catch (e) {
         console.error(e);
       }
@@ -100,6 +114,7 @@ function ProjectList() {
                 handleCreateProject={handleCreateProject}
                 closeModal={closeModal}
                 thumbnail={thumbnails[projects ? projects.length % thumbnails.length : 0]}
+                uid={userId}
               />
             )}
           </>
