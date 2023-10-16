@@ -152,7 +152,6 @@ const ProjectView = () => {
     editTitle,
     categories,
   };
-  console.log(storeTask);
 
   return !isLoading ? (
     project ? (
@@ -193,9 +192,7 @@ const ProjectView = () => {
               <div>Calendar View</div>
             )}
           </div>
-          {view === 'list' && storeTask !== initialValue && (
-            <TaskDetails task={storeTask} tasks={tasks} />
-          )}
+          {storeTask !== initialValue && <TaskDetails task={storeTask} tasks={tasks} />}
         </div>
       </div>
     ) : (

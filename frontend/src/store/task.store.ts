@@ -4,6 +4,7 @@ import { Task } from '../types/Task';
 type TaskStoreType = {
   storeTask: Task;
   setTask: (storeTask: Task) => void;
+  updateTask: (updatedTitle: string) => void;
 };
 
 type CompletedStoreType = {
@@ -29,11 +30,6 @@ export const initialValue: Task = {
   user_uid: '',
 };
 
-export const useTaskStore = create<TaskStoreType>()((set) => ({
-  storeTask: initialValue,
-  setTask: (storeTask: Task) => set({ storeTask }),
-}));
-
 export const useCompletedStore = create<CompletedStoreType>((set) => ({
   completed: {},
   setCompleted: (taskId: number | string, completed: boolean) => {
@@ -49,4 +45,13 @@ export const useCompletedStore = create<CompletedStoreType>((set) => ({
 export const useProjectStore = create<ProjectStoreType>()((set) => ({
   projectTitle: '',
   setProjectTitle: (projectTitle) => set({ projectTitle }),
+}));
+
+export const useTaskStore = create<TaskStoreType>()((set) => ({
+  storeTask: initialValue,
+  setTask: (storeTask: Task) => set({ storeTask }),
+  updateTask: (updatedTitle) =>
+    set((state) => ({
+      storeTask: { ...state.storeTask, title: updatedTitle },
+    })),
 }));

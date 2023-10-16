@@ -33,7 +33,6 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }: ListTa
   ) => {
     e.stopPropagation();
     setTask(tasks.filter((task) => task.id === id)[0]);
-    console.log('first');
   };
 
   useEffect(() => {

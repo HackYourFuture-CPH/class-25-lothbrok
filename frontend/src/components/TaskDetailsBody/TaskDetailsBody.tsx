@@ -43,12 +43,12 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
   const handleTextareaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(event.target.value);
   };
+  const updatedTask = { ...task };
 
   const handleInputChange = (
     fieldName: string,
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
-    const updatedTask = { ...task };
     switch (fieldName) {
       case 'title':
         setTitle(event.target.value);
@@ -70,7 +70,6 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
     }
     setTask(updatedTask);
   };
-
   const saveToDatabase = async (taskId: string | number, fieldName: string, value: any) => {
     try {
       const req = await api();
@@ -98,6 +97,7 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
 
   useEffect(() => {
     setTitle(task.title);
+
     setDescription(task.description);
   }, [task.title, task.description]);
 
