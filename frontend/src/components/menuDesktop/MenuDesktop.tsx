@@ -21,7 +21,7 @@ export const Menu = () => {
     <>
       <div className={styles.logo_div}>
         <img className={styles.logo_menu} src='/assets/icons/logo-menu.svg' alt='Logo' />
-        <h4>Dashhhboard</h4>
+        <h4 className={styles.header}>Dashhhboard</h4>
       </div>
       <List className={styles.list_top}>
         {['Dashboard', 'Project', 'My Task', 'Activity', 'Team', 'Message', 'Setting'].map(
