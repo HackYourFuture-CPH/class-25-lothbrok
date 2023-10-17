@@ -192,7 +192,7 @@ const ProjectView = () => {
               <div>Calendar View</div>
             )}
           </div>
-          {storeTask !== initialValue && <TaskDetails task={storeTask} />}
+          {storeTask !== initialValue && <TaskDetails task={storeTask} getAllTasks={getTasks} />}
         </div>
       </div>
     ) : (

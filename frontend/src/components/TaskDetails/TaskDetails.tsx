@@ -16,9 +16,10 @@ import './TaskDetails.css';
 
 type TaskDetailsType = {
   task: Task;
+  getAllTasks: () => void;
 };
 
-const TaskDetails = ({ task }: TaskDetailsType) => {
+const TaskDetails = ({ task, getAllTasks }: TaskDetailsType) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [attachments, setAttachments] = useState<string[]>([]);
   const open = Boolean(anchorEl);
@@ -72,7 +73,7 @@ const TaskDetails = ({ task }: TaskDetailsType) => {
         </div>
       </div>
 
-      <TaskDetailsBody task={task} />
+      <TaskDetailsBody task={task} getAllTasks={getAllTasks} />
 
       <div className='other-details'>
         <div className='single-detail'>
