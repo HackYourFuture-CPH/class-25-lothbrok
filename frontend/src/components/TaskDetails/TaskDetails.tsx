@@ -16,7 +16,6 @@ import './TaskDetails.css';
 
 type TaskDetailsType = {
   task: Task;
-  tasks: Task[];
 };
 
 const TaskDetails = ({ task }: TaskDetailsType) => {
