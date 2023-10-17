@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import styles from './ProjectModal.module.css';
 import Close from '../../assets/icons/x.png';
-import api from '../../api';
-import { Project } from '../../types/Project';
-import { InputLabel, MenuItem, NativeSelect, Select, TextField } from '@mui/material';
+
+import { MenuItem, Select, TextField } from '@mui/material';
 
 interface ProjectModalProps {
   closeModal: () => void;
