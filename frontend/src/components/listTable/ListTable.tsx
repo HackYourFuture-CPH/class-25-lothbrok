@@ -27,7 +27,10 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }: ListTa
     setCompleted(String(task.id), !task.completed);
   };
 
-  (e: React.MouseEvent<HTMLDivElement, MouseEvent>, id: string | number) => {
+  const handleOpenDetails = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    id: string | number,
+  ) => {
     e.stopPropagation();
     setTask(tasks.filter((task) => task.id === id)[0]);
   };
@@ -69,6 +72,7 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }: ListTa
                         {...provided.dragHandleProps}
                       >
                         <div
+                          onClick={(e) => handleOpenDetails(e, task.id)}
                           className={`${styles.grid_container} ${styles.task_row}`}
                           key={task.id}
                         >

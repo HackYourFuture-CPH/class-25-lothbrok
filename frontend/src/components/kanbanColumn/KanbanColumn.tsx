@@ -4,6 +4,7 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useEffect, useState } from 'react';
 import { MoreHoriz, CalendarMonth } from '@mui/icons-material';
 import styles from './kanbanColumn.module.css';
+import { useTaskStore } from '../../store/task.store';
 
 type KanbanColumnProps = {
   tasks: Task[];
@@ -13,6 +14,8 @@ type KanbanColumnProps = {
 
 const KanbanColumn: React.FC<KanbanColumnProps> = ({ tasks, listId }) => {
   const [enabled, setEnabled] = useState(false);
+  const { setTask } = useTaskStore();
+
   useEffect(() => {
     const animation = requestAnimationFrame(() => setEnabled(true));
     return () => {
@@ -23,6 +26,15 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ tasks, listId }) => {
   if (!enabled) {
     return null;
   }
+
+  const handleOpenDetails = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    id: string | number,
+  ) => {
+    e.stopPropagation();
+    setTask(tasks.filter((task) => task.id === id)[0]);
+    console.log('first');
+  };
 
   return (
     <div>
@@ -42,6 +54,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ tasks, listId }) => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
+                        onClick={(e) => handleOpenDetails(e, task.id)}
                       >
                         <div className={styles.kanban_task_row}>
                           <span

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './TaskDetailsBody.css';
 import { Checkbox } from '@mui/material';
 import {
@@ -8,9 +8,11 @@ import {
   RadioButtonUnchecked,
   Flag,
 } from '@mui/icons-material/';
-import { useCompletedStore } from '../../store/task.store';
-
+import api from '../../api';
+import { useCompletedStore, useTaskStore, useProjectStore } from '../../store/task.store';
 import { Task } from '../../types/Task';
+import { format } from 'date-fns';
+import { Dropdown } from '../dropdown/CustomDropDown';
 
 type TaskDetailsBodyType = {
   task: Task;
@@ -18,8 +20,16 @@ type TaskDetailsBodyType = {
 
 const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
   const { completed, setCompleted } = useCompletedStore();
+  const { setTask } = useTaskStore();
   const completedStatus = completed[`${task.id}`] ?? false;
+  const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
+  const defaultDueDate = task.due_date ? format(new Date(task.due_date), "yyyy-MM-dd'T'HH:mm") : '';
+  const [dueDate, setDueDate] = useState(defaultDueDate);
+  const { projectTitle } = useProjectStore();
+  const priorityArray = ['easy', 'medium', 'hard'];
+  const usersArray = ['Arash', 'Mike']; // This array will be replaced by users data from database
+
   const handleCheckbox = (task: Task) => {
     const updatedCompletedStatus = !completedStatus;
 
@@ -33,6 +43,71 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
   const handleTextareaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(event.target.value);
   };
+  const updatedTask = { ...task };
+
+  const handleInputChange = (
+    fieldName: string,
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  ) => {
+    switch (fieldName) {
+      case 'title':
+        setTitle(event.target.value);
+        break;
+      case 'assignee':
+        updatedTask.assignee = event.target.value;
+        saveFieldToDatabase(task.id, 'assignee', updatedTask.assignee);
+        break;
+      case 'due_date':
+        setDueDate(event.target.value);
+        break;
+      case 'priority':
+        updatedTask.priority = event.target.value;
+        saveFieldToDatabase(task.id, 'priority', updatedTask.priority);
+
+        break;
+      default:
+        break;
+    }
+    setTask(updatedTask);
+  };
+  const saveToDatabase = async (taskId: string | number, fieldName: string, value: any) => {
+    try {
+      const req = await api();
+      const data = { [fieldName]: value };
+      await req.put(`/dashboard/${taskId}`, data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const saveFieldToDatabase = async (
+    taskId: string | number,
+    fieldName: string,
+    value: any,
+  ): Promise<void> => {
+    await saveToDatabase(taskId, fieldName, value);
+  };
+
+  const saveDescriptionToDatabase = async (
+    taskId: string | number,
+    updatedDescription: string,
+  ): Promise<void> => {
+    await saveToDatabase(taskId, 'description', updatedDescription);
+  };
+
+  useEffect(() => {
+    setTitle(task.title);
+
+    setDescription(task.description);
+  }, [task.title, task.description]);
+
+  useEffect(() => {
+    // Update dueDate whenever a new task is selected
+    const defaultDueDate = task.due_date
+      ? format(new Date(task.due_date), "yyyy-MM-dd'T'HH:mm")
+      : '';
+    setDueDate(defaultDueDate);
+  }, [task.due_date]);
 
   return (
     <div className='details-title'>
@@ -44,8 +119,13 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
           onClick={() => handleCheckbox(task)}
         />
         <div className='label'>
-          <p>Bookum App</p>
-          <h6>{task.description}</h6>
+          <p>{projectTitle}</p>
+          <input
+            style={{ border: 'none' }}
+            value={title}
+            onChange={(e) => handleInputChange('title', e)}
+            onBlur={() => saveFieldToDatabase(task.id, 'title', title)}
+          />
         </div>
       </div>
       <div className='task-owner'>
@@ -55,14 +135,26 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
             <div className='icon-and-name'>
               <p>Assignee</p>
               <AccountCircleRounded />
-              <p>{task.assignee}</p>{' '}
+              <Dropdown
+                options={usersArray}
+                selectedValue={task.assignee}
+                fieldName='assignee'
+                handleInputChange={handleInputChange}
+              />
             </div>
           </div>
           <div className='status'>
             <div className='icon-and-name'>
               <p>Due date</p>
               <CalendarMonthRounded />
-              <p>{task.due_date}</p>
+
+              <input
+                type='datetime-local'
+                style={{ border: 'none' }}
+                value={dueDate}
+                onChange={(e) => handleInputChange('due_date', e)}
+                onBlur={() => saveFieldToDatabase(task.id, 'due_date', dueDate)}
+              />
             </div>
           </div>
           <div className='status'>
@@ -78,7 +170,12 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
                       : '#F18524',
                 }}
               />
-              <p>{task.priority}</p>
+              <Dropdown
+                options={priorityArray}
+                selectedValue={task.priority}
+                fieldName='priority'
+                handleInputChange={handleInputChange}
+              />
             </div>
           </div>
           <div className='status'>
@@ -92,6 +189,7 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
         className='description'
         value={description}
         onChange={handleTextareaChange}
+        onBlur={() => saveDescriptionToDatabase(task.id, description)}
       ></textarea>
     </div>
   );

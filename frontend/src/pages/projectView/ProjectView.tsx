@@ -4,7 +4,7 @@ import { User, getAuth, onAuthStateChanged } from '@firebase/auth';
 import styles from './projectView.module.css';
 import thumbnail from '../../assets/images/Rectangle 3025.svg';
 import ProjectListView from '../../components/projectListView/ProjectListView';
-import { useTaskStore, initialValue } from '../../store/task.store';
+import { useTaskStore, initialValue, useProjectStore } from '../../store/task.store';
 import { TaskDetails } from '../../IndexForImport';
 import ProjectKanbanView from '../../components/projectKanbanView/ProjectKanbanView';
 import { Task } from '../../types/Task';
@@ -18,12 +18,13 @@ const ProjectView = () => {
   const { id: project_id } = useParams();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [project, setProject] = useState<Project>();
+  const { storeTask } = useTaskStore();
   const [view, setView] = useState<string>('kanban');
-  const { task } = useTaskStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [title, setTitle] = useState<string>('');
   const [editing, setEditing] = useState<string>('');
   const [userId, setUserId] = useState<string>('');
+  const { setProjectTitle } = useProjectStore();
   const categories: Categories = {
     Documentation: 'documentation',
     Ongoing: 'ongoing',
@@ -50,6 +51,7 @@ const ProjectView = () => {
       const res = await req.get(`/project/${project_id}`);
       const project = await res.data;
       setProject(project);
+      setProjectTitle(project.title);
     } catch (e) {
       console.error(e);
     }
@@ -180,8 +182,8 @@ const ProjectView = () => {
             </span>
           </div>
         </div>
-        <div className={styles.manrope_font}>
-          <div>
+        <div className={styles.project_views}>
+          <div className={styles.list_wrapper}>
             {view === 'kanban' ? (
               <ProjectKanbanView {...viewProps} />
             ) : view === 'list' ? (
@@ -190,7 +192,7 @@ const ProjectView = () => {
               <div>Calendar View</div>
             )}
           </div>
-          {task !== initialValue && <TaskDetails task={task} />}
+          {storeTask !== initialValue && <TaskDetails task={storeTask} tasks={tasks} />}
         </div>
       </div>
     ) : (
