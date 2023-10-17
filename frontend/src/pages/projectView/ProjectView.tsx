@@ -14,6 +14,8 @@ import { ViewProps } from '../../types/ViewProps';
 import api from '../../api';
 import { Task as TaskConstructor } from '../../classes/Task';
 import { AddCircle } from '@mui/icons-material';
+import AddUsersDialog from '../../components/addUsersDialog/AddUsersDialog';
+import { CircularProgress } from '@mui/material';
 
 const ProjectView = () => {
   const { id: project_id } = useParams();
@@ -26,6 +28,8 @@ const ProjectView = () => {
   const [editing, setEditing] = useState<string>('');
   const [userId, setUserId] = useState<string>('');
   const [hasAccess, setHasAccess] = useState<boolean>(false);
+  const [addUsers, setAddUsers] = useState<boolean>(false);
+  const [allowedUsers, setAllowedUsers] = useState<string[]>();
   const categories: Categories = {
     Documentation: 'documentation',
     Ongoing: 'ongoing',
@@ -39,6 +43,7 @@ const ProjectView = () => {
       const res = await req.get(`project/${project_id}/users`);
       const fetchedUsers: { project_id: number; user_uid: string }[] = await res.data;
       const users = fetchedUsers.map((user) => user.user_uid);
+      setAllowedUsers(users);
       users.includes(userId) ? setHasAccess(true) : setHasAccess(false);
       return users.includes(userId);
     } catch (e) {
@@ -55,6 +60,7 @@ const ProjectView = () => {
         const res = await req.get(`/dashboard/${project_id}`);
         const tasks = await res.data;
         setTasks(tasks);
+        setIsLoading(false);
       }
     } catch (e) {
       console.error(e);
@@ -87,7 +93,6 @@ const ProjectView = () => {
   useEffect(() => {
     getTasks();
     getProject();
-    setIsLoading(false);
   }, [userId]);
 
   const changeView = (view: string) => {
@@ -181,7 +186,18 @@ const ProjectView = () => {
               <span className={styles.bold}>Details</span>
               <div className={styles.flex_row}>
                 <h2 className={styles.project_title}>{project.title}</h2>
-                <AddCircle style={{ color: '#110D59' }} />
+                <AddCircle
+                  style={{ color: '#110D59', cursor: 'pointer' }}
+                  onClick={() => setAddUsers(true)}
+                />
+                {addUsers ? (
+                  <AddUsersDialog
+                    allowedUsers={allowedUsers}
+                    addUsers={addUsers}
+                    setAddUsers={setAddUsers}
+                    projectId={project_id}
+                  />
+                ) : null}
               </div>
             </div>
           </div>
@@ -217,7 +233,7 @@ const ProjectView = () => {
       <h3>Project Not Found</h3>
     )
   ) : (
-    <div>loading</div>
+    <CircularProgress />
   );
 };
 
