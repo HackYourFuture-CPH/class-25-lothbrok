@@ -15,12 +15,11 @@ export const getProject = async (req: Request, res: Response) => {
   const { project_id } = req.params;
   try {
     const project = await db.select('*').from('projects').where({ id: project_id }).first();
-    if(!project){
+    if (!project) {
       res.status(StatusCodes.NOT_FOUND).json({ error: 'Project not found' });
       return;
     }
-    res.status(StatusCodes.OK).json(project)
-      : 
+    res.status(StatusCodes.OK).json(project);
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
