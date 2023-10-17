@@ -7,6 +7,7 @@ import {
   getProject,
   getAllProjects,
   addNewProject,
+  getAllTasksForProject,
 } from '../../controllers/dashboard';
 
 const dashboard: Router = express.Router();
@@ -15,6 +16,7 @@ dashboard.get('/', getAllTasks);
 dashboard.get('/project/:project_id', getProject);
 dashboard.get('/projects/:user_uid', getAllProjects);
 dashboard.get('/:project_id/:user_id', getTasksForProjectAndUser);
+dashboard.get('/:project_id', getAllTasksForProject);
 dashboard.post('/', addNewTask);
 dashboard.post('/project', addNewProject);
 dashboard.put('/:id', updateTask);

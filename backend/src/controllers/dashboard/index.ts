@@ -114,3 +114,16 @@ export const addNewProject = async (req: Request, res: Response) => {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
 };
+
+export const getAllTasksForProject = async (req: Request, res: Response) => {
+  const { project_id } = req.params;
+  try {
+    const tasks = await db
+      .select('tasks.*')
+      .from('tasks')
+      .where({ 'tasks.project_id': project_id });
+    res.status(StatusCodes.OK).send(tasks);
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+  }
+};

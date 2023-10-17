@@ -102,24 +102,24 @@ function ProjectList() {
 
   return (
     <div className={styles.project_list_container}>
-      <div>
+      <div className={styles.right_align}>
         <button className={styles.create_project} onClick={openModal}>
           Create Project
         </button>
-        {projects ? (
-          <>
-            <TaskList projects={projects} />
-            {isModalOpen && (
-              <ProjectModal
-                handleCreateProject={handleCreateProject}
-                closeModal={closeModal}
-                thumbnail={thumbnails[projects ? projects.length % thumbnails.length : 0]}
-                uid={userId}
-              />
-            )}
-          </>
-        ) : null}
       </div>
+      {projects ? (
+        <>
+          <TaskList projects={projects} />
+          {isModalOpen && (
+            <ProjectModal
+              handleCreateProject={handleCreateProject}
+              closeModal={closeModal}
+              thumbnail={thumbnails[projects ? projects.length % thumbnails.length : 0]}
+              uid={userId}
+            />
+          )}
+        </>
+      ) : null}
     </div>
   );
 }

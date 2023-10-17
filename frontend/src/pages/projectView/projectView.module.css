@@ -70,3 +70,13 @@
   font-weight: bold;
   color: #2b283d;
 }
+
+.title {
+  text-align: left;
+}
+
+.flex_row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

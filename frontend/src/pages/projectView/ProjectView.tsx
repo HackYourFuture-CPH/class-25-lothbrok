@@ -13,6 +13,7 @@ import { Categories } from '../../types/Categories';
 import { ViewProps } from '../../types/ViewProps';
 import api from '../../api';
 import { Task as TaskConstructor } from '../../classes/Task';
+import { AddCircle } from '@mui/icons-material';
 
 const ProjectView = () => {
   const { id: project_id } = useParams();
@@ -24,6 +25,7 @@ const ProjectView = () => {
   const [title, setTitle] = useState<string>('');
   const [editing, setEditing] = useState<string>('');
   const [userId, setUserId] = useState<string>('');
+  const [hasAccess, setHasAccess] = useState<boolean>(false);
   const categories: Categories = {
     Documentation: 'documentation',
     Ongoing: 'ongoing',
@@ -31,11 +33,26 @@ const ProjectView = () => {
     Done: 'done',
   };
 
-  const getTasks = async () => {
+  const checkIfUserHasAccess = async () => {
     try {
-      if (userId) {
+      const req = await api();
+      const res = await req.get(`project/${project_id}/users`);
+      const fetchedUsers: { project_id: number; user_uid: string }[] = await res.data;
+      const users = fetchedUsers.map((user) => user.user_uid);
+      users.includes(userId) ? setHasAccess(true) : setHasAccess(false);
+      return users.includes(userId);
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  };
+
+  const getTasks = async () => {
+    const check = await checkIfUserHasAccess();
+    try {
+      if (check) {
         const req = await api();
-        const res = await req.get(`/dashboard/${project_id}/${userId}`);
+        const res = await req.get(`/dashboard/${project_id}`);
         const tasks = await res.data;
         setTasks(tasks);
       }
@@ -152,17 +169,20 @@ const ProjectView = () => {
   };
 
   return !isLoading ? (
-    project ? (
+    project && hasAccess ? (
       <div className={styles.project_view}>
         <div className={styles.project_box}>
           <div>
             <div className={styles.image_wrap}>
               <img className={styles.thumbnail} src={thumbnail} alt='project thumbnail' />
             </div>
-            <div>
+            <div className={styles.title}>
               <span>Project / </span>
               <span className={styles.bold}>Details</span>
-              <h2 className={styles.project_title}>{project.title}</h2>
+              <div className={styles.flex_row}>
+                <h2 className={styles.project_title}>{project.title}</h2>
+                <AddCircle style={{ color: '#110D59' }} />
+              </div>
             </div>
           </div>
           <div className={styles.views}>
