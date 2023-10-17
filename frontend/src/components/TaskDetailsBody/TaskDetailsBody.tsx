@@ -76,7 +76,7 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
       const data = { [fieldName]: value };
       await req.put(`/dashboard/${taskId}`, data);
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 

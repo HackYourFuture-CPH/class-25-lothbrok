@@ -11,6 +11,20 @@ export const getAllProjects = async (req: Request, res: Response) => {
   }
 };
 
+export const getProject = async (req: Request, res: Response) => {
+  const { project_id } = req.params;
+  try {
+    const project = await db.select('*').from('projects').where({ id: project_id }).first();
+    if (!project) {
+      res.status(StatusCodes.NOT_FOUND).json({ error: 'Project not found' });
+      return;
+    }
+    res.status(StatusCodes.OK).json(project);
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+  }
+};
+
 export const getAmountOfTasks = async (req: Request, res: Response) => {
   const { project_id } = req.params;
   try {
@@ -29,6 +43,40 @@ export const getAmountOfTasks = async (req: Request, res: Response) => {
     } else {
       res.status(StatusCodes.NOT_FOUND).json({ message: `No tasks found` });
     }
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+  }
+};
+
+export const inviteUsersToProject = async (req: Request, res: Response) => {
+  const { project_id } = req.params;
+  const { uids } = req.body;
+  if (!uids?.length) {
+    res.status(StatusCodes.BAD_REQUEST).send({ error: 'No uids were provided' });
+    return;
+  }
+  try {
+    const result = await db.transaction(async (trx) => {
+      for (const uid of uids) {
+        await trx('project_user_relation').insert({
+          project_id,
+          user_uid: uid,
+        });
+      }
+    });
+    res.status(StatusCodes.OK).send(result);
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+  }
+};
+
+export const getUsersOfProject = async (req: Request, res: Response) => {
+  const { project_id } = req.params;
+  try {
+    const projectUsers = await db('project_user_relation')
+      .select('*')
+      .where('project_id', project_id);
+    res.status(StatusCodes.OK).send(projectUsers);
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
