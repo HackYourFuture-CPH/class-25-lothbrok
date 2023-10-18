@@ -27,9 +27,6 @@ const TaskDetailsBody = ({ task, updateTasksInDom }: TaskDetailsBodyType) => {
   const [description, setDescription] = useState(task.description);
   const defaultDueDate = task.due_date ? format(new Date(task.due_date), "yyyy-MM-dd'T'HH:mm") : '';
   const [dueDate, setDueDate] = useState(defaultDueDate);
-  const [projectUsers, setProjectUsers] = useState([]);
-  const [tasks, setTasks] = useState<Task[]>([]);
-
   const { projectTitle } = useProjectStore();
   const priorityArray = ['easy', 'medium', 'hard'];
   const usersArray = ['Arash', 'Mike']; // This array will be replaced by users data from database
@@ -97,16 +94,6 @@ const TaskDetailsBody = ({ task, updateTasksInDom }: TaskDetailsBodyType) => {
     updatedDescription: string,
   ): Promise<void> => {
     await saveToDatabase(taskId, 'description', updatedDescription);
-  };
-
-  const getProjectUsers = async (projectId: number) => {
-    try {
-      const req = await api();
-      const res = await req.get(`/project/${projectId}/users`);
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   useEffect(() => {
