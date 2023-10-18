@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { adminFireAuth } from '../../firebase';
 import { user } from '../../interfaces/user';
 import db from '../../config/db-config';
 import { StatusCodes } from 'http-status-codes';

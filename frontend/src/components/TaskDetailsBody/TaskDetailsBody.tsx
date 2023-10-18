@@ -80,7 +80,7 @@ const TaskDetailsBody = ({ task, getAllTasks }: TaskDetailsBodyType) => {
       await req.put(`/dashboard/${taskId}`, data);
       getAllTasks();
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
