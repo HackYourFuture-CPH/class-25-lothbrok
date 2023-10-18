@@ -5,19 +5,18 @@ import api from '../../api';
 import styles from './addUsersDialog.module.css';
 
 const AddUsersDialog = ({
-  allowedUsers,
+  projectMembers,
   setAddUsers,
   addUsers,
   projectId,
 }: {
-  allowedUsers: string[] | undefined;
+  projectMembers: string[] | undefined;
   setAddUsers: React.Dispatch<React.SetStateAction<boolean>>;
   addUsers: boolean;
   projectId: string | undefined;
 }) => {
   const [users, setUsers] = useState<User[]>();
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
-  const [allowedUserNames, setAllowedUserNames] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchAndSetUsers = async () => {
@@ -25,7 +24,7 @@ const AddUsersDialog = ({
         const req = await api();
         const res = await req.get('/user');
         const users: User[] = await res.data;
-        const filteredUsers = users.filter((user) => !allowedUsers?.includes(user.uid));
+        const filteredUsers = users.filter((user) => !projectMembers?.includes(user.uid));
         setUsers(filteredUsers);
       } catch (e) {
         console.error(e);

@@ -31,17 +31,8 @@ export const getTasksForProjectAndUser = async (req: Request, res: Response) => 
 
 export const addNewTask = async (req: Request, res: Response) => {
   try {
-    const {
-      title,
-      description,
-      status,
-      due_date,
-      user_uid,
-      assignee,
-      completed,
-      priority,
-      project_id,
-    } = req.body;
+    const { title, description, status, due_date, user_uid, completed, priority, project_id } =
+      req.body;
 
     const task = await db('tasks')
       .insert({
@@ -50,7 +41,6 @@ export const addNewTask = async (req: Request, res: Response) => {
         status,
         due_date,
         user_uid,
-        assignee,
         completed,
         priority,
         project_id,

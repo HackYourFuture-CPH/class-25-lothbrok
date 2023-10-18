@@ -29,7 +29,7 @@ const ProjectView = () => {
   const [userId, setUserId] = useState<string>('');
   const [hasAccess, setHasAccess] = useState<boolean>(false);
   const [addUsers, setAddUsers] = useState<boolean>(false);
-  const [allowedUsers, setAllowedUsers] = useState<string[]>();
+  const [projectMembers, setProjectMembers] = useState<string[]>();
   const { setProjectTitle } = useProjectStore();
   const categories: Categories = {
     Documentation: 'documentation',
@@ -44,7 +44,7 @@ const ProjectView = () => {
       const res = await req.get(`project/${project_id}/users`);
       const fetchedUsers: { project_id: number; user_uid: string }[] = await res.data;
       const users = fetchedUsers.map((user) => user.user_uid);
-      setAllowedUsers(users);
+      setProjectMembers(users);
       users.includes(userId) ? setHasAccess(true) : setHasAccess(false);
       return users.includes(userId);
     } catch (e) {
@@ -54,9 +54,9 @@ const ProjectView = () => {
   };
 
   const getTasks = async () => {
-    const check = await checkIfUserHasAccess();
+    const userHasAccess = await checkIfUserHasAccess();
     try {
-      if (check) {
+      if (userHasAccess) {
         const req = await api();
         const res = await req.get(`project/tasks/${project_id}`);
         const tasks = await res.data;
@@ -194,7 +194,7 @@ const ProjectView = () => {
                 />
                 {addUsers ? (
                   <AddUsersDialog
-                    allowedUsers={allowedUsers}
+                    projectMembers={projectMembers}
                     addUsers={addUsers}
                     setAddUsers={setAddUsers}
                     projectId={project_id}

@@ -64,35 +64,24 @@ function ProjectList() {
   };
 
   const handleCreateProject = async (projectName: string, team: UserType[]) => {
-    let projectId;
     if (projectName.trim()) {
+      const invitedUserUids = team.map((user) => user.uid);
       const project = {
         title: projectName,
         date_of_creation: new Date().toISOString().split('T')[0],
         user_uid: userId,
         thumbnail_link: thumbnails[projects ? projects.length % thumbnails.length : 0],
+        uids: invitedUserUids,
       };
       try {
         const req = await api();
         const res = await req.post(`/project`, project);
-        const newProject = res.data[0];
-        projectId = newProject.id;
+        const newProject = res.data;
         if (projects) {
           setProjects([...projects, newProject]);
         } else {
           setProjects(newProject);
         }
-      } catch (e) {
-        console.error(e);
-      }
-      try {
-        const uids = team.map((user) => user.uid);
-        const data = {
-          uids: uids,
-        };
-        const req = await api();
-        const res = await req.post(`project/${projectId}/invite-users`, data);
-        console.log(res);
       } catch (e) {
         console.error(e);
       }
@@ -115,7 +104,7 @@ function ProjectList() {
               handleCreateProject={handleCreateProject}
               closeModal={closeModal}
               thumbnail={thumbnails[projects ? projects.length % thumbnails.length : 0]}
-              uid={userId}
+              userUid={userId}
             />
           )}
         </>

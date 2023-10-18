@@ -113,3 +113,42 @@ export const addNewProject = async (req: Request, res: Response) => {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error.message);
   }
 };
+
+export const createProjectAndInviteUsers = async (req: Request, res: Response) => {
+  try {
+    const { title, description, thumbnail_link, date_of_creation, user_uid } = req.body;
+    const { uids } = req.body;
+
+    if (!title || !user_uid) {
+      return res.status(StatusCodes.BAD_REQUEST).send({ error: 'Invalid project data' });
+    }
+
+    const result = await db.transaction(async (trx) => {
+      const [newProject] = await trx('projects')
+        .insert({
+          title,
+          description,
+          thumbnail_link,
+          date_of_creation,
+          user_uid,
+        })
+        .returning('*');
+
+      const project_id = newProject.id;
+
+      if (uids && uids.length) {
+        for (const uid of uids) {
+          await trx('project_user_relation').insert({
+            project_id,
+            user_uid: uid,
+          });
+        }
+      }
+      return newProject;
+    });
+
+    res.status(StatusCodes.CREATED).json(result);
+  } catch (error: any) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error.message);
+  }
+};

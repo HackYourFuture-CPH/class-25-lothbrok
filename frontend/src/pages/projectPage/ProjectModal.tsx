@@ -2,18 +2,17 @@ import React, { useState, useEffect } from 'react';
 import styles from './ProjectModal.module.css';
 import Close from '../../assets/icons/x.png';
 import api from '../../api';
-import { Project } from '../../types/Project';
-import { Autocomplete, InputLabel, MenuItem, NativeSelect, Select, TextField } from '@mui/material';
+import { Autocomplete, TextField } from '@mui/material';
 import { User } from '../../types/User';
 
 interface ProjectModalProps {
   closeModal: () => void;
   handleCreateProject: any;
   thumbnail: string;
-  uid: string;
+  userUid: string;
 }
 
-function ProjectModal({ closeModal, handleCreateProject, thumbnail, uid }: ProjectModalProps) {
+function ProjectModal({ closeModal, handleCreateProject, thumbnail, userUid }: ProjectModalProps) {
   const [users, setUsers] = useState<User[]>();
   const [projectName, setProjectName] = useState('');
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
@@ -25,7 +24,7 @@ function ProjectModal({ closeModal, handleCreateProject, thumbnail, uid }: Proje
         const res = await req.get('/user');
         const users = await res.data;
         setUsers(users);
-        setSelectedUsers([users.find((user: User) => user.uid === uid)]);
+        setSelectedUsers([users.find((user: User) => user.uid === userUid)]);
       } catch (e) {
         console.error(e);
       }
