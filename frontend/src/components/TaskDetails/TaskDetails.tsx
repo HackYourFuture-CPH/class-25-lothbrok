@@ -16,6 +16,7 @@ import './TaskDetails.css';
 
 type TaskDetailsType = {
   task: Task;
+  tasks: Task[];
 };
 
 const TaskDetails = ({ task }: TaskDetailsType) => {
@@ -78,20 +79,22 @@ const TaskDetails = ({ task }: TaskDetailsType) => {
         <div className='single-detail'>
           <div className='single-header'>
             <p className='single-title'>Attachment</p>
-            {/* Hidden file input */}
-            <input
-              type='file'
-              accept='image/*'
-              onChange={handleAttachment}
-              style={{ display: 'none' }}
-              id='attachment-input'
-            />
-            {/* IconButton to trigger file input */}
-            <label htmlFor='attachment-input'>
-              <IconButton component='span'>
-                <Add />
-              </IconButton>
-            </label>
+            <div className='attachment-main'>
+              {/* Hidden file input */}
+              <input
+                type='file'
+                accept='image/*'
+                onChange={handleAttachment}
+                style={{ display: 'none' }}
+                id='attachment-input'
+              />
+              {/* IconButton to trigger file input */}
+              <label htmlFor='attachment-input'>
+                <IconButton component='span'>
+                  <Add />
+                </IconButton>
+              </label>
+            </div>
           </div>
           <div className='attachment-files'>
             {attachments.map((attachment, index) => (
@@ -102,7 +105,9 @@ const TaskDetails = ({ task }: TaskDetailsType) => {
         <div className='single-detail'>
           <div className='single-header'>
             <p className='single-title'>Objective</p>
-            <Add className='details-icon' />
+            <IconButton component='span'>
+              <Add />
+            </IconButton>
           </div>
           <div className='task-objectives'>
             <div className='task-objective'>

@@ -4,7 +4,7 @@ import { User, getAuth, onAuthStateChanged } from '@firebase/auth';
 import styles from './projectView.module.css';
 import thumbnail from '../../assets/images/Rectangle 3025.svg';
 import ProjectListView from '../../components/projectListView/ProjectListView';
-import { useTaskStore, initialValue } from '../../store/task.store';
+import { useTaskStore, initialValue, useProjectStore } from '../../store/task.store';
 import { TaskDetails } from '../../IndexForImport';
 import ProjectKanbanView from '../../components/projectKanbanView/ProjectKanbanView';
 import { Task } from '../../types/Task';
@@ -21,8 +21,8 @@ const ProjectView = () => {
   const { id: project_id } = useParams();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [project, setProject] = useState<Project>();
+  const { storeTask } = useTaskStore();
   const [view, setView] = useState<string>('kanban');
-  const { task } = useTaskStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [title, setTitle] = useState<string>('');
   const [editing, setEditing] = useState<string>('');
@@ -30,6 +30,7 @@ const ProjectView = () => {
   const [hasAccess, setHasAccess] = useState<boolean>(false);
   const [addUsers, setAddUsers] = useState<boolean>(false);
   const [allowedUsers, setAllowedUsers] = useState<string[]>();
+  const { setProjectTitle } = useProjectStore();
   const categories: Categories = {
     Documentation: 'documentation',
     Ongoing: 'ongoing',
@@ -57,7 +58,7 @@ const ProjectView = () => {
     try {
       if (check) {
         const req = await api();
-        const res = await req.get(`/dashboard/${project_id}`);
+        const res = await req.get(`project/tasks/${project_id}`);
         const tasks = await res.data;
         setTasks(tasks);
         setIsLoading(false);
@@ -70,9 +71,10 @@ const ProjectView = () => {
   const getProject = async () => {
     try {
       const req = await api();
-      const res = await req.get(`/dashboard/project/${project_id}`);
+      const res = await req.get(`/project/${project_id}`);
       const project = await res.data;
       setProject(project);
+      setProjectTitle(project.title);
     } catch (e) {
       console.error(e);
     }
@@ -108,7 +110,7 @@ const ProjectView = () => {
       task.project_id = +project_id;
       try {
         const req = await api();
-        const res = await req.post(`/dashboard`, task);
+        const res = await req.post(`/project/tasks`, task);
         const newTask = res.data[0];
         setTasks([...tasks, newTask]);
       } catch (e) {
@@ -139,7 +141,7 @@ const ProjectView = () => {
         if (String(task.id) === result.draggableId) {
           try {
             const req = await api();
-            await req.put(`/dashboard/${task.id}`, { status: destination.droppableId });
+            await req.put(`/project/tasks/${task.id}`, { status: destination.droppableId });
           } catch (e) {
             console.error(e);
           }
@@ -216,17 +218,15 @@ const ProjectView = () => {
             </span>
           </div>
         </div>
-        <div className={styles.manrope_font}>
-          <div>
+        <div className={styles.project_views}>
+          <div className={styles.list_wrapper}>
             {view === 'kanban' ? (
               <ProjectKanbanView {...viewProps} />
-            ) : view === 'list' ? (
-              <ProjectListView {...viewProps} />
             ) : (
-              <div>Calendar View</div>
+              <ProjectListView {...viewProps} />
             )}
           </div>
-          {task !== initialValue && <TaskDetails task={task} />}
+          {storeTask !== initialValue && <TaskDetails task={storeTask} tasks={tasks} />}
         </div>
       </div>
     ) : (

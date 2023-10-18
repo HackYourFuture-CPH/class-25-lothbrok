@@ -17,8 +17,8 @@ const AddUsersDialog = ({
 }) => {
   const [users, setUsers] = useState<User[]>();
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+  const [allowedUserNames, setAllowedUserNames] = useState<string[]>([]);
 
-  console.log(users);
   useEffect(() => {
     const fetchAndSetUsers = async () => {
       try {

@@ -11,6 +11,20 @@ export const getAllProjects = async (req: Request, res: Response) => {
   }
 };
 
+export const getProject = async (req: Request, res: Response) => {
+  const { project_id } = req.params;
+  try {
+    const project = await db.select('*').from('projects').where({ id: project_id }).first();
+    if (!project) {
+      res.status(StatusCodes.NOT_FOUND).json({ error: 'Project not found' });
+      return;
+    }
+    res.status(StatusCodes.OK).json(project);
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+  }
+};
+
 export const getAmountOfTasks = async (req: Request, res: Response) => {
   const { project_id } = req.params;
   try {
@@ -78,5 +92,24 @@ export const getProjectsOfUser = async (req: Request, res: Response) => {
     res.status(StatusCodes.OK).send(projects);
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+  }
+};
+
+export const addNewProject = async (req: Request, res: Response) => {
+  try {
+    const { title, description, thumbnail_link, date_of_creation, user_uid } = req.body;
+
+    const project = await db('projects')
+      .insert({
+        title,
+        description,
+        thumbnail_link,
+        date_of_creation,
+        user_uid,
+      })
+      .returning('*');
+    res.status(StatusCodes.CREATED).json(project);
+  } catch (error: any) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error.message);
   }
 };

@@ -74,7 +74,7 @@ function ProjectList() {
       };
       try {
         const req = await api();
-        const res = await req.post(`/dashboard/project`, project);
+        const res = await req.post(`/project`, project);
         const newProject = res.data[0];
         projectId = newProject.id;
         if (projects) {

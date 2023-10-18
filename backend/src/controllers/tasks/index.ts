@@ -2,9 +2,10 @@ import db from '../../config/db-config';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
-export const getAllTasks = async (req: Request, res: Response) => {
+export const getAllTasksOfProject = async (req: Request, res: Response) => {
+  const { project_id } = req.params;
   try {
-    const tasks = await db('tasks').select('*').from('tasks');
+    const tasks = await db('tasks').select('*').from('tasks').where('tasks.project_id', project_id);
     res.status(StatusCodes.OK).send(tasks);
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
@@ -74,13 +75,28 @@ export const updateTask = async (req: Request, res: Response) => {
   }
 };
 
-export const getProject = async (req: Request, res: Response) => {
-  const { project_id } = req.params;
+export const assignTaskToUser = async (req: Request, res: Response) => {
+  const { task_id, project_id } = req.params;
+  const { assignee } = req.body;
+
   try {
-    const project = await db.select('*').from('projects').where({ id: project_id }).first();
-    project
-      ? res.status(StatusCodes.OK).json(project)
-      : res.status(StatusCodes.NOT_FOUND).json({ error: 'Project not found' });
+    const newAssignee = await db('users').where('uid', assignee).first();
+
+    if (!newAssignee) {
+      return res.status(StatusCodes.NOT_FOUND).send('Assignee not found in the users table.');
+    }
+
+    const isMember = await db('project_user_relation')
+      .where({ project_id, user_uid: assignee })
+      .first();
+
+    if (!isMember) {
+      return res.status(StatusCodes.FORBIDDEN).send('Assignee is not a member of the project.');
+    }
+
+    await db('tasks').where('id', task_id).update({ user_uid: newAssignee.uid });
+
+    res.status(StatusCodes.OK).send('Task assignee updated successfully.');
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
@@ -110,19 +126,6 @@ export const addNewProject = async (req: Request, res: Response) => {
       })
       .returning('*');
     res.status(StatusCodes.CREATED).json(project);
-  } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
-  }
-};
-
-export const getAllTasksForProject = async (req: Request, res: Response) => {
-  const { project_id } = req.params;
-  try {
-    const tasks = await db
-      .select('tasks.*')
-      .from('tasks')
-      .where({ 'tasks.project_id': project_id });
-    res.status(StatusCodes.OK).send(tasks);
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
