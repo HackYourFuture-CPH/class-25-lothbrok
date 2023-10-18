@@ -70,6 +70,19 @@ export const inviteUsersToProject = async (req: Request, res: Response) => {
   }
 };
 
+export const getProjectsOfUser = async (req: Request, res: Response) => {
+  const { user_uid } = req.params;
+  try {
+    const projects = await db('projects')
+      .select('projects.*')
+      .leftJoin('project_user_relation', 'projects.id', 'project_user_relation.project_id')
+      .where('project_user_relation.user_uid', user_uid);
+    res.status(StatusCodes.OK).send(projects);
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+  }
+};
+
 export const getUsersOfProject = async (req: Request, res: Response) => {
   const { project_id } = req.params;
   try {

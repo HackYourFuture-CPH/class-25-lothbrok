@@ -20,7 +20,7 @@ function ProjectList() {
     try {
       if (userId) {
         const req = await api();
-        const res = await req.get(`/dashboard/projects/${userId}`);
+        const res = await req.get(`/project/user/${userId}`);
         const projects = await Promise.all(
           res.data.map(async (project: Project, index: number) => {
             const res = await req.get(`/project/${project.id}/tasks/count`);
@@ -72,7 +72,7 @@ function ProjectList() {
       };
       try {
         const req = await api();
-        const res = await req.post(`/dashboard/project`, project);
+        const res = await req.post(`/project`, project);
         const newProject = res.data[0];
         if (projects) {
           setProjects([...projects, newProject]);
