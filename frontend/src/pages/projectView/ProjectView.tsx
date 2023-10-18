@@ -40,7 +40,6 @@ const ProjectView = () => {
         const tasks = await res.data;
         setTasks(tasks);
       }
-      console.log(tasks);
     } catch (e) {
       console.error(e);
     }

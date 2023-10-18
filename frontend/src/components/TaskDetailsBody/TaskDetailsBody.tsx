@@ -16,10 +16,10 @@ import { Dropdown } from '../dropdown/CustomDropDown';
 
 type TaskDetailsBodyType = {
   task: Task;
-  getAllTasks: () => void;
+  updateTasksInDom: () => void;
 };
 
-const TaskDetailsBody = ({ task, getAllTasks }: TaskDetailsBodyType) => {
+const TaskDetailsBody = ({ task, updateTasksInDom }: TaskDetailsBodyType) => {
   const { completed, setCompleted } = useCompletedStore();
   const { setTask } = useTaskStore();
   const completedStatus = completed[`${task.id}`] ?? false;
@@ -77,8 +77,8 @@ const TaskDetailsBody = ({ task, getAllTasks }: TaskDetailsBodyType) => {
     try {
       const req = await api();
       const data = { [fieldName]: value };
-      await req.put(`/dashboard/${taskId}`, data);
-      getAllTasks();
+      await req.put(`/project/tasks/${taskId}`, data);
+      updateTasksInDom();
     } catch (error) {
       return error;
     }
@@ -112,7 +112,7 @@ const TaskDetailsBody = ({ task, getAllTasks }: TaskDetailsBodyType) => {
   useEffect(() => {
     setDescription(task.description);
     setTitle(task.title);
-    getAllTasks();
+    updateTasksInDom();
   }, [task.title, task.description]);
 
   useEffect(() => {
