@@ -16,9 +16,10 @@ import { Dropdown } from '../dropdown/CustomDropDown';
 
 type TaskDetailsBodyType = {
   task: Task;
+  updateTasksInDom: () => void;
 };
 
-const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
+const TaskDetailsBody = ({ task, updateTasksInDom }: TaskDetailsBodyType) => {
   const { completed, setCompleted } = useCompletedStore();
   const { setTask } = useTaskStore();
   const completedStatus = completed[`${task.id}`] ?? false;
@@ -26,15 +27,15 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
   const [description, setDescription] = useState(task.description);
   const defaultDueDate = task.due_date ? format(new Date(task.due_date), "yyyy-MM-dd'T'HH:mm") : '';
   const [dueDate, setDueDate] = useState(defaultDueDate);
+  const [projectUsers, setProjectUsers] = useState([]);
+
   const { projectTitle } = useProjectStore();
   const priorityArray = ['easy', 'medium', 'hard'];
   const usersArray = ['Arash', 'Mike']; // This array will be replaced by users data from database
 
   const handleCheckbox = (task: Task) => {
     const updatedCompletedStatus = !completedStatus;
-
     setCompleted(`${task.id}`, updatedCompletedStatus);
-
     const updatedTask = { ...task, completed: updatedCompletedStatus };
 
     return updatedTask;
@@ -70,11 +71,13 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
     }
     setTask(updatedTask);
   };
+
   const saveToDatabase = async (taskId: string | number, fieldName: string, value: any) => {
     try {
       const req = await api();
       const data = { [fieldName]: value };
-      await req.put(`/dashboard/${taskId}`, data);
+      await req.put(`/project/tasks/${taskId}`, data);
+      updateTasksInDom();
     } catch (error) {
       return error;
     }
@@ -95,10 +98,20 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
     await saveToDatabase(taskId, 'description', updatedDescription);
   };
 
-  useEffect(() => {
-    setTitle(task.title);
+  const getProjectUsers = async (projectId: number) => {
+    try {
+      const req = await api();
+      const res = await req.get(`/project/${projectId}/users`);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
     setDescription(task.description);
+    setTitle(task.title);
+    updateTasksInDom();
   }, [task.title, task.description]);
 
   useEffect(() => {

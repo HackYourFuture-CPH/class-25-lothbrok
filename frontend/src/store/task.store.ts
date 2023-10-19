@@ -4,7 +4,7 @@ import { Task } from '../types/Task';
 type TaskStoreType = {
   storeTask: Task;
   setTask: (storeTask: Task) => void;
-  updateTask: (updatedTitle: string) => void;
+  updateTask: (updatedFields: Partial<Task>) => void;
 };
 
 type CompletedStoreType = {
@@ -47,11 +47,11 @@ export const useProjectStore = create<ProjectStoreType>()((set) => ({
   setProjectTitle: (projectTitle) => set({ projectTitle }),
 }));
 
-export const useTaskStore = create<TaskStoreType>()((set) => ({
+export const useTaskStore = create<TaskStoreType>((set) => ({
   storeTask: initialValue,
   setTask: (storeTask: Task) => set({ storeTask }),
-  updateTask: (updatedTitle) =>
+  updateTask: (updatedFields: Partial<Task>) =>
     set((state) => ({
-      storeTask: { ...state.storeTask, title: updatedTitle },
+      storeTask: { ...state.storeTask, ...updatedFields },
     })),
 }));

@@ -226,7 +226,7 @@ const ProjectView = () => {
               <ProjectListView {...viewProps} />
             )}
           </div>
-          {storeTask !== initialValue && <TaskDetails task={storeTask} tasks={tasks} />}
+          {storeTask !== initialValue && <TaskDetails task={storeTask} getAllTasks={getTasks} />}
         </div>
       </div>
     ) : (

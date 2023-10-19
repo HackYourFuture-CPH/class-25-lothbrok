@@ -33,7 +33,6 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ tasks, listId }) => {
   ) => {
     e.stopPropagation();
     setTask(tasks.filter((task) => task.id === id)[0]);
-    return 'first';
   };
 
   return (
