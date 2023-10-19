@@ -93,14 +93,15 @@ const ProjectView = () => {
       if (projectMembers) {
         const req = await api();
         const res = await req.post('/user/names', { uids: projectMembers });
-        setProjectMemberUsernames(res.data);
+        const data: { first_name: string; last_name: string }[] = res.data;
+        const usernames = data.map((user) => `${user.first_name} ${user.last_name}`);
+        setProjectMemberUsernames(usernames);
       }
     } catch (e) {
       console.error(e);
     }
   };
 
-  console.log(projectMemberUsernames);
   useEffect(() => {
     const setUser = () => {
       const auth = getAuth();
