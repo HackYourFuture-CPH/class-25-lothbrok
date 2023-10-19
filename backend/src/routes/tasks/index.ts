@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 import {
-  getAllTasksForProject,
+  getAllTasksOfProject,
   getTasksForProjectAndUser,
   addNewTask,
   updateTask,
@@ -9,7 +9,7 @@ import {
 
 const tasks: Router = express.Router();
 
-tasks.get('/:project_id/', getAllTasksForProject);
+tasks.get('/:project_id/', getAllTasksOfProject);
 tasks.get('/:project_id/:user_id', getTasksForProjectAndUser);
 tasks.post('/', addNewTask);
 tasks.put('/:id', updateTask);

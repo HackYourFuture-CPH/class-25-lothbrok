@@ -13,7 +13,7 @@
   font-family: 'Manrope', sans-serif;
   display: flex;
   gap: 1rem;
-  margin-top: 5rem;
+  margin-top: 1rem;
 }
 
 .list_wrapper {
@@ -74,4 +74,14 @@
 .bold {
   font-weight: bold;
   color: #2b283d;
+}
+
+.title {
+  text-align: left;
+}
+
+.flex_row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }

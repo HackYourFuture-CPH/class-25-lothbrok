@@ -137,7 +137,7 @@ const TaskDetailsBody = ({ task }: TaskDetailsBodyType) => {
               <AccountCircleRounded />
               <Dropdown
                 options={usersArray}
-                selectedValue={task.assignee}
+                selectedValue={task.assignee ? task.assignee : ''}
                 fieldName='assignee'
                 handleInputChange={handleInputChange}
               />

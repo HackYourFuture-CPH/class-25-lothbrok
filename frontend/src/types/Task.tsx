@@ -4,7 +4,7 @@ export type Task = {
   description: string;
   status: string;
   due_date: string | null;
-  assignee: string;
+  assignee?: string;
   completed: boolean;
   priority: string;
   project_id: number | undefined;

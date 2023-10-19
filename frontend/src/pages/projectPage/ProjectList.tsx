@@ -8,6 +8,7 @@ import image3 from '../../assets/images/Rectangle 2998.jpg';
 import image4 from '../../assets/images/Rectangle 2999.jpg';
 import { Project } from '../../types/Project';
 import { User, getAuth, onAuthStateChanged } from 'firebase/auth';
+import { User as UserType } from '../../types/User';
 import api from '../../api';
 
 function ProjectList() {
@@ -20,7 +21,7 @@ function ProjectList() {
     try {
       if (userId) {
         const req = await api();
-        const res = await req.get(`/dashboard/projects/${userId}`);
+        const res = await req.get(`/project/user/${userId}`);
         const projects = await Promise.all(
           res.data.map(async (project: Project, index: number) => {
             const res = await req.get(`/project/${project.id}/tasks/count`);
@@ -62,18 +63,20 @@ function ProjectList() {
     setIsModalOpen(false);
   };
 
-  const handleCreateProject = async (projectName: string) => {
+  const handleCreateProject = async (projectName: string, team: UserType[]) => {
     if (projectName.trim()) {
+      const invitedUserUids = team.map((user) => user.uid);
       const project = {
         title: projectName,
         date_of_creation: new Date().toISOString().split('T')[0],
         user_uid: userId,
         thumbnail_link: thumbnails[projects ? projects.length % thumbnails.length : 0],
+        uids: invitedUserUids,
       };
       try {
         const req = await api();
-        const res = await req.post(`/dashboard/project`, project);
-        const newProject = res.data[0];
+        const res = await req.post(`/project`, project);
+        const newProject = res.data;
         if (projects) {
           setProjects([...projects, newProject]);
         } else {
@@ -88,23 +91,24 @@ function ProjectList() {
 
   return (
     <div className={styles.project_list_container}>
-      <div>
+      <div className={styles.right_align}>
         <button className={styles.create_project} onClick={openModal}>
           Create Project
         </button>
-        {projects ? (
-          <>
-            <TaskList projects={projects} />
-            {isModalOpen && (
-              <ProjectModal
-                handleCreateProject={handleCreateProject}
-                closeModal={closeModal}
-                thumbnail={thumbnails[projects ? projects.length % thumbnails.length : 0]}
-              />
-            )}
-          </>
-        ) : null}
       </div>
+      {projects ? (
+        <>
+          <TaskList projects={projects} />
+          {isModalOpen && (
+            <ProjectModal
+              handleCreateProject={handleCreateProject}
+              closeModal={closeModal}
+              thumbnail={thumbnails[projects ? projects.length % thumbnails.length : 0]}
+              userUid={userId}
+            />
+          )}
+        </>
+      ) : null}
     </div>
   );
 }

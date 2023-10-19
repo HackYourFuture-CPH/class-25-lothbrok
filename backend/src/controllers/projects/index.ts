@@ -81,3 +81,74 @@ export const getUsersOfProject = async (req: Request, res: Response) => {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
 };
+
+export const getProjectsOfUser = async (req: Request, res: Response) => {
+  const { user_uid } = req.params;
+  try {
+    const projects = await db('projects')
+      .select('projects.*')
+      .leftJoin('project_user_relation', 'projects.id', 'project_user_relation.project_id')
+      .where('project_user_relation.user_uid', user_uid);
+    res.status(StatusCodes.OK).send(projects);
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+  }
+};
+
+export const addNewProject = async (req: Request, res: Response) => {
+  try {
+    const { title, description, thumbnail_link, date_of_creation, user_uid } = req.body;
+
+    const project = await db('projects')
+      .insert({
+        title,
+        description,
+        thumbnail_link,
+        date_of_creation,
+        user_uid,
+      })
+      .returning('*');
+    res.status(StatusCodes.CREATED).json(project);
+  } catch (error: any) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error.message);
+  }
+};
+
+export const createProjectAndInviteUsers = async (req: Request, res: Response) => {
+  try {
+    const { title, description, thumbnail_link, date_of_creation, user_uid } = req.body;
+    const { uids } = req.body;
+
+    if (!title || !user_uid) {
+      return res.status(StatusCodes.BAD_REQUEST).send({ error: 'Invalid project data' });
+    }
+
+    const result = await db.transaction(async (trx) => {
+      const [newProject] = await trx('projects')
+        .insert({
+          title,
+          description,
+          thumbnail_link,
+          date_of_creation,
+          user_uid,
+        })
+        .returning('*');
+
+      const project_id = newProject.id;
+
+      if (uids && uids.length) {
+        for (const uid of uids) {
+          await trx('project_user_relation').insert({
+            project_id,
+            user_uid: uid,
+          });
+        }
+      }
+      return newProject;
+    });
+
+    res.status(StatusCodes.CREATED).json(result);
+  } catch (error: any) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error.message);
+  }
+};
