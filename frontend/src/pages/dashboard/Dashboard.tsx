@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, getAuth, onAuthStateChanged } from '@firebase/auth';
 import api from '../../api';
+import { CircularProgress } from '@mui/material';
 
 const Dashboard = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -35,7 +36,7 @@ const Dashboard = () => {
   return (
     <>
       {loading ? (
-        <></>
+        <CircularProgress />
       ) : (
         <div className={styles.pages}>
           <div className={styles.menu_desktop}>

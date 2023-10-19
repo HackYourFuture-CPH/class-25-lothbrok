@@ -25,7 +25,7 @@ function TaskItem({ project }: TaskItemProps) {
       <div className={styles.task_info}>
         <img src={thumbnail_link} className={styles.thumbnail_image} />
         <div>
-          <h3>{title}</h3>
+          <h3 className={styles.title}>{title}</h3>
           <div className={styles.icon_container}>
             <p>
               <img src={Calendar} alt='Calendar' />{' '}

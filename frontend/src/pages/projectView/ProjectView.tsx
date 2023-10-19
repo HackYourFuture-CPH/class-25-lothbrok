@@ -13,6 +13,9 @@ import { Categories } from '../../types/Categories';
 import { ViewProps } from '../../types/ViewProps';
 import api from '../../api';
 import { Task as TaskConstructor } from '../../classes/Task';
+import { AddCircle } from '@mui/icons-material';
+import AddUsersDialog from '../../components/addUsersDialog/AddUsersDialog';
+import { CircularProgress } from '@mui/material';
 
 const ProjectView = () => {
   const { id: project_id } = useParams();
@@ -24,6 +27,9 @@ const ProjectView = () => {
   const [title, setTitle] = useState<string>('');
   const [editing, setEditing] = useState<string>('');
   const [userId, setUserId] = useState<string>('');
+  const [hasAccess, setHasAccess] = useState<boolean>(false);
+  const [addUsers, setAddUsers] = useState<boolean>(false);
+  const [projectMembers, setProjectMembers] = useState<string[]>();
   const { setProjectTitle } = useProjectStore();
   const categories: Categories = {
     Documentation: 'documentation',
@@ -32,13 +38,30 @@ const ProjectView = () => {
     Done: 'done',
   };
 
-  const getTasks = async () => {
+  const checkIfUserHasAccess = async () => {
     try {
-      if (userId) {
+      const req = await api();
+      const res = await req.get(`project/${project_id}/users`);
+      const fetchedUsers: { project_id: number; user_uid: string }[] = await res.data;
+      const users = fetchedUsers.map((user) => user.user_uid);
+      setProjectMembers(users);
+      users.includes(userId) ? setHasAccess(true) : setHasAccess(false);
+      return users.includes(userId);
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  };
+
+  const getTasks = async () => {
+    const userHasAccess = await checkIfUserHasAccess();
+    try {
+      if (userHasAccess) {
         const req = await api();
-        const res = await req.get(`/project/tasks/${project_id}/${userId}`);
+        const res = await req.get(`project/tasks/${project_id}`);
         const tasks = await res.data;
         setTasks(tasks);
+        setIsLoading(false);
       }
     } catch (e) {
       console.error(e);
@@ -72,7 +95,6 @@ const ProjectView = () => {
   useEffect(() => {
     getTasks();
     getProject();
-    setIsLoading(false);
   }, [userId]);
 
   const changeView = (view: string) => {
@@ -154,17 +176,31 @@ const ProjectView = () => {
   };
 
   return !isLoading ? (
-    project ? (
+    project && hasAccess ? (
       <div className={styles.project_view}>
         <div className={styles.project_box}>
           <div>
             <div className={styles.image_wrap}>
               <img className={styles.thumbnail} src={thumbnail} alt='project thumbnail' />
             </div>
-            <div>
+            <div className={styles.title}>
               <span>Project / </span>
               <span className={styles.bold}>Details</span>
-              <h2 className={styles.project_title}>{project.title}</h2>
+              <div className={styles.flex_row}>
+                <h2 className={styles.project_title}>{project.title}</h2>
+                <AddCircle
+                  style={{ color: '#110D59', cursor: 'pointer' }}
+                  onClick={() => setAddUsers(true)}
+                />
+                {addUsers ? (
+                  <AddUsersDialog
+                    projectMembers={projectMembers}
+                    addUsers={addUsers}
+                    setAddUsers={setAddUsers}
+                    projectId={project_id}
+                  />
+                ) : null}
+              </div>
             </div>
           </div>
           <div className={styles.views}>
@@ -186,10 +222,8 @@ const ProjectView = () => {
           <div className={styles.list_wrapper}>
             {view === 'kanban' ? (
               <ProjectKanbanView {...viewProps} />
-            ) : view === 'list' ? (
-              <ProjectListView {...viewProps} />
             ) : (
-              <div>Calendar View</div>
+              <ProjectListView {...viewProps} />
             )}
           </div>
           {storeTask !== initialValue && <TaskDetails task={storeTask} getAllTasks={getTasks} />}
@@ -199,7 +233,7 @@ const ProjectView = () => {
       <h3>Project Not Found</h3>
     )
   ) : (
-    <div>loading</div>
+    <CircularProgress />
   );
 };
 

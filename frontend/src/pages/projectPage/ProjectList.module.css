@@ -1,16 +1,19 @@
+.right_align {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .project_list_container {
-  font: 'Manrope';
+  font-family: 'Manrope';
   text-align: right;
   padding-right: 20px;
-  display: flex;
 }
 
 .task_list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
   text-align: center;
-  padding-top: 30px;
+  padding: 2rem 1rem;
 }
 
 .create_project {
@@ -23,4 +26,10 @@
   color: #110d59;
   padding: 10px 25px 10px 25px;
   margin-top: 5px;
+}
+
+@media only screen and (max-width: 800px) {
+  .task_list {
+    justify-content: center;
+  }
 }
