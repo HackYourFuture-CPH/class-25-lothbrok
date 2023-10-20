@@ -17,6 +17,7 @@ const ProjectKanbanView = ({
   onDragEnd,
   editTitle,
   categories,
+  allAssignees,
 }: ViewProps) => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -54,7 +55,12 @@ const ProjectKanbanView = ({
                 />
               )}
             </div>
-            <KanbanColumn listId={status} tasks={tasks} setTasks={setTasks} />
+            <KanbanColumn
+              listId={status}
+              tasks={tasks}
+              setTasks={setTasks}
+              allAssignees={allAssignees}
+            />
           </div>
         ))}
       </div>

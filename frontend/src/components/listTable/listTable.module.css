@@ -30,6 +30,7 @@
 
 .completed_task {
   color: #b3b1bb;
+  text-decoration: line-through;
 }
 
 .task_row:hover {

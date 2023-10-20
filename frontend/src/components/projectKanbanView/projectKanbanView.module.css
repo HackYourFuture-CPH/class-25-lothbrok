@@ -20,3 +20,7 @@
 .section_title > h4 {
   color: #2b283d;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}

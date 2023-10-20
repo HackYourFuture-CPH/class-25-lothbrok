@@ -5,14 +5,17 @@ import { useEffect, useState } from 'react';
 import { MoreHoriz, CalendarMonth } from '@mui/icons-material';
 import styles from './kanbanColumn.module.css';
 import { useTaskStore } from '../../store/task.store';
+import api from '../../api';
+import { Avatar, Tooltip } from '@mui/material';
 
 type KanbanColumnProps = {
   tasks: Task[];
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   listId: string;
+  allAssignees: { first_name: string; last_name: string; uid: string }[] | undefined;
 };
 
-const KanbanColumn: React.FC<KanbanColumnProps> = ({ tasks, listId }) => {
+const KanbanColumn: React.FC<KanbanColumnProps> = ({ tasks, listId, allAssignees }) => {
   const [enabled, setEnabled] = useState(false);
   const { setTask } = useTaskStore();
 
@@ -23,6 +26,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ tasks, listId }) => {
       setEnabled(false);
     };
   }, []);
+
   if (!enabled) {
     return null;
   }
@@ -68,6 +72,28 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ tasks, listId }) => {
                         <h2 className={styles.kanban_title}>{task.title}</h2>
                         <div className={styles.description}>{task.description}</div>
                         <div className={styles.kanban_task_row}>
+                          {task.user_uid && allAssignees ? (
+                            <Tooltip
+                              title={`${allAssignees.find(
+                                (assignee) => assignee.uid === task.user_uid,
+                              )?.first_name} ${allAssignees.find(
+                                (assignee) => assignee.uid === task.user_uid,
+                              )?.last_name}`}
+                            >
+                              <Avatar
+                                sx={{ height: '1.5rem', width: '1.5rem', fontSize: '0.75rem' }}
+                              >
+                                {
+                                  allAssignees.find((assignee) => assignee.uid === task.user_uid)
+                                    ?.first_name[0]
+                                }
+                                {
+                                  allAssignees.find((assignee) => assignee.uid === task.user_uid)
+                                    ?.last_name[0]
+                                }
+                              </Avatar>
+                            </Tooltip>
+                          ) : null}
                           <span>{task.assignee}</span>
                           <span className={styles.date}>
                             {task.due_date ? (

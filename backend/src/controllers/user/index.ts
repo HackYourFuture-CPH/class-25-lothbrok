@@ -62,7 +62,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
 export const getUserNamesByUids = async (req: Request, res: Response) => {
   const { uids } = req.body;
   try {
-    const users = await db('users').select('first_name', 'last_name').whereIn('uid', uids);
+    const users = await db('users').select('first_name', 'last_name', 'uid').whereIn('uid', uids);
     res.status(StatusCodes.OK).send(users);
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);

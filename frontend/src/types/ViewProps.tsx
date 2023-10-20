@@ -12,4 +12,5 @@ export type ViewProps = {
   onDragEnd: (result: any) => void;
   editTitle: (status: string) => void;
   categories: Categories;
+  allAssignees: { first_name: string; last_name: string; uid: string }[] | undefined;
 };
