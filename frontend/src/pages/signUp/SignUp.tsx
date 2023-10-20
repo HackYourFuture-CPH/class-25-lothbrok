@@ -42,12 +42,6 @@ const SignUp = () => {
             email: data.email,
           });
           navigate('/project');
-
-          /*if (auth.currentUser) {
-  ...
-} else {
-  throw 'ошибка'
-}*/
         } else {
           throw 'User registration failed, server error';
         }
