@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styles from './signUp.module.css';
 import { Button, TextField, InputLabel, Checkbox, Alert, AlertTitle } from '@mui/material';
-import logo from '../../assets/images/authLogo.svg';
+import logo from '../../assets/icons/mangement.png';
 import image from '../../assets/images/Hands Show.svg';
 import { useNavigate } from 'react-router';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -62,7 +62,9 @@ const SignUp = () => {
 
   return (
     <div className={styles.sign_up}>
-      <img src={logo} className={styles.icon} alt='logo' />
+      <div className={styles.icon}>
+        <img src={logo} alt='logo' className={styles.logo_img} /> <span>Lothbrok</span>
+      </div>
       {errorMessage ? (
         <Alert severity='error' onClose={() => setErrorMessage('')}>
           <AlertTitle>Error</AlertTitle>

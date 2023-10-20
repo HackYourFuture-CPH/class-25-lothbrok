@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { TextField, Button, Checkbox, Typography, Alert, AlertTitle } from '@mui/material';
-import logo from '../../assets/images/authLogo.svg';
+import logo from '../../assets/icons/mangement.png';
 import image from '../../assets/images/Stuck at Home Imagination.jpg';
 import styles from './LoginPage.module.css';
 
@@ -61,7 +61,9 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className={styles.main}>
-      <img src={logo} alt='logo' className={styles.icon} />
+      <div className={styles.icon}>
+        <img src={logo} alt='logo' className={styles.logo_img} /> <span>Lothbrok</span>
+      </div>
       {errorMessage ? (
         <Alert severity='error' onClose={() => setErrorMessage('')}>
           <AlertTitle>Error</AlertTitle>
