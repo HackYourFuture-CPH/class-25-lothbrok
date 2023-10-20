@@ -120,3 +120,17 @@ export const addNewProject = async (req: Request, res: Response) => {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
 };
+
+export const deleteTask = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const data = await db('tasks').where({ id }).del();
+    if (data === 1) {
+      res.status(204).send('Task deleted successfully');
+    } else {
+      res.status(404).json({ error: 'Task not found' });
+    }
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+  }
+};
