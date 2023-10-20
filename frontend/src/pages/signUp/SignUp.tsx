@@ -76,7 +76,10 @@ const SignUp = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.row}>
               <div>
-                <InputLabel htmlFor='first-name' style={{ color: '#55555F' }}>
+                <InputLabel
+                  htmlFor='first-name'
+                  style={{ color: '#55555F', marginBottom: '0.5rem', width: '100%' }}
+                >
                   First Name
                 </InputLabel>
                 <TextField
@@ -88,13 +91,17 @@ const SignUp = () => {
                 />
               </div>
               <div>
-                <InputLabel htmlFor='last-name' style={{ color: '#55555F' }}>
+                <InputLabel
+                  htmlFor='last-name'
+                  style={{ color: '#55555F', marginBottom: '0.5rem' }}
+                >
                   Last Name
                 </InputLabel>
                 <TextField
                   {...register('last_name', {
                     required: 'Last name is required',
                   })}
+                  className={styles.input_styles}
                   placeholder='Last Name'
                 />
               </div>
@@ -111,6 +118,7 @@ const SignUp = () => {
                   message: 'Invalid email format',
                 },
               })}
+              className={styles.input_styles}
               placeholder='Email'
             />
 
@@ -139,6 +147,7 @@ const SignUp = () => {
                   : ''
               }
               placeholder='Password'
+              className={styles.input_styles}
             />
             <div>
               <Checkbox /> Remeber me
@@ -148,6 +157,11 @@ const SignUp = () => {
               type='submit'
               variant='contained'
               disabled={!isDirty || !isValid}
+              sx={{
+                '&:disabled': {
+                  color: '#f1f2f4',
+                },
+              }}
             >
               Sign Up
             </Button>
