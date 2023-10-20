@@ -16,7 +16,9 @@
 }
 
 .logo_menu {
-  width: 1.25rem;
+  width: 35px;
+  height: 35px;
+  justify-items: center;
 }
 
 .logo_div {
@@ -24,6 +26,8 @@
   padding-left: 1rem;
   padding-bottom: 2rem;
   gap: 1rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .current_path {
