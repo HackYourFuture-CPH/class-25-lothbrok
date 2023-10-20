@@ -255,6 +255,7 @@ const ProjectView = () => {
                 {addUsers ? (
                   <AddUsersDialog
                     projectMembers={projectMembers}
+                    setProjectMembers={setProjectMembers}
                     addUsers={addUsers}
                     setAddUsers={setAddUsers}
                     projectId={project_id}

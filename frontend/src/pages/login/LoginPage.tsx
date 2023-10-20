@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import {
-  TextField,
-  Button,
-  Checkbox,
-  Typography,
-  Alert,
-  AlertTitle,
-  InputLabel,
-} from '@mui/material';
+import { TextField, Button, Checkbox, Typography, Alert, AlertTitle } from '@mui/material';
 import logo from '../../assets/images/authLogo.svg';
 import image from '../../assets/images/Stuck at Home Imagination.jpg';
 import styles from './LoginPage.module.css';
