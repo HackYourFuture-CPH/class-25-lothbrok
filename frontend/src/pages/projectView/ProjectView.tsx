@@ -15,7 +15,7 @@ import api from '../../api';
 import { Task as TaskConstructor } from '../../classes/Task';
 import { AddCircle } from '@mui/icons-material';
 import AddUsersDialog from '../../components/addUsersDialog/AddUsersDialog';
-import { CircularProgress } from '@mui/material';
+import { Avatar, AvatarGroup, CircularProgress, Tooltip } from '@mui/material';
 
 const ProjectView = () => {
   const { id: project_id } = useParams();
@@ -30,12 +30,20 @@ const ProjectView = () => {
   const [hasAccess, setHasAccess] = useState<boolean>(false);
   const [addUsers, setAddUsers] = useState<boolean>(false);
   const [projectMembers, setProjectMembers] = useState<string[]>();
+  const [projectMemberUsernames, setProjectMemberUsernames] = useState<string[]>();
   const { setProjectTitle } = useProjectStore();
   const categories: Categories = {
     Documentation: 'documentation',
     Ongoing: 'ongoing',
     Todo: 'to_do',
     Done: 'done',
+  };
+
+  const getUserInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase())
+      .join('');
   };
 
   const checkIfUserHasAccess = async () => {
@@ -80,6 +88,20 @@ const ProjectView = () => {
     }
   };
 
+  const getProjectMemberNames = async () => {
+    try {
+      if (projectMembers) {
+        const req = await api();
+        const res = await req.post('/user/names', { uids: projectMembers });
+        const data: { first_name: string; last_name: string }[] = res.data;
+        const usernames = data.map((user) => `${user.first_name} ${user.last_name}`);
+        setProjectMemberUsernames(usernames);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
     const setUser = () => {
       const auth = getAuth();
@@ -96,6 +118,10 @@ const ProjectView = () => {
     getTasks();
     getProject();
   }, [userId]);
+
+  useEffect(() => {
+    getProjectMemberNames();
+  }, [projectMembers]);
 
   const changeView = (view: string) => {
     setView(view);
@@ -188,8 +214,24 @@ const ProjectView = () => {
               <span className={styles.bold}>Details</span>
               <div className={styles.flex_row}>
                 <h2 className={styles.project_title}>{project.title}</h2>
+                <AvatarGroup max={4} className={styles.user_icons}>
+                  {projectMemberUsernames
+                    ? projectMemberUsernames.map((userName) => (
+                        <Tooltip key={userName} title={userName}>
+                          <Avatar
+                            style={{
+                              border: '3px solid #fff',
+                              marginLeft: '-1rem',
+                            }}
+                          >
+                            {getUserInitials(userName)}
+                          </Avatar>
+                        </Tooltip>
+                      ))
+                    : null}
+                </AvatarGroup>
                 <AddCircle
-                  style={{ color: '#110D59', cursor: 'pointer' }}
+                  style={{ color: '#110D59', cursor: 'pointer', width: '2.5rem', height: '2.5rem' }}
                   onClick={() => setAddUsers(true)}
                 />
                 {addUsers ? (

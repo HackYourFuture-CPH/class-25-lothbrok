@@ -63,6 +63,7 @@
 
 .project_title {
   margin: 0;
+  margin-right: 1rem;
   text-align: left;
 }
 
@@ -84,4 +85,13 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.user_icons {
+  display: flex;
+}
+
+.user_icons > * {
+  width: 1.5rem;
+  height: 1.5rem;
 }
