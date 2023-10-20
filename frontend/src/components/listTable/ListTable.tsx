@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Task } from '../../types/Task';
 import styles from './listTable.module.css';
-import { Checkbox, useMediaQuery } from '@mui/material';
+import { Avatar, Checkbox, Tooltip, useMediaQuery } from '@mui/material';
 import { CheckCircle, RadioButtonUnchecked, Flag } from '@mui/icons-material';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useTaskStore, useCompletedStore } from '../../store/task.store';
@@ -10,9 +10,15 @@ type ListTableProps = {
   tasks: Task[];
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   listId: string;
+  allAssignees: { first_name: string; last_name: string; uid: string }[] | undefined;
 };
 
-const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }: ListTableProps) => {
+const ListTable: React.FC<ListTableProps> = ({
+  tasks,
+  setTasks,
+  listId,
+  allAssignees,
+}: ListTableProps) => {
   const { setTask } = useTaskStore();
   const isMobile = useMediaQuery('(max-width: 550px)');
   const [enabled, setEnabled] = useState(false);
@@ -113,7 +119,31 @@ const ListTable: React.FC<ListTableProps> = ({ tasks, setTasks, listId }: ListTa
                             </div>
                           ) : null}
 
-                          <div className={styles.grid_item}>{task.assignee}</div>
+                          <div className={styles.grid_item}>
+                            {' '}
+                            {task.user_uid && allAssignees ? (
+                              <Tooltip
+                                title={`${allAssignees.find(
+                                  (assignee) => assignee.uid === task.user_uid,
+                                )?.first_name} ${allAssignees.find(
+                                  (assignee) => assignee.uid === task.user_uid,
+                                )?.last_name}`}
+                              >
+                                <Avatar
+                                  sx={{ height: '1.5rem', width: '1.5rem', fontSize: '0.75rem' }}
+                                >
+                                  {
+                                    allAssignees.find((assignee) => assignee.uid === task.user_uid)
+                                      ?.first_name[0]
+                                  }
+                                  {
+                                    allAssignees.find((assignee) => assignee.uid === task.user_uid)
+                                      ?.last_name[0]
+                                  }
+                                </Avatar>
+                              </Tooltip>
+                            ) : null}
+                          </div>
                         </div>
                       </div>
                     )}

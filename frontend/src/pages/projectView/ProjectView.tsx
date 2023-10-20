@@ -31,6 +31,8 @@ const ProjectView = () => {
   const [addUsers, setAddUsers] = useState<boolean>(false);
   const [projectMembers, setProjectMembers] = useState<string[]>();
   const [projectMemberUsernames, setProjectMemberUsernames] = useState<string[]>();
+  const [allAssignees, setAllassignees] =
+    useState<{ first_name: string; last_name: string; uid: string }[]>();
   const { setProjectTitle } = useProjectStore();
   const categories: Categories = {
     Documentation: 'documentation',
@@ -101,6 +103,21 @@ const ProjectView = () => {
       console.error(e);
     }
   };
+
+  const fetchAndSetAssignees = async () => {
+    const assigneeUids = tasks.map((task) => task.user_uid);
+    try {
+      const req = await api();
+      const res = await req.post('/user/names', { uids: assigneeUids });
+      setAllassignees(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    fetchAndSetAssignees();
+  }, [tasks]);
 
   useEffect(() => {
     const setUser = () => {
@@ -199,6 +216,7 @@ const ProjectView = () => {
     onDragEnd,
     editTitle,
     categories,
+    allAssignees,
   };
 
   return !isLoading ? (

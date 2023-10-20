@@ -17,6 +17,7 @@ const ProjectListView = ({
   onDragEnd,
   editTitle,
   categories,
+  allAssignees,
 }: ViewProps) => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -50,7 +51,12 @@ const ProjectListView = ({
               <Add sx={{ cursor: 'pointer', color: '#7D7A89' }} onClick={() => editTitle(status)} />
             )}
           </div>
-          <ListTable listId={status} tasks={tasks} setTasks={setTasks} />
+          <ListTable
+            listId={status}
+            tasks={tasks}
+            setTasks={setTasks}
+            allAssignees={allAssignees}
+          />
         </React.Fragment>
       ))}
     </DragDropContext>

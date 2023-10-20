@@ -8,5 +8,5 @@ export type Task = {
   completed: boolean;
   priority: string;
   project_id: number | undefined;
-  user_uid: number | string;
+  user_uid: string;
 };
