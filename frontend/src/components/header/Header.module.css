@@ -25,3 +25,12 @@
 .signOut:hover {
   color: #800c93;
 }
+
+#h1 {
+  color: #28246f;
+}
+.lothbrok {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

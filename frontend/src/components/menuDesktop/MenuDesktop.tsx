@@ -20,8 +20,8 @@ export const Menu = () => {
   return (
     <>
       <div className={styles.logo_div}>
-        <img className={styles.logo_menu} src='/assets/icons/logo-menu.svg' alt='Logo' />
-        <h4 className={styles.header}>Dashhhboard</h4>
+        <img className={styles.logo_menu} src='/assets/icons/mangement.png' alt='Logo' />
+        <h1 className={styles.header}>Lothbrok</h1>
       </div>
       <List className={styles.list_top}>
         {['Dashboard', 'Project', 'My Task', 'Activity', 'Team', 'Message', 'Setting'].map(
