@@ -41,6 +41,11 @@ function ForgotPassword() {
               required
             />
             <Button
+              sx={{
+                '&:disabled': {
+                  color: '#f1f2f4',
+                },
+              }}
               className={styles.button_style}
               type='submit'
               variant='contained'
