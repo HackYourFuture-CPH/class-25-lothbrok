@@ -5,6 +5,7 @@ import { Avatar, Checkbox, Tooltip, useMediaQuery } from '@mui/material';
 import { CheckCircle, RadioButtonUnchecked, Flag } from '@mui/icons-material';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useTaskStore, useCompletedStore } from '../../store/task.store';
+import api from '../../api';
 
 type ListTableProps = {
   tasks: Task[];
@@ -24,12 +25,18 @@ const ListTable: React.FC<ListTableProps> = ({
   const [enabled, setEnabled] = useState(false);
 
   const { setCompleted } = useCompletedStore();
-  const handleCheckbox = (task: Task) => {
+  const handleCheckbox = async (task: Task) => {
     setTasks((tasks) => {
       return tasks.map((item) =>
         item.id === task.id ? { ...item, completed: !item.completed } : item,
       );
     });
+    try {
+      const req = await api();
+      await req.put(`/project/tasks/${task.id}`, { completed: !task.completed });
+    } catch (e) {
+      console.error(e);
+    }
     setCompleted(String(task.id), !task.completed);
   };
 
