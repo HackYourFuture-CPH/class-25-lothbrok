@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styles from './signUp.module.css';
 import { Button, TextField, InputLabel, Checkbox, Alert, AlertTitle } from '@mui/material';
-import logo from '../../assets/images/authLogo.svg';
+import logo from '../../assets/icons/mangement.png';
 import image from '../../assets/images/Hands Show.svg';
 import { useNavigate } from 'react-router';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -62,7 +62,9 @@ const SignUp = () => {
 
   return (
     <div className={styles.sign_up}>
-      <img src={logo} className={styles.icon} alt='logo' />
+      <div className={styles.icon}>
+        <img src={logo} alt='logo' className={styles.logo_img} /> <span>Lothbrok</span>
+      </div>
       {errorMessage ? (
         <Alert severity='error' onClose={() => setErrorMessage('')}>
           <AlertTitle>Error</AlertTitle>
@@ -76,7 +78,10 @@ const SignUp = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.row}>
               <div>
-                <InputLabel htmlFor='first-name' style={{ color: '#55555F' }}>
+                <InputLabel
+                  htmlFor='first-name'
+                  style={{ color: '#55555F', marginBottom: '0.5rem', width: '100%' }}
+                >
                   First Name
                 </InputLabel>
                 <TextField
@@ -88,13 +93,17 @@ const SignUp = () => {
                 />
               </div>
               <div>
-                <InputLabel htmlFor='last-name' style={{ color: '#55555F' }}>
+                <InputLabel
+                  htmlFor='last-name'
+                  style={{ color: '#55555F', marginBottom: '0.5rem' }}
+                >
                   Last Name
                 </InputLabel>
                 <TextField
                   {...register('last_name', {
                     required: 'Last name is required',
                   })}
+                  className={styles.input_styles}
                   placeholder='Last Name'
                 />
               </div>
@@ -111,6 +120,7 @@ const SignUp = () => {
                   message: 'Invalid email format',
                 },
               })}
+              className={styles.input_styles}
               placeholder='Email'
             />
 
@@ -139,6 +149,7 @@ const SignUp = () => {
                   : ''
               }
               placeholder='Password'
+              className={styles.input_styles}
             />
             <div>
               <Checkbox /> Remeber me
@@ -148,6 +159,11 @@ const SignUp = () => {
               type='submit'
               variant='contained'
               disabled={!isDirty || !isValid}
+              sx={{
+                '&:disabled': {
+                  color: '#f1f2f4',
+                },
+              }}
             >
               Sign Up
             </Button>

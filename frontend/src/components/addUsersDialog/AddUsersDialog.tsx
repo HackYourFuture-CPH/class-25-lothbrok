@@ -6,12 +6,14 @@ import styles from './addUsersDialog.module.css';
 
 const AddUsersDialog = ({
   projectMembers,
+  setProjectMembers,
   setAddUsers,
   addUsers,
   projectId,
 }: {
   projectMembers: string[] | undefined;
   setAddUsers: React.Dispatch<React.SetStateAction<boolean>>;
+  setProjectMembers: React.Dispatch<React.SetStateAction<string[] | undefined>>;
   addUsers: boolean;
   projectId: string | undefined;
 }) => {
@@ -41,6 +43,11 @@ const AddUsersDialog = ({
       };
       const req = await api();
       await req.post(`project/${projectId}/invite-users`, data);
+      if (projectMembers) {
+        setProjectMembers([...projectMembers, ...uids]);
+      } else {
+        setProjectMembers([...uids]);
+      }
       setAddUsers(false);
     } catch (e) {
       console.error(e);

@@ -6,7 +6,7 @@ import styles from './Header.module.css';
 import api from '../../api';
 import { Avatar, useMediaQuery } from '@mui/material';
 import MenuLeftBar from '../menuMobile/MenuLeftBar';
-import logo from '../../assets/images/Logo.svg';
+import logo from '../../assets/icons/mangement.png';
 
 const handleSignOut = () => signOut(getAuth());
 const Header = () => {
@@ -63,7 +63,12 @@ const Header = () => {
         </div>
       ) : null}
       <PageTitle />
-      {!isDesktop ? <img src={logo} /> : null}
+
+      <div className={styles.lothbrok}>
+        <img src={logo} width='30px' height='30px' />
+        <h1 id={styles.h1}>Lothbrok</h1>
+      </div>
+
       <div className={styles.header_right}>
         {userName && isDesktop ? (
           <>

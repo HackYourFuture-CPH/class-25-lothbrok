@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { TextField, Button, Checkbox, Typography, Alert, AlertTitle } from '@mui/material';
-import logo from '../../assets/images/authLogo.svg';
+import logo from '../../assets/icons/mangement.png';
 import image from '../../assets/images/Stuck at Home Imagination.jpg';
 import styles from './LoginPage.module.css';
 
@@ -61,18 +61,8 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className={styles.main}>
-      <div className={styles.logo_div}>
-        <img
-          src={logo}
-          alt='Image'
-          style={{
-            width: '176px',
-            height: '30px',
-            top: '40px',
-            left: '40px',
-            position: 'absolute',
-          }}
-        />
+      <div className={styles.icon}>
+        <img src={logo} alt='logo' className={styles.logo_img} /> <span>Lothbrok</span>
       </div>
       {errorMessage ? (
         <Alert severity='error' onClose={() => setErrorMessage('')}>
@@ -80,26 +70,16 @@ const LoginPage: React.FC = () => {
           {errorMessage}
         </Alert>
       ) : null}
-      <div className={styles.login_main}>
+      <div className={styles.flex_container}>
+        <img className={styles.image} src={image} alt='Image' />
         <div className={styles.login_content}>
-          <Typography
-            style={{
-              font: 'Poppins',
-              fontSize: '40px',
-              fontWeight: '800',
-              textAlign: 'left',
-              color: '#111111',
-            }}
-          >
-            Log in
-          </Typography>
+          <h1>Log in</h1>
 
           <Typography
             style={{
               fontFamily: 'Poppins',
               textAlign: 'left',
               color: '#89899C',
-              marginTop: '10px',
             }}
           >
             Easy steps to enter the platform
@@ -126,6 +106,7 @@ const LoginPage: React.FC = () => {
                     placeholder='Input text here'
                     error={Boolean(errors.email)}
                     helperText={errors.email?.message}
+                    className={styles.input_styles}
                   />
                 </>
               )}
@@ -146,6 +127,7 @@ const LoginPage: React.FC = () => {
                     placeholder='Input text here'
                     error={Boolean(errors.password)}
                     helperText={errors.password?.message}
+                    className={styles.input_styles}
                   />
                 </>
               )}
@@ -165,27 +147,21 @@ const LoginPage: React.FC = () => {
               type='submit'
               fullWidth
               disabled={!isDirty || !isValid}
+              sx={{
+                '&:disabled': {
+                  color: '#f1f2f4',
+                },
+              }}
             >
-              Login
+              Log In
             </Button>
           </form>
 
-          <div className={styles.sign_up}>
+          <div className={styles.small}>
             Don&apos;t have an account?
-            <Link
-              to={'/sign-up'}
-              style={{
-                font: 'Inter',
-                paddingLeft: '20px',
-                fontSize: '15px',
-                textDecoration: 'none',
-              }}
-            >
-              Sign Up
-            </Link>
+            <a onClick={() => navigate('/sign-up')}>Sign Up</a>
           </div>
         </div>
-        <img className={styles.image} src={image} alt='Image' />
       </div>
     </div>
   );

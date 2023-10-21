@@ -21,6 +21,18 @@
 
 .icon {
   cursor: pointer;
+  width: 11rem;
+  margin: 1rem;
+  display: flex;
+  color: #28246f;
+  align-items: baseline;
+  font-weight: 700;
+  gap: 0.5rem;
+  font-size: 2rem;
+}
+
+.logo_img {
+  width: 2.5rem;
 }
 
 a {
@@ -57,6 +69,7 @@ form {
   border-radius: 8px;
   height: 3rem;
   margin-bottom: 3rem;
+  text-transform: lowercase;
 }
 
 .sign_up {
@@ -64,6 +77,9 @@ form {
   font-family: 'Poppins', sans-serif;
   box-sizing: border-box;
   text-align: left;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .row {
@@ -72,11 +88,13 @@ form {
 }
 
 .small {
-  font-size: 0.8rem;
+  margin-top: 2rem;
+  font-size: 0.9rem;
   text-align: center;
   display: flex;
   justify-content: center;
-  gap: 2%;
+  gap: 4%;
+  color: #89899c;
 }
 
 .input_styles {
@@ -95,7 +113,8 @@ form {
 
 @media only screen and (min-width: 850px) {
   .flex_container {
-    padding: 1rem 7rem 0;
+    padding: 1rem;
+    padding-left: 7rem;
     flex-flow: row-reverse;
     justify-content: space-between;
   }
