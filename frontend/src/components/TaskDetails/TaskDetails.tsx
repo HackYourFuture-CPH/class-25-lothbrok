@@ -11,10 +11,12 @@ type TaskDetailsType = {
   task: Task;
   getAllTasks: () => void;
   setTasks: (val: any) => void;
+  allAssignees: { first_name: string; last_name: string; uid: string }[] | undefined;
 };
 
-const TaskDetails = ({ task, getAllTasks, setTasks }: TaskDetailsType) => {
+const TaskDetails = ({ task, getAllTasks, setTasks, allAssignees }: TaskDetailsType) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { setTask } = useTaskStore();
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -22,7 +24,6 @@ const TaskDetails = ({ task, getAllTasks, setTasks }: TaskDetailsType) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const { setTask } = useTaskStore();
 
   const handleCloseDetails = () => {
     setTask(initialValue);
@@ -31,10 +32,11 @@ const TaskDetails = ({ task, getAllTasks, setTasks }: TaskDetailsType) => {
   const handleDelete = async () => {
     try {
       const req = await api();
-      await req.put(`/project/tasks/${task.id}`, { completed: !task.completed });
+      await req.delete(`/project/tasks/${task.id}`);
       setTasks((tasks: any) => {
         return tasks.filter((item: any) => item.id !== task.id);
       });
+      setTask(initialValue);
     } catch (e) {
       console.error(e);
     }
@@ -70,7 +72,12 @@ const TaskDetails = ({ task, getAllTasks, setTasks }: TaskDetailsType) => {
         </div>
       </div>
 
-      <TaskDetailsBody task={task} updateTasksInDom={getAllTasks} setTasks={setTasks} />
+      <TaskDetailsBody
+        task={task}
+        updateTasksInDom={getAllTasks}
+        setTasks={setTasks}
+        allAssignees={allAssignees}
+      />
     </div>
   );
 };

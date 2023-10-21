@@ -19,6 +19,11 @@
   position: inherit;
 }
 
+.kanban_title.completed_task {
+  color: #b3b1bb;
+  text-decoration: line-through;
+}
+
 .droppable {
   min-height: 60vh;
 }

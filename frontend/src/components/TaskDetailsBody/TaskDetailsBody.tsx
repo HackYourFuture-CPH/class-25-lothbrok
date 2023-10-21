@@ -16,23 +16,31 @@ import { Dropdown } from '../dropdown/CustomDropDown';
 
 type TaskDetailsBodyType = {
   task: Task;
+  allAssignees: { first_name: string; last_name: string; uid: string }[] | undefined;
   setTasks: (val: any) => void;
   updateTasksInDom: () => void;
 };
 
-const TaskDetailsBody = ({ task, updateTasksInDom, setTasks }: TaskDetailsBodyType) => {
-  const { completed, setCompleted } = useCompletedStore();
+const TaskDetailsBody = ({
+  task,
+  updateTasksInDom,
+  setTasks,
+  allAssignees,
+}: TaskDetailsBodyType) => {
+  const { setCompleted } = useCompletedStore();
   const { setTask } = useTaskStore();
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
   const defaultDueDate = task.due_date ? format(new Date(task.due_date), "yyyy-MM-dd'T'HH:mm") : '';
   const [dueDate, setDueDate] = useState(defaultDueDate);
-  const [projectUsers, setProjectUsers] = useState([]);
+  const [projectUsers, setProjectUsers] = useState<any>([]);
 
   const { projectTitle } = useProjectStore();
-  const priorityArray = ['easy', 'medium', 'hard'];
-
-  const usersArray = ['Arash', 'Mike']; // This array will be replaced by users data from database
+  const priorityArray = [
+    { value: 'easy', label: 'easy' },
+    { value: 'medium', label: 'medium' },
+    { value: 'hard', label: 'hard' },
+  ];
 
   const handleCheckbox = async (task: Task) => {
     const updatedCompletedStatus = !task.completed;
@@ -64,8 +72,8 @@ const TaskDetailsBody = ({ task, updateTasksInDom, setTasks }: TaskDetailsBodyTy
         setTitle(event.target.value);
         break;
       case 'assignee':
-        updatedTask.assignee = event.target.value;
-        saveFieldToDatabase(task.id, 'assignee', updatedTask.assignee);
+        updatedTask.user_uid = event.target.value;
+        saveFieldToDatabase(task.id, 'user_uid', updatedTask.user_uid);
         break;
       case 'due_date':
         setDueDate(event.target.value);
@@ -73,7 +81,6 @@ const TaskDetailsBody = ({ task, updateTasksInDom, setTasks }: TaskDetailsBodyTy
       case 'priority':
         updatedTask.priority = event.target.value;
         saveFieldToDatabase(task.id, 'priority', updatedTask.priority);
-
         break;
       default:
         break;
@@ -107,15 +114,14 @@ const TaskDetailsBody = ({ task, updateTasksInDom, setTasks }: TaskDetailsBodyTy
     await saveToDatabase(taskId, 'description', updatedDescription);
   };
 
-  const getProjectUsers = async (projectId: number) => {
-    try {
-      const req = await api();
-      const res = await req.get(`/project/${projectId}/users`);
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  useEffect(() => {
+    setProjectUsers(
+      (allAssignees || []).map((item: any) => ({
+        value: item.uid,
+        label: `${item.first_name} ${item.last_name}`,
+      })),
+    );
+  }, [task.project_id, allAssignees]);
 
   useEffect(() => {
     setDescription(task.description);
@@ -158,8 +164,8 @@ const TaskDetailsBody = ({ task, updateTasksInDom, setTasks }: TaskDetailsBodyTy
               <p>Assignee</p>
               <AccountCircleRounded />
               <Dropdown
-                options={usersArray}
-                selectedValue={task.assignee ? task.assignee : ''}
+                options={projectUsers}
+                selectedValue={task.user_uid ? task.user_uid : ''}
                 fieldName='assignee'
                 handleInputChange={handleInputChange}
               />

@@ -98,26 +98,12 @@ const ProjectView = () => {
         const data: { first_name: string; last_name: string }[] = res.data;
         const usernames = data.map((user) => `${user.first_name} ${user.last_name}`);
         setProjectMemberUsernames(usernames);
+        setAllassignees(res.data);
       }
     } catch (e) {
       console.error(e);
     }
   };
-
-  const fetchAndSetAssignees = async () => {
-    const assigneeUids = tasks.map((task) => task.user_uid);
-    try {
-      const req = await api();
-      const res = await req.post('/user/names', { uids: assigneeUids });
-      setAllassignees(res.data);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  useEffect(() => {
-    fetchAndSetAssignees();
-  }, [tasks]);
 
   useEffect(() => {
     const setUser = () => {
@@ -288,7 +274,12 @@ const ProjectView = () => {
             )}
           </div>
           {storeTask !== initialValue && (
-            <TaskDetails task={storeTask} getAllTasks={getTasks} setTasks={setTasks} />
+            <TaskDetails
+              task={storeTask}
+              getAllTasks={getTasks}
+              setTasks={setTasks}
+              allAssignees={allAssignees}
+            />
           )}
         </div>
       </div>

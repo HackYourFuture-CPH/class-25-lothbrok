@@ -69,7 +69,13 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ tasks, listId, allAssignees
                             sx={{ color: '#7D7A89' }} /* on click open task detail component */
                           />
                         </div>
-                        <h2 className={styles.kanban_title}>{task.title}</h2>
+                        <h2
+                          className={`${styles.kanban_title} ${
+                            task.completed ? styles.completed_task : ''
+                          }`}
+                        >
+                          {task.title}
+                        </h2>
                         <div className={styles.description}>{task.description}</div>
                         <div className={styles.kanban_task_row}>
                           {task.user_uid && allAssignees ? (
