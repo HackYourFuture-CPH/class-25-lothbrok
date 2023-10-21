@@ -26,18 +26,21 @@ const ListTable: React.FC<ListTableProps> = ({
 
   const { setCompleted } = useCompletedStore();
   const handleCheckbox = async (task: Task) => {
-    setTasks((tasks) => {
-      return tasks.map((item) =>
-        item.id === task.id ? { ...item, completed: !item.completed } : item,
-      );
-    });
+    const updatedCompletedStatus = !task.completed;
+    const updatedTask = { ...task, completed: updatedCompletedStatus };
     try {
       const req = await api();
       await req.put(`/project/tasks/${task.id}`, { completed: !task.completed });
+      setTask(updatedTask);
+      setTasks((tasks) => {
+        return tasks.map((item) =>
+          item.id === task.id ? { ...item, completed: !item.completed } : item,
+        );
+      });
     } catch (e) {
       console.error(e);
     }
-    setCompleted(String(task.id), !task.completed);
+    setCompleted(String(task.id), updatedCompletedStatus);
   };
 
   const handleOpenDetails = (

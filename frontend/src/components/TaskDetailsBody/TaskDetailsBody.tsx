@@ -16,13 +16,13 @@ import { Dropdown } from '../dropdown/CustomDropDown';
 
 type TaskDetailsBodyType = {
   task: Task;
+  setTasks: (val: any) => void;
   updateTasksInDom: () => void;
 };
 
-const TaskDetailsBody = ({ task, updateTasksInDom }: TaskDetailsBodyType) => {
+const TaskDetailsBody = ({ task, updateTasksInDom, setTasks }: TaskDetailsBodyType) => {
   const { completed, setCompleted } = useCompletedStore();
   const { setTask } = useTaskStore();
-  const completedStatus = completed[`${task.id}`] ?? false;
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
   const defaultDueDate = task.due_date ? format(new Date(task.due_date), "yyyy-MM-dd'T'HH:mm") : '';
@@ -31,14 +31,23 @@ const TaskDetailsBody = ({ task, updateTasksInDom }: TaskDetailsBodyType) => {
 
   const { projectTitle } = useProjectStore();
   const priorityArray = ['easy', 'medium', 'hard'];
+
   const usersArray = ['Arash', 'Mike']; // This array will be replaced by users data from database
 
-  const handleCheckbox = (task: Task) => {
-    const updatedCompletedStatus = !completedStatus;
-    setCompleted(`${task.id}`, updatedCompletedStatus);
+  const handleCheckbox = async (task: Task) => {
+    const updatedCompletedStatus = !task.completed;
     const updatedTask = { ...task, completed: updatedCompletedStatus };
-
-    return updatedTask;
+    try {
+      const req = await api();
+      await req.put(`/project/tasks/${task.id}`, { completed: !task.completed });
+      setTask(updatedTask);
+      setTasks((tasks: any) => {
+        return tasks.map((item: any) => (item.id === task.id ? updatedTask : item));
+      });
+    } catch (e) {
+      console.error(e);
+    }
+    setCompleted(`${task.id}`, updatedCompletedStatus);
   };
 
   const handleTextareaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -126,7 +135,7 @@ const TaskDetailsBody = ({ task, updateTasksInDom }: TaskDetailsBodyType) => {
     <div className='details-title'>
       <div className='task-name'>
         <Checkbox
-          checked={completedStatus}
+          checked={task.completed}
           icon={<RadioButtonUnchecked style={{ color: '#7D7A89' }} />}
           checkedIcon={<CheckCircle style={{ color: '#5FB918' }} />}
           onClick={() => handleCheckbox(task)}

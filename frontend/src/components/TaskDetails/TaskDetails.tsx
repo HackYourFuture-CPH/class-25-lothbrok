@@ -1,27 +1,20 @@
 import React, { useState } from 'react';
-import { Button, Menu, MenuItem, IconButton, Divider } from '@mui/material/';
-import {
-  MoreHoriz,
-  CloseRounded,
-  Add,
-  CheckCircleRounded,
-  RadioButtonUnchecked,
-  AccountCircle,
-  Circle,
-} from '@mui/icons-material/';
+import { Button, Menu, MenuItem, IconButton } from '@mui/material/';
+import { MoreHoriz, CloseRounded } from '@mui/icons-material/';
 import TaskDetailsBody from '../TaskDetailsBody/TaskDetailsBody';
 import { Task } from '../../types/Task';
 import { useTaskStore, initialValue } from '../../store/task.store';
 import './TaskDetails.css';
+import api from '../../api';
 
 type TaskDetailsType = {
   task: Task;
   getAllTasks: () => void;
+  setTasks: (val: any) => void;
 };
 
-const TaskDetails = ({ task, getAllTasks }: TaskDetailsType) => {
+const TaskDetails = ({ task, getAllTasks, setTasks }: TaskDetailsType) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [attachments, setAttachments] = useState<string[]>([]);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -34,12 +27,18 @@ const TaskDetails = ({ task, getAllTasks }: TaskDetailsType) => {
   const handleCloseDetails = () => {
     setTask(initialValue);
   };
-  const handleAttachment = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files) {
-      const newAttachments = Array.from(files).map((file) => URL.createObjectURL(file));
-      setAttachments((prevAttachments) => [...prevAttachments, ...newAttachments]);
+
+  const handleDelete = async () => {
+    try {
+      const req = await api();
+      await req.put(`/project/tasks/${task.id}`, { completed: !task.completed });
+      setTasks((tasks: any) => {
+        return tasks.filter((item: any) => item.id !== task.id);
+      });
+    } catch (e) {
+      console.error(e);
     }
+    handleClose();
   };
   return (
     <div className='taskDetails'>
@@ -66,91 +65,12 @@ const TaskDetails = ({ task, getAllTasks }: TaskDetailsType) => {
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={handleClose}>option 1</MenuItem>
-            <MenuItem onClick={handleClose}>option 2</MenuItem>
-            <MenuItem onClick={handleClose}>option 3</MenuItem>
+            <MenuItem onClick={handleDelete}>Delete</MenuItem>
           </Menu>
         </div>
       </div>
 
-      <TaskDetailsBody task={task} updateTasksInDom={getAllTasks} />
-
-      <div className='other-details'>
-        <div className='single-detail'>
-          <div className='single-header'>
-            <p className='single-title'>Attachment</p>
-            <div className='attachment-main'>
-              {/* Hidden file input */}
-              <input
-                type='file'
-                accept='image/*'
-                onChange={handleAttachment}
-                style={{ display: 'none' }}
-                id='attachment-input'
-              />
-              {/* IconButton to trigger file input */}
-              <label htmlFor='attachment-input'>
-                <IconButton component='span'>
-                  <Add />
-                </IconButton>
-              </label>
-            </div>
-          </div>
-          <div className='attachment-files'>
-            {attachments.map((attachment, index) => (
-              <img key={index} src={attachment} alt={`attachment-${index}`} />
-            ))}
-          </div>
-        </div>
-        <div className='single-detail'>
-          <div className='single-header'>
-            <p className='single-title'>Objective</p>
-            <IconButton component='span'>
-              <Add />
-            </IconButton>
-          </div>
-          <div className='task-objectives'>
-            <div className='task-objective'>
-              <CheckCircleRounded id='small-check' />
-              <p>Project Kanban/Cards*Trello</p>
-            </div>
-            <Divider />
-            <div className='task-objective'>
-              <CheckCircleRounded id='small-check' />
-              <p>Activity/Inbox*with advance filter</p>
-            </div>
-            <Divider />
-            <div className='task-objective'>
-              <RadioButtonUnchecked id='small-circle' />
-              <p>Project List *Asana</p>
-            </div>
-            <Divider />
-          </div>
-          <textarea className='question' defaultValue='Ask question or post an update' />
-        </div>
-        <div className='single-detail'>
-          <p className='single-title'>Comments(1)</p>
-          <div className='comment'>
-            <div className='comment-section'>
-              <AccountCircle />
-              <p>Jackson Pierce</p>
-            </div>
-            <p className='comment-text'>
-              It is a long and a reader will be distracted by the readable content of a page when
-              looking at its layout. The point of
-            </p>
-          </div>
-          <div className='comment'>
-            <div className='comment-section comment-part'>
-              <Circle />
-              <p>Superboard</p>
-            </div>
-            <p className='comment-text'>
-              The leap into electronic typesetting, remaining essentially unchanged
-            </p>
-          </div>
-        </div>
-      </div>
+      <TaskDetailsBody task={task} updateTasksInDom={getAllTasks} setTasks={setTasks} />
     </div>
   );
 };
