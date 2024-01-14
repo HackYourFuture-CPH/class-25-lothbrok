@@ -4,6 +4,8 @@ import bodyParser from 'body-parser';
 import router from './routes';
 import path from 'path';
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 const app: Express = express();
 const uiBuildPath = path.join(__dirname, '../../frontend/build/');
 
